@@ -1,0 +1,24 @@
+<?php
+
+$module = $_GET['module'] ?? 'connexion';
+
+
+session_start();
+
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = [];
+}
+
+switch($module) {
+    case 'connexion':
+        include_once "modules/module_connexion/module_connexion.php";
+        $mod = new Mod_connexion();
+        $moduleContent=$mod->affiche();
+        break;
+    default:
+        echo "<p>Module inconnu.</p>";
+        break;
+}
+echo $moduleContent;
+
+?>
