@@ -2,7 +2,7 @@
 require_once('utils/vue_generique.php');
     Class Vue_connexion extends VueGenerique{
         public function __construct(){
-
+            parent::__construct();
         }
     public function formulaire_inscription($liste_asso){
         echo
@@ -14,7 +14,7 @@ require_once('utils/vue_generique.php');
                        ';
 
                    foreach($liste_asso as $asso_courante){
-                        echo '<option value="'.$asso_courante['idAssoc'].'"">'.$asso_courante['nomAssoc'].'</option>';
+                        echo '<option value="'.$asso_courante['idAsso'].'"">'.$asso_courante['nomAsso'].'</option>';
                    }
                echo '</select>';
 
@@ -43,6 +43,15 @@ require_once('utils/vue_generique.php');
          </form>
         ';
     }
+    public function afficher_déconnexion(){
+        echo
+        '
+            <form method="post" action="index.php?module=connexion&action=deconnexion">
+                
+                    <input type="submit" value="Déconnexion">
+         </form>
+        ';
+    }
     public function menu(){
         echo
         '
@@ -53,6 +62,9 @@ require_once('utils/vue_generique.php');
         }
     public function affiche(){
         return $this->getAffichage();
+    }
+    public function message($txt){
+        echo "<p>$txt</p>";
     }
     }
 

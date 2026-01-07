@@ -1,101 +1,108 @@
 <?php
-include_once("utils/connexion.php"); // creer le fichier base de données
-
+include_once("utils/connexion.php"); // fichier de connexion à la base
 
 Connexion::initConnexion();
-class Modele_connexion extends Connexion{
-    private $id_solde=0;
 
+class Modele_connexion extends Connexion {
 
-    public function __construct(){
-
-    }
-public function ajout_formulaire_inscription() {
-    // 1. Vérification des champs obligatoires
-    if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"])) {
-        die("Champs manquants");
+    public function __construct() {
+        // constructeur vide
     }
 
-    $input_login = $_POST["login_inscription"];
-    $input_mdp = $_POST["mdp_inscription"];
-    $input_asso = $_POST["asso_inscription"];
 
-    $existedeja = "SELECT idUtilisateur FROM Utilisateur WHERE nom = :login";
-    $existedeja_s_sql = self::$bdd->prepare($existedeja);
-    $existedeja_s_sql->execute(['login' => $input_login]);
+    public function ajout_formulaire_inscription() {
 
-    if ($existedeja_s_sql->fetch()) {
-        die("Vous avez déjà un compte ou ce nom est pris.");
+        if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"]) || empty($_POST["asso_inscription"])) {
+            return "Champs manquants";
+        }
+
+        $input_login = $_POST["login_inscription"];
+        $input_mdp   = $_POST["mdp_inscription"];
+        $input_asso  = $_POST["asso_inscription"];
+
+        // Vérifier si le nom existe déjà
+        $existedeja = self::$bdd->prepare("SELECT idUtilisateur FROM Utilisateur WHERE nom = :login");
+        $existedeja->execute(['login' => $input_login]);
+
+        if ($existedeja->fetch()) {
+            return "Vous avez déjà un compte ou ce nom est pris.";
+        }
+
+        $role_defaut = 3;
+
+        $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
+
+
+        $sql = "INSERT INTO Utilisateur (nom, mdp, idRole, idAsso) VALUES (:nom, :mdp, :idRole, :idAsso)";
+        $stmt = self::$bdd->prepare($sql);
+        $success = $stmt->execute([
+            'nom'    => $input_login,
+            'mdp'    => $hash_mdp,
+            'idRole' => $role_defaut,
+            'idAsso' => $input_asso
+        ]);
+
+        if (!$success) {
+            return "Erreur lors de la création de l'utilisateur.";
+        }
+
+        $idUtilisateur = self::$bdd->lastInsertId();
+
+        $sqlCompte = "INSERT INTO Compte (solde, idUtilisateur) VALUES (0, :idUtilisateur)";
+        $stmtCompte = self::$bdd->prepare($sqlCompte);
+        $successCompte = $stmtCompte->execute(['idUtilisateur' => $idUtilisateur]);
+
+        if (!$successCompte) {
+            return "Erreur lors de la création du compte.";
+        }
+
+        return "Inscription réussie !";
     }
 
-    $compte = "INSERT INTO Compte (idCompte, solde) VALUES (DEFAULT, 0)";
-    $v_compte = self::$bdd->prepare($compte);
-    $v_compte->execute();
+
+    public function ajout_formulaire_connexion() {
+        if (empty($_POST["login_connexion"]) || empty($_POST["mdp_connexion"])) {
+            return "Champs manquants";
+        }
+
+        $input_login = $_POST["login_connexion"];
+        $input_mdp   = $_POST["mdp_connexion"];
+
+        $sql = "SELECT idUtilisateur, nom, mdp FROM Utilisateur WHERE nom = :login";
+        $stmt = self::$bdd->prepare($sql);
+        $stmt->execute(['login' => $input_login]);
+        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$utilisateur || !password_verify($input_mdp, $utilisateur['mdp'])) {
+            return "Login ou mot de passe incorrect.";
+        }
 
 
-    $nouveau_id_compte = self::$bdd->lastInsertId();
+        $_SESSION['login'] = $utilisateur['nom'];
+        $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
+        $_SESSION['connecté'] = true; 
 
-
-    $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO Utilisateur (nom, mdp, idCompte, idAssoc) VALUES (:nom, :mdp, :idCompte, :idAssoc)";
-    $s_sql = self::$bdd->prepare($sql);
-
-    // 5. Exécution finale
-    $success = $s_sql->execute([
-        'nom'      => $input_login,
-        'mdp'      => $hash_mdp,
-        'idCompte' => $nouveau_id_compte,
-        'idAssoc'  => $input_asso
-    ]);
-
-    if ($success) {
-        echo "Inscription réussie";
-    } else {
-        echo "Une erreur est survenue lors de la création de l'utilisateur.";
+        return "Connexion réussie !";
+        
     }
-}
-public function ajout_formulaire_connexion() {
-    if (empty($_POST["login_connexion"]) || empty($_POST["mdp_connexion"])) {
-        die("Champs manquants");
-    }
-    else{
-
-    $input_login = $_POST["login_connexion"];
-    $input_mdp = $_POST["mdp_connexion"];
-
-
-    $sql = "SELECT nom, mdp FROM Utilisateur WHERE nom = :login";
-    $s_sql = self::$bdd->prepare($sql);
-    $s_sql->execute(['login' => $input_login]);
-    $utilisateur = $s_sql->fetch(PDO::FETCH_ASSOC);
-
-    if (!$utilisateur || !password_verify($input_mdp, $utilisateur['mdp'])) {
-        die("Mot de passe ou login incorrect");
-    }
-
-    $_SESSION['login'] = $input_login;
-    $_SESSION['mdp'] = $input_mdp;
-    echo "Connexion réussie !";
-    }
-}
 public function déconnexion() {
+    session_unset();
     session_destroy();
-    unset($_SESSION['actif']);
-    header("Location: index.php");
-    exit();
-}
-public function getAssos() : array{
-    $selectAssoc = self::$bdd->prepare("SELECT idAssoc,nomAssoc from Association");
-    $selectAssoc -> execute();
-    $array = $selectAssoc->fetchAll(PDO::FETCH_ASSOC);
-    return $array;
+
+    // recrée une session vide pour l’affichage du menu
+    session_start();
+    $_SESSION['connecté'] = false;
+
 }
 
 
 
 
 
-
-
+    public function getAssos(): array {
+        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM Association");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
-
+session_start();
 $module = $_GET['module'] ?? 'connexion';
 
 
-session_start();
+
 
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = [];
