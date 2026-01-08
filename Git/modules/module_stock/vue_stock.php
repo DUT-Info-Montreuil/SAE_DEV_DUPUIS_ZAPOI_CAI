@@ -2,7 +2,7 @@
 require_once('utils/vue_generique.php');
 Class Vue_stock extends VueGenerique{
     public function __construct(){
-
+        parent::__construct();
     }
 
     public function afficheStock($liste_stock){

@@ -5,8 +5,8 @@ include_once 'modele_stock.php';
 class Cont_stock{
     private $vue;
     private $modele;
-    public function __construct(){
-        $this->vue = new Vue_stock();
+    public function __construct(Vue_stock $vue){
+        $this->vue = $vue;
         $this->modele = new Modele_stock();
     }
     //Fonctions de la vue

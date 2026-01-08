@@ -50,15 +50,7 @@ require_once('utils/vue_generique.php');
          </form>
         ';
     }
-    public function afficher_déconnexion(){
-        echo
-        '
-            <form method="post" action="index.php?module=connexion&action=deconnexion">
-                
-                    <input type="submit" value="Déconnexion">
-         </form>
-        ';
-    }
+
     public function menu(){
         echo
         '
@@ -74,7 +66,7 @@ require_once('utils/vue_generique.php');
     public function message($txt){
         echo "<p>$txt</p>";
     }
-    }
+
 
 }
 

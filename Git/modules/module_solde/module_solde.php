@@ -1,5 +1,6 @@
 <?php
 include_once "controleur_solde.php";
+include_once "vue_solde.php";
 class Mod_solde{
     private $vue;
     private $cont;

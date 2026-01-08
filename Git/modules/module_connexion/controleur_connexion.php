@@ -39,19 +39,13 @@
         }
         public function déconnexion(){
             $this->modele->déconnexion();
-  
 
         }
 
         public function exec() {
-            if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] == false) {
-                // utilisateur non connecté
-                $this->vue->menu(); // affichage Inscription / Connexion
-            } else {
-                // utilisateur connecté
-                $this->vue->afficher_déconnexion(); // affichage bouton déconnexion
+                $this->vue->menu();
             }
-        }
+
 
         public function getAssos() : array {
             return $this->modele->getAssos();
