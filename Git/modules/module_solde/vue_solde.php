@@ -16,6 +16,10 @@ require_once ('utils/vue_generique.php');
 
             ';
         }
+        public function afficheSolde($solde){
+            echo '<p>Votre solde est de : ' . $solde . '</p>';
+        }
+
         public function affiche(){
             return $this->getAffichage();
         }

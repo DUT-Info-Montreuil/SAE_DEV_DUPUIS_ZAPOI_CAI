@@ -45,6 +45,17 @@ class Modele_solde extends Connexion{
 
        return "Solde mis à jour avec succès";
    }
+public function getSolde(){
+
+    $idUtilisateur = $_SESSION['idUtilisateur'];
+
+    $sql_solde = "SELECT solde FROM compte WHERE idUtilisateur = :idU";
+    $ssql_solde = self::$bdd->prepare($sql_solde);
+    $ssql_solde->execute(['idU' => $idUtilisateur]);
+
+    return $ssql_solde->fetchColumn();
+}
+
 
 }
 

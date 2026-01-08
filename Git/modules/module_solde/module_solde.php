@@ -15,13 +15,18 @@ class Mod_solde{
 
             case "ajout_solde":
                 $this->cont->envoyer_formulaire_solde();
+                header("Location: index.php?module=solde&action=page_solde");
+                exit;
                 break;
-            case "solde":
-                $this->cont->afficher_formulaire_solde();
+
+            case "page_solde":
+                $this->cont->afficher_page_solde();
                 break;
         }
 
     }
+
+
 
     public function affiche(){
         return $this->cont->affiche();

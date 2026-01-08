@@ -21,7 +21,7 @@ class Mod_connexion {
                 $this->cont->envoyer_formulaire_connexion();
 
                 if($this->cont->getRole()==3){
-                    header("Location: index.php?module=solde&action=page_solde");
+                    header("Location: index.php?module=solde&action=solde");
                     exit;
                 }
                 else if($this->cont->getRole()==2){
