@@ -22,6 +22,9 @@
         public function affiche() {
                 return $this->vue->affiche();
         }
+        public function getRole(){
+                return $this->modele->getRole();
+        }
 
         //Fonctions du modèle
         public function envoyer_formulaire_inscription(){
