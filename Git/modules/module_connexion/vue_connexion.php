@@ -57,6 +57,10 @@ require_once('utils/vue_generique.php');
         '
             <a href="index.php?module=connexion&action=inscription">Inscription</a>
             <a href="index.php?module=connexion&action=connexion">Connexion</a>
+
+
+            <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
+            <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
         ';
 
         }

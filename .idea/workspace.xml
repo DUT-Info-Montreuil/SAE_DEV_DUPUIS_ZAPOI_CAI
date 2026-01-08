@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/controleur_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/controleur_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/modele_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/modele_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/recapJournee/controleur_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/recapJournee/module_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,19 +29,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
-    "last_opened_file_path": "/home/etudiants/info/edupuis/local_html/SAE_DEV_DUPUIS_ZAPOI_CAI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;recapJourneeRe&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/etudiants/info/edupuis/local_html/SAE_DEV_DUPUIS_ZAPOI_CAI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Git/modules" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -57,7 +65,7 @@
       <workItem from="1767859970575" duration="203000" />
       <workItem from="1767860411656" duration="4096000" />
       <workItem from="1767876315088" duration="554000" />
-      <workItem from="1767877393360" duration="2815000" />
+      <workItem from="1767877393360" duration="10253000" />
     </task>
     <servers />
   </component>

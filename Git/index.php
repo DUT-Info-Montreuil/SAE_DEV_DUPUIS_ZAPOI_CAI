@@ -3,7 +3,7 @@ session_start();
 $module = $_GET['module'] ?? 'connexion';
 
 
-
+$moduleContent = '';
 
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = [];
@@ -20,6 +20,11 @@ switch($module) {
         $mod = new Mod_solde();
         $moduleContent=$mod->affiche();
         break;
+    case 'recapJournee':
+            include_once "modules/recapJournee/module_recapJournee.php";
+            $mod = new module_recapJournee();
+            $moduleContent=$mod->affiche();
+            break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

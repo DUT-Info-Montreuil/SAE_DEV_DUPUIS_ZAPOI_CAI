@@ -5,36 +5,30 @@ require_once('utils/vue_generique.php');
 
         }
         
-    public function recapitulatif(int $recette){
+    public function recapitulatif(){
         echo
-            '
-            
-            '
+            "
+            <h1> Récapitulatif de la journée </h1>
+            <br>
+            <p> ".benefDuJour()." </p> .......à voir comment on s'organise </p>
+            "
         ;
     }
 
-    public function benefDuJour(){
+    public function benefDuJour(int $recette){
         echo 
-            '
-            
-            '
+            "
+            Recettes du jour : ".$recette." euros
+            "
         ;
     }
 
-    public function recap_semaine(){
-        echo
-            '
-            
-            '
-        ;
-    }
-
-    public function recap_semaine(){
-        echo
-            '
-            
-            '
-        ;
+    public function recap_semaine(array $semaine){
+        echo "Recapitulatif des 7 deniers jours :";
+        foreach($semaine as $jour){
+           echo "<br>
+                   Recettes de tel jour (à voir comment afficher les jours) : ".$jour."";
+        }
     }
 
     public function transactionsDuJour(){

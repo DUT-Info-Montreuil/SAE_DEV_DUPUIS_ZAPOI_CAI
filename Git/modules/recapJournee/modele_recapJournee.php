@@ -16,7 +16,7 @@ class modele_recapJournee extends Connexion{
                                 SUM(lc.quantite * p.prix) AS recette_totale
                                 FROM lignecommande lc
                                 JOIN produits p ON lc.idProd = p.idProd
-                                WHERE lc.date = DATE_SUB(CURRENT_DATE(), INTERVAL $jour DAY);
+                                WHERE lc.date = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY);
                             ";
 
             $requete = self::$bdd->prepare($sql_lignecom);
@@ -31,13 +31,33 @@ class modele_recapJournee extends Connexion{
 
         }
 
-        public function getRecapSemaine() : int[] {
+        public function getRecapSemaine() : array {
+            $tab = [];
 
-            $tab = int[7];
-            for(int $i = 0; $i < 7; $i--){
-                $tab[$i] = getRecetteJournée(-$i);
+            for ($i = 0; $i < 7; $i++) {
+                $tab[$i] = $this->getRecetteJournee(-$i);
             }
+
             return $tab;
+
+        }
+
+        public function getTransactions() : array {
+
+            $sql_transactions = "
+                SELECT p.nom, lc.quantite
+                FROM commande c JOIN lignecommande lc JOIN produits p
+                GROUP BY idCommande;
+            ";
+            /** niké, à check à la maison, mais principe ok  */
+
+            $requete = self::$bdd->prepare($sql_transactions);
+            $requete->execute();
+
+            $resultat = $requete->fetchAll();
+
+
+
 
         }
 
