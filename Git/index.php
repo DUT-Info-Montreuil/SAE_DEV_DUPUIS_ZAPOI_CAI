@@ -1,5 +1,6 @@
 <?php
 $module = $_GET['module'] ?? 'connexion';
+
 session_start();
 
 
@@ -25,6 +26,11 @@ switch($module) {
         $mod = new Mod_stock();
         $moduleContent = $mod->affiche();
         break;
+    case 'recapJournee':
+            include_once "modules/recapJournee/module_recapJournee.php";
+            $mod = new module_recapJournee();
+            $moduleContent=$mod->affiche();
+            break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

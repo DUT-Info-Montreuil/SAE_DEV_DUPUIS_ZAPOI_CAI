@@ -84,7 +84,7 @@ class Modele_connexion extends Connexion {
 
 
         return "Connexion réussie !";
-        
+
     }
 public function déconnexion() {
     session_unset();
