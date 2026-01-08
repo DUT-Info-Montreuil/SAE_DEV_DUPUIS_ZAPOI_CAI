@@ -27,7 +27,10 @@ class Mod_connexion {
                 else if($this->cont->getRole()==2){
                     header("Location: index.php?module=commande&action=commande");
                     exit;
-                }
+		}
+		else{
+		    header("Location: index.php?module=stock");
+		}
                 break;
 
             case "deconnexion":

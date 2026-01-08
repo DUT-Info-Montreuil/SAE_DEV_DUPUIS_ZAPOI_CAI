@@ -1,9 +1,16 @@
 <?php
 require_once('utils/vue_generique.php');
+
     Class Vue_connexion extends VueGenerique{
         public function __construct(){
             parent::__construct();
         }
+
+
+
+
+
+
     public function formulaire_inscription($liste_asso){
         echo
         '
@@ -16,16 +23,16 @@ require_once('utils/vue_generique.php');
                    foreach($liste_asso as $asso_courante){
                         echo '<option value="'.$asso_courante['idAsso'].'"">'.$asso_courante['nomAsso'].'</option>';
                    }
-               echo '</select>';
+            echo '</select>';
 
-               echo'
+        echo'
 
-                    <p>Identifiant</p>
-                    <input type="text" name="login_inscription" maxlength="50">
-                    <p>Mot de passe</p>
-                    <input type="text" name="mdp_inscription" maxlength="50">
-                    <br>
-                    <input type="submit" value="Inscription">
+            <p>Identifiant</p>
+            <input type="text" name="login_inscription" maxlength="50">
+            <p>Mot de passe</p>
+            <input type="text" name="mdp_inscription" maxlength="50">
+            <br>
+            <input type="submit" value="Inscription">
          </form>
         ';
     }
@@ -59,13 +66,17 @@ require_once('utils/vue_generique.php');
             <a href="index.php?module=connexion&action=connexion">Connexion</a>
         ';
 
-        }
+    }
     public function affiche(){
         return $this->getAffichage();
     }
+
     public function message($txt){
         echo "<p>$txt</p>";
     }
     }
+
+}
+
 
 ?>

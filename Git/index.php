@@ -1,6 +1,11 @@
 <?php
+
 session_start();
 $module = $_GET['module'] ?? 'connexion';
+
+
+
+
 
 
 
@@ -15,9 +20,15 @@ switch($module) {
         $mod = new Mod_connexion();
         $moduleContent=$mod->affiche();
         break;
+
     case 'solde':
         include_once "modules/module_solde/module_solde.php";
         $mod = new Mod_solde();
+
+    case 'stock':
+        include_once "modules/module_stock/module_stock.php";
+        $mod = new Mod_stock();
+
         $moduleContent=$mod->affiche();
         break;
     default:
@@ -26,4 +37,5 @@ switch($module) {
 }
 echo $moduleContent;
 
+include_once "template.php";
 ?>

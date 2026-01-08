@@ -95,6 +95,7 @@ public function déconnexion() {
     $_SESSION['connecté'] = false;
 
 }
+
 public function getRole(){
      $input_login = $_SESSION['login'];
      $sql = "SELECT idRole FROM utilisateur WHERE nom = :login";
@@ -103,6 +104,13 @@ public function getRole(){
             $role = $stmt->fetchColumn();
 
      return $role;
+
+
+
+
+
+
+
 }
 
 
