@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Git/gestionnaire/controleur_gestionnaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/recapJournee/controleur_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/gestionnaire/modele_gestionnaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/recapJournee/modele_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/gestionnaire/module_gestionnaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/recapJournee/module_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/gestionnaire/vue_gestionnaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/recapJournee/vue_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/recapJournee/vue_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/utils/connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/utils/connexion.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "recapJournée",
-    "last_opened_file_path": "/home/etudiants/info/edupuis/local_html/MVC_1",
+    "last_opened_file_path": "/home/etudiants/info/edupuis/local_html/SAE_DEV_DUPUIS_ZAPOI_CAI",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,7 +54,9 @@
       <option name="presentableId" value="Default" />
       <updated>1767859969533</updated>
       <workItem from="1767859970575" duration="203000" />
-      <workItem from="1767860411656" duration="3887000" />
+      <workItem from="1767860411656" duration="4096000" />
+      <workItem from="1767876315088" duration="554000" />
+      <workItem from="1767877393360" duration="1810000" />
     </task>
     <servers />
   </component>

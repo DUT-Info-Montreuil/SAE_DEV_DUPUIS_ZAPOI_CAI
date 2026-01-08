@@ -1,6 +1,6 @@
 <?php
 require_once('utils/vue_generique.php');
-    Class Vue_connexion extends VueGenerique{
+    Class vue_recapJournee extends VueGenerique{
         public function __construct(){
 
         }

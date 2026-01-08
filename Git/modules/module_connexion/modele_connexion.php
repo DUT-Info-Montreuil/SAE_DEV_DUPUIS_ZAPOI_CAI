@@ -100,7 +100,7 @@ public function déconnexion() {
 
 
     public function getAssos(): array {
-        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM Association");
+        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM association");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
