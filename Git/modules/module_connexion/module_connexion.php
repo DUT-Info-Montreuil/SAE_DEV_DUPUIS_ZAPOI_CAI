@@ -19,6 +19,8 @@ class Mod_connexion {
 
             case "ajout_connexion":
                 $this->cont->envoyer_formulaire_connexion();
+                header("Location: index.php?module=solde&action=solde");
+                exit;
                 break;
 
             case "deconnexion":
