@@ -5,7 +5,7 @@ require_once('utils/vue_generique.php');
 
         }
         
-    public function recapitulatif(){
+    public function recapitulatif(int $recette){
         echo
             '
             
