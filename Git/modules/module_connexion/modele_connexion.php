@@ -95,6 +95,15 @@ public function déconnexion() {
     $_SESSION['connecté'] = false;
 
 }
+public function getRole(){
+     $input_login = $_SESSION['login'];
+     $sql = "SELECT idRole FROM utilisateur WHERE nom = :login";
+            $stmt = self::$bdd->prepare($sql);
+            $stmt->execute(['login' => $input_login]);
+            $role = $stmt->fetchColumn();
+
+     return $role;
+}
 
 
 
