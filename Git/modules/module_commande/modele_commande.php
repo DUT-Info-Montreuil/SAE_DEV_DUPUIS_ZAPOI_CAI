@@ -12,13 +12,13 @@ class Modele_commande extends Connexion {
 
     public function ajout_début_commande() {
         $idUtilisateur = $_SESSION['idUtilisateur'];
-        $sql = "INSERT INTO commande(DEFAULT,idUtilisateur,date,état) values(:idUtilisateur,:date,:etat)";
+        $sql = "INSERT INTO commande(idUtilisateur,date,état) values(:idUtilisateur,NOW(),:etat)";
         $ssql = self::$bdd->prepare($sql);
-        $success = self::$bdd->execute([
+        $success = $ssql->execute([
         'idUtilisateur'=>$idUtilisateur,
-        'date'=>CURRENT_DATE(),
         'etat'=>0
         ]);
+        $_SESSION['idCommandeActuelle'] = self::$bdd->lastInsertId();
     }
     public function ajout_commande() {
 
@@ -26,13 +26,14 @@ class Modele_commande extends Connexion {
             return;
         }
 
-
+        echo'<br>';
+        var_dump($_POST['produits']);
         $sql = "INSERT INTO lignecommande (idCommande, idProd, quantite)
                 VALUES (?, ?, ?)";
         $stmt = self::$bdd->prepare($sql);
 
         foreach ($_POST['produits'] as $prod) {
-            $lastID = self::$bdd->lastInsert();
+            $lastID = $_SESSION['idCommandeActuelle'];
             $id = $prod['id'];
             $qte = $prod['qte'];
 

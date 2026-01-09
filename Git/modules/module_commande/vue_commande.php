@@ -5,31 +5,34 @@ require_once('utils/vue_generique.php');
             parent::__construct();
         }
 
-    public function formulaire_début_commande(){
-        echo
-        '
-            <form method="post" action="index.php?module=commande&action=ajout_début_commande">
-                    <p>Ajouter une commande : </p>
-                    <input type="text" name="ajouter_commande" maxlength="50">
-                    <input type="submit" value="Commande">
-            </form>
+public function formulaire_début_commande(){
+
+    echo '
+        <form method="post" action="index.php?module=commande&action=traiter_debut_commande">
+                <p>Cliquer pour commencer une nouvelle commande : </p>
+                <input type="submit" value="Démarrer la commande">
+        </form>
+    ';
+}
+
+public function formulaire_commande($liste_prod){
+echo '<form method="post" action="index.php?module=commande&action=ajout_produit">';
+    $elem = 0;
+    foreach($liste_prod as $p){
+        $id = $p['idProd'];
+        echo '
+            <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
+            <input type="number" name="produits['.$elem.'][qte]" min="1" max="100" placeholder="0">
+                <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
+
+            <p>'.$p["nom"].' - '.$p["prix"].' €</p>
+
         ';
+        $elem += 1;
     }
-    public function formulaire_commande($liste_prod){
-        foreach($liste_prod as $p){
-        echo'
-            <form method="post" action="index.php?module=commande&action=ajout_produit">
-                <input type="hidden" name="id_produit['.$p["id"].'][id] value="'.$p["id"].'">
-                <input type="number" name="nb_produit['.$p["id"].'][quantite]" max="100">
-                <button type="submit" style="border:none;background:none;padding:0;cursor:pointer;">
-                <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="200">
-                </button>
-                <p>'.$p["nom"].'</p>
-                <p>'.$p["prix"].' €</p>
-            </form>
-            ';
-        }
-    }
+echo'<button type="submit">Panier</button>
+</form>';
+}
 
     public function affiche(){
         return $this->getAffichage();
