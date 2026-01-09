@@ -21,7 +21,7 @@ class Modele_connexion extends Connexion {
         $input_asso  = $_POST["asso_inscription"];
 
         // Vérifier si le nom existe déjà
-        $existedeja = self::$bdd->prepare("SELECT idUtilisateur FROM utilisateur WHERE nom = :login");
+        $existedeja = self::$bdd->prepare("SELECT idUtilisateur FROM Utilisateur WHERE nom = :login");
         $existedeja->execute(['login' => $input_login]);
 
         if ($existedeja->fetch()) {
@@ -33,7 +33,7 @@ class Modele_connexion extends Connexion {
         $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
 
 
-        $sql = "INSERT INTO utilisateur (nom, mdp, idRole, idAsso) VALUES (:nom, :mdp, :idRole, :idAsso)";
+        $sql = "INSERT INTO Utilisateur (nom, mdp, idRole, idAsso) VALUES (:nom, :mdp, :idRole, :idAsso)";
         $stmt = self::$bdd->prepare($sql);
         $success = $stmt->execute([
             'nom'    => $input_login,
@@ -68,7 +68,7 @@ class Modele_connexion extends Connexion {
         $input_login = $_POST["login_connexion"];
         $input_mdp   = $_POST["mdp_connexion"];
 
-        $sql = "SELECT idUtilisateur, nom, mdp FROM utilisateur WHERE nom = :login";
+        $sql = "SELECT idUtilisateur, nom, mdp FROM Utilisateur WHERE nom = :login";
         $stmt = self::$bdd->prepare($sql);
         $stmt->execute(['login' => $input_login]);
         $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -97,7 +97,7 @@ public function déconnexion() {
 }
 public function getRole(){
      $input_login = $_SESSION['login'];
-     $sql = "SELECT idRole FROM utilisateur WHERE nom = :login";
+     $sql = "SELECT idRole FROM Utilisateur WHERE nom = :login";
             $stmt = self::$bdd->prepare($sql);
             $stmt->execute(['login' => $input_login]);
             $role = $stmt->fetchColumn();
