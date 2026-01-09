@@ -24,10 +24,9 @@ require_once('utils/vue_generique.php');
     }
 
     public function recap_semaine(array $semaine){
-        echo "Recapitulatif des 7 deniers jours :";
+        echo "<h2>Recapitulatif des 7 deniers jours :</h2>";
         foreach($semaine as $jour){
-           echo "<br>
-                   Recettes de tel jour (à voir comment afficher les jours) : ".$jour."";
+           echo "<p class='ligneRecette'> Recettes de tel jour (à voir comment afficher les jours) : ".$jour."</p>";
         }
     }
 

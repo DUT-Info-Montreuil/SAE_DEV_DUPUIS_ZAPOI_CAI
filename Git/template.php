@@ -2,23 +2,34 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="template.css">
     <title>Alacool</title>
 </head>
 <body>
     <header>
         <h1>Alacool</h1>
-        <nav>
              <?php
              if ($_SESSION['connecté']==true){ ?>
-                            <form method="post" action="index.php?module=connexion&action=deconnexion">
-                                <button type="submit" name="deconnexion">Déconnexion</button>
-                            </form>
+                <form id="formDeco" method="post" action="index.php?module=connexion&action=deconnexion">
+                    <button id="Deco" type="submit" name="deconnexion">Déconnexion</button>
+                </form>
             <?php
             }
             ?>
+        <nav>
+            <?php
+                if ($_SESSION['connecté']==false){ ?>
+                    <a href="index.php?module=connexion&action=inscription">Inscription</a>
+                    <a href="index.php?module=connexion&action=connexion">Connexion</a>
+            <?php
+                }
+                ?>
+            <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
+            <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
+            <a href="index.php?module=stock&action=affiche_stock">Stock</a>
         </nav>
     </header>
-
+            
     <main>
         <?php echo $moduleContent; ?>
     </main>

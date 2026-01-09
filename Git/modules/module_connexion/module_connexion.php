@@ -39,9 +39,6 @@ class Mod_connexion {
         }
 
 
-        $this->cont->exec();
-
-
         switch($action) {
             case "inscription":
                 $asso_array = $this->cont->getAssos();
