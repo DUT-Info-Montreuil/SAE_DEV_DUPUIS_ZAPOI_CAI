@@ -15,9 +15,17 @@ Class module_recapJournee{
                 $recette = $this->cont->getRecap($jour);
                 $this->cont->afficheRecap($recette);
                 break;
-            case "recapSemaine";
+            case "recapSemaine":
                 $recapSemaine = $this->cont->getRecapSemaine();
                 $this->cont->afficheRecapSemaine($recapSemaine);
+                break;
+            case "transactions":
+                $transactions = $this->cont->getTransactions();
+                $this->cont->afficheTransactions($transactions);
+                break;
+            case "produitsVendus":
+                $produits = $this->cont->getProduitsVendus();
+                $this->cont->afficheProduitsVendus($produits);
                 break;
         }
 

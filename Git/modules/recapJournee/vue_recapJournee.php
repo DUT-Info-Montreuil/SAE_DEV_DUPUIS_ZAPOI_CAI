@@ -31,20 +31,17 @@ require_once('utils/vue_generique.php');
         }
     }
 
-    public function transactionsDuJour(){
-        echo
-            '
-            
-            '
-        ;
+    public function transactionsDuJour($transactions){
+        foreach ($transactions as $t) {
+            echo $t['produits'] . ' — ' . number_format($t['total'], 2) . " €<br>";
+        }
+
     }
 
-    public function Produits_vendus(){
-        echo
-            '
-            
-            '
-        ;
+    public function ProduitsVendus($produits){
+        foreach ($produits as $p) {
+             echo "".$p['nom'].' —  x' . $p['quantite'] .", total : ".$p['total']." €<br>";
+        }
     }
     
 
