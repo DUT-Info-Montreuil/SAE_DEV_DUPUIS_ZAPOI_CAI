@@ -13,10 +13,12 @@ class modele_recapJournee extends Connexion{
         public function getRecetteJournee(int $jour) : int {
 
             $sql_lignecom = "SELECT
-                                SUM(lc.quantite * p.prix) AS recette_totale
-                                FROM commande c JOIN lignecommande lc
-                                JOIN produits p ON lc.idProd = p.idProd
-                                WHERE c.date = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY);
+                                 SUM(lc.quantite * p.prix) AS recette_totale
+                             FROM commande c
+                             JOIN lignecommande lc ON lc.idCommande = c.idCommande
+                             JOIN produits p ON lc.idProd = p.idProd
+                             WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY);
+
                             ";
 
             $requete = self::$bdd->prepare($sql_lignecom);
@@ -35,7 +37,7 @@ class modele_recapJournee extends Connexion{
             $tab = [];
 
             for ($i = 0; $i < 7; $i++) {
-                $tab[$i] = $this->getRecetteJournee(-$i);
+                $tab[$i] = $this->getRecetteJournee($i);
             }
 
             return $tab;

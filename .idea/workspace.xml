@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +61,7 @@
       <workItem from="1767860411656" duration="4096000" />
       <workItem from="1767876315088" duration="554000" />
       <workItem from="1767877393360" duration="10254000" />
-      <workItem from="1767946111977" duration="9034000" />
+      <workItem from="1767946111977" duration="10202000" />
     </task>
     <servers />
   </component>

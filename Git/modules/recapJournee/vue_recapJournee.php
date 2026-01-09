@@ -40,7 +40,8 @@ require_once('utils/vue_generique.php');
 
     public function ProduitsVendus($produits){
         foreach ($produits as $p) {
-             echo "".$p['nom'].' —  x' . $p['quantite'] .", total : ".$p['total']." €<br>";
+
+             echo ''.$p['nom'].' —  x' . $p['quantite'] .", total : ".$p['total']." €<br>";
         }
     }
     
