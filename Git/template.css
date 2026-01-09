@@ -77,3 +77,15 @@ footer{
         border-bottom: 2px solid black;
     }
 }
+
+.TransactionsDuJour{
+    width: 80%;
+    margin-left: 10%;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-auto-rows: auto;
+    text-align: center;
+}
+.ligneRecette{
+    border: 2px solid black;
+}

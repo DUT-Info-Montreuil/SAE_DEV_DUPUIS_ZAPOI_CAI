@@ -6,11 +6,6 @@ require_once('utils/vue_generique.php');
             parent::__construct();
         }
 
-
-
-
-
-
     public function formulaire_inscription($liste_asso){
         echo
         '
