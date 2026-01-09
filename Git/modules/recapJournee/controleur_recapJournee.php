@@ -20,20 +20,30 @@
     public function getRecap(int $recette) {
             return $this->modele->getRecetteJournee($recette);
     }
-
-    public function getRecapSemaine() {
-            return $this->modele->getRecapSemaine();
-    }
-
     public function afficheRecap(int $recette) {
             return $this->vue->benefDuJour($recette);
     }
 
+    public function getRecapSemaine() {
+            return $this->modele->getRecapSemaine();
+    }
     public function afficheRecapSemaine(array $semaine) {
             return $this->vue->recap_semaine($semaine);
     }
 
+    public function getTransactions() {
+            return $this->modele->getTransactions();
+    }
+    public function afficheTransactions(array $transactions) {
+            return $this->vue->transactionsDuJour($transactions);
+    }
 
+    public function getProduitsVendus() {
+            return $this->modele->getProdVendus();
+    }
+    public function afficheProduitsVendus(array $transactions) {
+            return $this->vue->ProduitsVendus($transactions);
+    }
 
 
 

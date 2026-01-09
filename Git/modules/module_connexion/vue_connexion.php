@@ -59,7 +59,12 @@ require_once('utils/vue_generique.php');
 
 
             <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
+            <br>
             <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
+            <br>
+            <a href="index.php?module=recapJournee&action=transactions">Les transactions du jour</a>
+            <br>
+            <a href="index.php?module=recapJournee&action=produitsVendus">Les produits vendus</a>
         ';
 
     }
