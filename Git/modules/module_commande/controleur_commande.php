@@ -1,60 +1,39 @@
 <?php
-    include_once 'vue_connexion.php';
-    include_once 'modele_connexion.php';
+    include_once 'vue_commande.php';
+    include_once 'modele_commande.php';
 
-    class Cont_connexion{
+    class Cont_commande{
         private $vue;
         private $modele;
-        public function __construct(Vue_connexion $vue){
+        public function __construct(Vue_commande $vue){
             $this->vue = $vue;
-            $this->modele = new Modele_connexion();
+            $this->modele = new Modele_commande();
 
         }
         //Fonctions de la vue
-        public function afficher_formulaire_inscription($donneAsso){
-                $this->vue->formulaire_inscription($donneAsso);
-    
-        }
-        public function afficher_formulaire_connexion(){
-                $this->vue->formulaire_connexion();
-        }
-
-        public function affiche() {
-                return $this->vue->affiche();
-        }
-        public function getRole(){
-                return $this->modele->getRole();
-        }
-
-        //Fonctions du modèle
-        public function envoyer_formulaire_inscription(){
-            $message = $this->modele->ajout_formulaire_inscription();
-            $this->vue->message($message);
-
+        public function afficher_formulaire_débutCommande(){
+                $this->vue->formulaire_début_commande();
 
         }
-        public function envoyer_formulaire_connexion(){
-            $messsage = $this->modele->ajout_formulaire_connexion();
-            $this->vue->message($messsage);
-        }
-        public function déconnexion(){
-            $this->modele->déconnexion();
-  
-
+        public function afficher_formulaire_Commande(){
+                $produits = getProduits();
+                $this->vue->formulaire_commande($produits);
         }
 
-        public function exec() {
-            if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] == false) {
-                // utilisateur non connecté
-                $this->vue->menu(); // affichage Inscription / Connexion
-            } else {
-                // utilisateur connecté
-                $this->vue->afficher_déconnexion(); // affichage bouton déconnexion
-            }
+        public function envoyer_formulaire_débutCommande(){
+            $this->modele->ajout_début_commande();
         }
+        public function envoyer_formulaire_Commande(){
+            $this->modele->ajout_commande();
+        }
+       	public function affiche(){
+		return $this->vue->affiche();
+       	}
 
-        public function getAssos() : array {
-            return $this->modele->getAssos();
+
+
+        public function getProduits() : array {
+            return $this->modele->getProduits();
         }
 
 

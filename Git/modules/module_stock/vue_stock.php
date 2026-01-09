@@ -7,38 +7,38 @@ Class Vue_stock extends VueGenerique{
 
     public function afficheStock($liste_stock){
         echo '<h2>Stock des Produits</h2>
-                <table>
-                <input type="search" placeholder="Rechercher un produit"><button type="submit">Rechercher</button>
-                <thread>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom Produit</th>
-                        <th>Quantité</th>
-                        <th>Seuil</th>
-                        <th>Statut</th>
-                    </tr>
-                    </thread>
-                    <tbody>';
-        for($i= 0;$i<25;$i++){
+             
+                <input type="search" placeholder="Rechercher un produit"><button id="rechercher" type="submit">Rechercher</button>
+                <div id="tableauStock">
+                
+                    <div class="TitreColonne">ID</div>
+                    <div class="TitreColonne">Nom Produit</div>
+                    <div class="TitreColonne">Quantité</div>
+                    <div class="TitreColonne">Seuil minimum</div>
+                    <div class="TitreColonne">Statut</div>
+                
+                  ';
+        
             
-        foreach($liste_stock as $item){
-            echo '<tr>
-            <td>'.$item['idProd'] .'</td>
-            <td>'. $item['nom'] .'</td>
-            <td>'. $item['quantite'] .'</td>
-            <td>'. $item['seuil'] .'</td>
-            <td>';
-                if($item['quantite'] >= $item['seuil']){
-                    echo "<span style='color:green'>Disponible</span>";
-                }
-                else{
-                    echo "<span style='color:red'>En faible quantité</span>";
-                }
-            '</td>
-            </tr>';
-        }
-    }
-        echo '</tbody> </table>';
+            foreach($liste_stock as $item){
+                echo '
+                <div>'.$item['idProd'] .'</div>
+                <div>'. $item['nom'] .'</div>
+                <div>'. $item['quantite'] .'</div>
+                <div>'. $item['seuil'] .'</div>
+                <div>';
+                    if($item["quantite"] >= $item["seuil"]){
+                        echo '<span style="color:green">Disponible</span>';
+                    }
+                    else{
+                        echo '<span style="color:red">En faible quantité</span>';
+                    }
+                '
+                </div>';
+            }
+            echo '</div>';
+        
+        
     }
 
     public function afficheNBProduit($nb){

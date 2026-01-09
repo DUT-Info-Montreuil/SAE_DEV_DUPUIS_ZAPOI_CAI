@@ -42,10 +42,6 @@
 
         }
 
-        public function exec() {
-                $this->vue->menu();
-            }
-
 
         public function getAssos() : array {
             return $this->modele->getAssos();

@@ -1,60 +1,32 @@
 <?php
-include_once "controleur_connexion.php";
-class Mod_connexion {
+include_once "controleur_commande.php";
+class Mod_commande {
     private $vue;
     private $cont;
 
     public function __construct(){
         $action = $_GET['action'] ?? "inscription";
 
-        $this->vue = new Vue_connexion();
-        $this->cont = new Cont_connexion($this->vue);
+        $this->vue = new Vue_commande();
+        $this->cont = new Cont_commande($this->vue);
+    
 
   
         switch($action) {
-
-            case "ajout_inscription":
-                $this->cont->envoyer_formulaire_inscription();
+            case 'début_commande':
+                $this->cont->envoyer_formulaire_débutCommande();
                 break;
-
-            case "ajout_connexion":
-                $this->cont->envoyer_formulaire_connexion();
-
-                if($this->cont->getRole()==3){
-                    header("Location: index.php?module=solde&action=solde");
-                    exit;
-                }
-                else if($this->cont->getRole()==2){
-                    header("Location: index.php?module=commande&action=commande");
-                    exit;
-                }
-                break;
-
-            case "deconnexion":
-                $this->cont->déconnexion();
+            case 'commande':
+                 $this->cont->envoyer_formulaire_Commande();
+                 break;
+            case 'ajout_debut_commande':
+                $this->cont->afficher_formulaire_débutCommande();
+               	 break;
+            case 'ajout_produit':
+                $this->cont->afficher_formulaire_Commande();
                 break;
         }
-
-
-        $this->cont->exec();
-
- 
-        switch($action) {
-            case "inscription":
-                $asso_array = $this->cont->getAssos();
-                $this->cont->afficher_formulaire_inscription($asso_array);
-                break;
-
-            case "connexion":
-                $this->cont->afficher_formulaire_connexion();
-                break;
-
-            default:
-                if (!$_SESSION['connecté']) {
-                    $this->cont->afficher_formulaire_connexion();
-                }
-        }
-    }
+	}
 
     public function affiche(){
         return $this->cont->affiche();

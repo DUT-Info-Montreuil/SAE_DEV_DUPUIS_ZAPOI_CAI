@@ -31,6 +31,11 @@ switch($module) {
             $mod = new module_recapJournee();
             $moduleContent=$mod->affiche();
             break;
+    case 'commande':
+	    include_once "modules/module_commande/module_commande.php";
+	    $mod = new Mod_commande();
+	    $moduleContent=$mod->affiche();
+	    break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

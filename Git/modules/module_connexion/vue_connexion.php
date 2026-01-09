@@ -30,7 +30,7 @@ require_once('utils/vue_generique.php');
             <p>Identifiant</p>
             <input type="text" name="login_inscription" maxlength="50">
             <p>Mot de passe</p>
-            <input type="text" name="mdp_inscription" maxlength="50">
+            <input type="password" name="mdp_inscription" maxlength="50">
             <br>
             <input type="submit" value="Inscription">
          </form>
@@ -44,30 +44,21 @@ require_once('utils/vue_generique.php');
                     <input type="text" name="login_connexion" maxlength="50">
 
                     <p>Mot de passe</p>
-                    <input type="text" name="mdp_connexion" maxlength="50">
+                    <input type="password" name="mdp_connexion" maxlength="50">
                     <br>
                     <input type="submit" value="Connexion">
          </form>
         ';
     }
 
-    public function menu(){
-        echo
-        '
-            <a href="index.php?module=connexion&action=inscription">Inscription</a>
-            <a href="index.php?module=connexion&action=connexion">Connexion</a>
 
 
-            <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
-            <br>
-            <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
-            <br>
-            <a href="index.php?module=recapJournee&action=transactions">Les transactions du jour</a>
-            <br>
-            <a href="index.php?module=recapJournee&action=produitsVendus">Les produits vendus</a>
-        ';
 
-    }
+
+
+
+
+    
     public function affiche(){
         return $this->getAffichage();
     }

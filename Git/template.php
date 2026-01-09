@@ -2,20 +2,45 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="template.css">
     <title>Alacool</title>
 </head>
 <body>
     <header>
         <h1>Alacool</h1>
+        <?php
+        if ($_SESSION['connecté'] == true){ ?>
+            <form id="formDeco" method="post" action="index.php?module=connexion&action=deconnexion">
+                <button id="Deco" type="submit" name="deconnexion">Déconnexion</button>
+            </form>
+        <?php
+        }
+        ?>
+
         <nav>
-             <?php
-             if ($_SESSION['connecté']==true){ ?>
-                            <form method="post" action="index.php?module=connexion&action=deconnexion">
-                                <button type="submit" name="deconnexion">Déconnexion</button>
-                            </form>
-            <?php
+        <?php
+        if ($_SESSION['connecté'] == false){ ?>
+            <a href="index.php?module=connexion&action=inscription">Inscription</a>
+            <a href="index.php?module=connexion&action=connexion">Connexion</a>
+        <?php
+        }
+        else {
+            if ($_SESSION['role'] == 1){ // Gestionnaire ?>
+                <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
+                <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
+                <a href="index.php?module=stock&action=affiche_stock">Stock</a>
+        <?php
             }
-            ?>
+            else if ($_SESSION['role'] == 2){ // Barman ?>
+                <a></a>
+        <?php
+            }
+            else { // Client ?>
+                <a href="index.php?module=solde&action=page_solde">Solde</a>
+                <a href="index.php?module=commande&action=ajout_debut_commande">Prendre une commande</a>
+        <?php
+            }
+        } ?>
         </nav>
     </header>
 
@@ -28,3 +53,4 @@
     </footer>
 </body>
 </html>
+

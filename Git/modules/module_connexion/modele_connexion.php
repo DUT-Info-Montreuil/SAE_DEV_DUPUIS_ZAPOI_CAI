@@ -81,6 +81,7 @@ class Modele_connexion extends Connexion {
         $_SESSION['login'] = $utilisateur['nom'];
         $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
         $_SESSION['connecté'] = true;
+       
 
 
         return "Connexion réussie !";
@@ -104,7 +105,7 @@ public function getRole(){
             $stmt->execute(['login' => $input_login]);
             $role = $stmt->fetchColumn();
 
-
+     $_SESSION['role']=$role;
      return $role;
      }
 
