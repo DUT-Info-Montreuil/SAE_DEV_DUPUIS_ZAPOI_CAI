@@ -10,9 +10,10 @@ class modele_recapJournee extends Connexion{
 
     }
 
-        public function getRecetteJournee(int $jour) : int {
+        public function getRecetteJournee(int $jour) : array {
 
-            $sql_lignecom = "SELECT SUM(lc.quantite * p.prix) AS recette_totale
+            $sql_lignecom = "SELECT SUM(lc.quantite * p.prix) AS recette_totale,
+                                     DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY) as date_jour
                                      FROM commande c
                                      JOIN lignecommande lc ON lc.idCommande = c.idCommande
                                      JOIN produits p ON lc.idProd = p.idProd
@@ -25,7 +26,8 @@ class modele_recapJournee extends Connexion{
 
             $resultat = $requete->fetch(PDO::FETCH_ASSOC);
 
-            $recetteTotale = $resultat['recette_totale'] ?? 0;
+            $recetteTotale = ['recette' => $resultat['recette_totale'],
+                              'jour' => $resultat['date_jour']]?? 0;
 
             return $recetteTotale;
 
@@ -34,7 +36,7 @@ class modele_recapJournee extends Connexion{
         public function getRecapSemaine() : array {
             $tab = [];
 
-            for ($i = 0; $i < 7; $i++) {
+            for ($i = 1; $i < 8; $i++) {
                 $tab[$i] = $this->getRecetteJournee($i);
             }
 
@@ -42,8 +44,7 @@ class modele_recapJournee extends Connexion{
 
         }
 
-        public function getTransactions(): array
-        {
+        public function getTransactions(int $jour): array{
             $sql = "
                 SELECT
                     c.idCommande as id,
@@ -53,10 +54,12 @@ class modele_recapJournee extends Connexion{
                     ( lc.quantite * p.prix ) AS total_ligne
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
-                JOIN produits p ON p.idProd = lc.idProd;
+                JOIN produits p ON p.idProd = lc.idProd
+                WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY);
             ";
 
             $stmt = self::$bdd->prepare($sql);
+            $stmt->bindParam(':jour', $jour);
             $stmt->execute();
 
             $lignes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -84,7 +87,7 @@ class modele_recapJournee extends Connexion{
             return $transactions;
         }
 
-    public function getProdVendus() {
+    public function getProdVendus(int $jour) {
 
             $sql = "
                 SELECT
@@ -95,11 +98,12 @@ class modele_recapJournee extends Connexion{
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
                 JOIN produits p ON p.idProd = lc.idProd
-                WHERE c.date = CURRENT_DATE()
+                WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 GROUP BY p.idProd;
             ";
 
             $stmt = self::$bdd->prepare($sql);
+            $stmt->bindParam(':jour', $jour);
             $stmt->execute();
 
             $prodVendus = $stmt->fetchAll(PDO::FETCH_ASSOC);

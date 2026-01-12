@@ -5,49 +5,50 @@ require_once('utils/vue_generique.php');
 
         }
         
-    public function recapitulatif(){
-        echo
-            "
-            <h1> Récapitulatif de la journée </h1>
-            <br>
-            <p> ".benefDuJour()." </p> .......à voir comment on s'organise </p>
-            "
-        ;
-    }
-
-    public function benefDuJour(int $recette){
+    public function benefDuJour(array $recette){
+        echo "<h2> Bénéfices du jour :</h2>";
         echo 
             "
-            Recettes du jour : ".$recette." euros
+            Recettes du jour (".$recette['jour']."): ".$recette['recette']." euros
             "
         ;
+        echo "<br>";
     }
 
     public function recap_semaine(array $semaine){
-        echo "<h2>Recapitulatif des 7 deniers jours :</h2>";
+        echo "<h2> Recapitulatif des 7 jours précédants :</h2>";
+        $i = 0;
         foreach($semaine as $jour){
-           echo "<p class='ligneRecette'> Recettes de tel jour (à voir comment afficher les jours) : ".$jour."</p>";
+           $i++;
+           echo "<p class='ligneRecette'> Recettes du ".$jour['jour']." : ".$jour['recette'].' € <a href="index.php?module=recapJournee&action=recapCertainJour&jour='.$i.'">Récapitulatif de ce jour</a> </p>';
         }
+        echo "<br>";
     }
 
-    public function transactionsDuJour($transactions){
+    public function transactionsDuJour(array $transactions){
+        echo "<h2> Transactions effectuées :</h2>";
         foreach ($transactions as $t) {
             echo $t['produits'] . ' — ' . number_format($t['total'], 2) . " €<br>";
         }
-
+        echo "<br>";
     }
 
-    public function ProduitsVendus($produits){
+    public function ProduitsVendus(array $produits){
+        echo "<h2> Produits vendus :</h2>";
         foreach ($produits as $p) {
              echo "".$p['nom'].' —  x' . $p['quantite'] .", total : ".$p['total']." €<br>";
         }
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
     }
-    
 
     public function menu(){
         echo
         '
-            <a href="index.php?module=gestionnaire&action=recap">Récapitulatif de la semaine</a>
+            <a href="index.php?module=gestionnaire&action=recapDuJour">Récapitulatif de la semaine</a>
             
         ';
 
@@ -57,5 +58,5 @@ require_once('utils/vue_generique.php');
     public function affiche(){
         return $this->getAffichage();
     }
-    }
+}
 ?>

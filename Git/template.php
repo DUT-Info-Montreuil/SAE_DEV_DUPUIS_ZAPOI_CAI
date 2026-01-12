@@ -26,9 +26,10 @@
         }
         else {
             if ($_SESSION['role'] == 1){ // Gestionnaire ?>
-                <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
-                <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>
-                <a href="index.php?module=stock&action=affiche_stock">Stock</a>
+                <br>
+                <a href="index.php?module=recapJournee&action=recapDuJour">Récapitulatif du jour</a>
+                <br>
+
         <?php
             }
             else if ($_SESSION['role'] == 2){ // Barman ?>
