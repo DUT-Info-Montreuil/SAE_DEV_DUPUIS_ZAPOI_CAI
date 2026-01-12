@@ -27,7 +27,6 @@ class Modele_commande extends Connexion {
         }
 
         echo'<br>';
-        var_dump($_POST['produits']);
         $sql = "INSERT INTO lignecommande (idCommande, idProd, quantite)
                 VALUES (?, ?, ?)";
         $stmt = self::$bdd->prepare($sql);
@@ -47,14 +46,47 @@ class Modele_commande extends Connexion {
         }
     }
 
-      public function getProduits():array{
-             $sql = "SELECT * FROM produits";
-                    $stmt = self::$bdd->prepare($sql);
-                    $stmt->execute();
-                    $produits = $stmt->fetchAll();
+  public function getProduits():array{
+         $sql = "SELECT * FROM produits";
+                $stmt = self::$bdd->prepare($sql);
+                $stmt->execute();
+                $produits = $stmt->fetchAll();
 
-             return $produits;
+         return $produits;
+  }
+  public function déduireSolde($montant) : void {
+    $solde = $_SESSION['solde'];
+    $solde_final = $solde - $montant;
+    $sql = "UPDATE compte set solde = ? where idUtilisateur = ?";
+    $s_sql= self::$bdd->prepare($sql);
+    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur']]);
+
+    $_SESSION['solde'] = $solde_final;
+
+
+  }
+public function calculerPrixTotalCommande() {
+    $total = 0;
+    if (isset($_POST['produits'])) {
+        foreach ($_POST['produits'] as $prod) {
+            $id = $prod['id'];
+            $qte = (int)$prod['qte'];
+            if ($qte > 0) {
+                $stmt = self::$bdd->prepare("SELECT prix FROM produits WHERE idProd = ?");
+                $stmt->execute([$id]);
+                $prixUnitaire = $stmt->fetchColumn();
+                $total += $prixUnitaire * $qte;
+            }
         }
+    }
+    return $total;
+}
+public function commandeEstValide($solde_user, $prix_total) : bool {
+    return ($prix_total > 0 && $solde_user >= $prix_total);
+}
+
+
+
 }
 
 

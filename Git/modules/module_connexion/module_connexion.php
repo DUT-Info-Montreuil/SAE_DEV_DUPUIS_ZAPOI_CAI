@@ -19,7 +19,6 @@ class Mod_connexion {
 
             case "ajout_connexion":
                 $this->cont->envoyer_formulaire_connexion();
-
                 if($this->cont->getRole()==3){
                     header("Location: index.php?module=solde&action=page_solde");
                     exit;

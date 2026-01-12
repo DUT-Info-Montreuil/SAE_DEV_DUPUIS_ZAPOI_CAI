@@ -14,22 +14,27 @@ class Mod_commande {
   
 switch($action) {
     case 'ajout_debut_commande':
-        // Étape 1 : Affiche juste le gros bouton "Commande"
         $this->cont->afficher_formulaire_débutCommande();
         break;
 
     case 'traiter_debut_commande':
-        // Étape 2 : L'utilisateur a cliqué, on insère en BDD
         $this->cont->envoyer_formulaire_débutCommande();
-        // Puis on affiche la sélection des produits
         $this->cont->afficher_formulaire_Commande();
         break;
 
     case 'ajout_produit':
-        // Étape 3 : L'utilisateur a choisi ses produits, on enregistre les lignes
-        $this->cont->envoyer_formulaire_Commande();
-        $this->vue->message("Commande enregistrée !");
+            if($this->cont->commande_valide()){
+                $this->cont->envoyer_formulaire_Commande();
+                $this->vue->message("Commande enregistrée !");
+                $this->cont->prix_total(); // pas idéal d'afficher le prix total après avoir passé commande,  à refaire une fois que nous aurons des connaissances en AJAX
+
+            }
+            else{
+                $this->vue->message("Echec de la commande");
+            }
         break;
+
+
 }
 	}
 

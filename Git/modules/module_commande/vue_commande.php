@@ -33,6 +33,9 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
 echo'<button type="submit">Panier</button>
 </form>';
 }
+    public function afficher_confirmation_commande($prix) {
+        echo "<p>Le prix total est de : " . $prix . " €</p>";
+    }
 
     public function affiche(){
         return $this->getAffichage();
@@ -40,6 +43,7 @@ echo'<button type="submit">Panier</button>
     public function message($txt){
         echo "<p>$txt</p>";
     }
+
     }
 
 ?>

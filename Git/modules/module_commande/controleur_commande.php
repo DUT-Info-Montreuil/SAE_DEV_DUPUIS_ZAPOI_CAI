@@ -25,6 +25,19 @@
         }
         public function envoyer_formulaire_Commande(){
             $this->modele->ajout_commande();
+            $prix = $this->modele->calculerPrixTotalCommande($_SESSION['idCommandeActuelle']);
+            $this->modele->déduireSolde($prix);
+        }
+        public function prix_total(){
+
+            $prix = $this->modele->calculerPrixTotalCommande($_SESSION['idCommandeActuelle']);
+            $this->vue->afficher_confirmation_commande($prix);
+
+        }
+        public function commande_valide() : bool {
+            $prixAchat = $this->modele->calculerPrixTotalCommande();
+
+            return $this->modele->commandeEstValide($_SESSION['solde'], $prixAchat);
         }
        	public function affiche(){
 		return $this->vue->affiche();

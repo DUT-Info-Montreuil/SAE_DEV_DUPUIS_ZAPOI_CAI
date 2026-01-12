@@ -78,9 +78,15 @@ class Modele_connexion extends Connexion {
         }
 
 
+
         $_SESSION['login'] = $utilisateur['nom'];
         $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
         $_SESSION['connecté'] = true;
+        $sql_solde = "SELECT solde from compte where idUtilisateur = ?";
+        $ssql_solde = self::$bdd->prepare($sql_solde);
+        $ssql_solde->execute([$_SESSION['idUtilisateur']]);
+        $res_solde = $ssql_solde->fetchColumn();
+        $_SESSION['solde'] = $res_solde;
        
 
 
