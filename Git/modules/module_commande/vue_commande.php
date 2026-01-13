@@ -25,7 +25,7 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
             <input type="number" name="produits['.$elem.'][qte]" min="1" max="100" placeholder="0">
                 <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
 
-            <p>'.$p["nom"].' - '.$p["prix"].' €</p>
+            <p>'.$p["nom"].' - '.($p["prix"]/100).' €</p>
 
         ';
         $elem += 1;

@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +26,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "moduleAccueil",
-    "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/local_html/merge_temporaire/Git",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,7 +66,7 @@
       <workItem from="1768227179072" duration="893000" />
       <workItem from="1768228521219" duration="8746000" />
       <workItem from="1768293580768" duration="16008000" />
-      <workItem from="1768315768991" duration="787000" />
+      <workItem from="1768315768991" duration="1371000" />
     </task>
     <servers />
   </component>

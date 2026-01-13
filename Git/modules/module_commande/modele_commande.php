@@ -58,9 +58,9 @@ class Modele_commande extends Connexion {
   public function déduireSolde($montant) : void {
     $solde = $_SESSION['solde'];
     $solde_final = $solde - $montant;
-    $sql = "UPDATE compte set solde = ? where idUtilisateur = ?";
+    $sql = "UPDATE compte set solde = ? FROM compte NATURAL JOIN Utilisateur WHERE idUtilisateur = ? AND idAssociation= ? ";
     $s_sql= self::$bdd->prepare($sql);
-    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur']]);
+    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur'],$_SESSION['idAsso']]);
 
     $_SESSION['solde'] = $solde_final;
 
@@ -75,7 +75,7 @@ public function calculerPrixTotalCommande() {
             if ($qte > 0) {
                 $stmt = self::$bdd->prepare("SELECT prix FROM produits WHERE idProd = ?");
                 $stmt->execute([$id]);
-                $prixUnitaire = $stmt->fetchColumn();
+                $prixUnitaire = $stmt->fetchColumn()/100;
                 $total += $prixUnitaire * $qte;
             }
         }

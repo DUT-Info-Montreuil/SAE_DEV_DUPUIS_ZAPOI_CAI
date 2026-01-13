@@ -23,7 +23,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <?php if ($_SESSION['connecté']): ?>
+                    <?php if ($_SESSION['connecté'] && isset($_SESSION['role']) ): ?>
                         <?php if ($_SESSION['role'] == 1): // Gestionnaire ?>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
