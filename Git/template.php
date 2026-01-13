@@ -11,7 +11,7 @@
 
     <header class="bg-dark text-white shadow-sm">
         <nav class="navbar navbar-expand-lg navbar-dark container">
-            <a class="navbar-brand fw-bold" href="<?= $_SESSION['lien_home'] ?? 'index.php?module=connexion&action=connexion' ?>">ALACOOL
+            <a class="navbar-brand fw-bold" href="index.php">ALACOOL
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

@@ -1,5 +1,5 @@
 <?php
-$module = $_GET['module'] ?? 'connexion';
+$module = $_GET['module'] ?? 'acceuil';
 
 session_start();
 
@@ -19,6 +19,11 @@ switch($module) {
     case 'solde':
         include_once "modules/module_solde/module_solde.php";
         $mod = new Mod_solde();
+        $moduleContent = $mod->affiche();
+        break;
+    case 'acceuil':
+        include_once "modules/module_acceuil/module_accueil.php";
+        $mod = new Mod_accueil();
         $moduleContent = $mod->affiche();
         break;
     case 'stock':
@@ -43,4 +48,5 @@ switch($module) {
 
 
 include_once "template.php";
+
 ?>
