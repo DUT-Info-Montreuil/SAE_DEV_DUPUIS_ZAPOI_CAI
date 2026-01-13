@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" afterDir="false" />
@@ -31,7 +30,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;recapJourneeRe&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;recapJourneeV1&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/etudiants/info/edupuis/local_html/SAE_DEV_DUPUIS_ZAPOI_CAI&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -65,7 +64,12 @@
       <workItem from="1767860411656" duration="4096000" />
       <workItem from="1767876315088" duration="554000" />
       <workItem from="1767877393360" duration="10254000" />
-      <workItem from="1767946111977" duration="9034000" />
+      <workItem from="1767946111977" duration="10504000" />
+      <workItem from="1767957441667" duration="217000" />
+      <workItem from="1767961652880" duration="4425000" />
+      <workItem from="1768227179072" duration="893000" />
+      <workItem from="1768228521219" duration="8746000" />
+      <workItem from="1768293580768" duration="16008000" />
     </task>
     <servers />
   </component>

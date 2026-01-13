@@ -20,7 +20,7 @@
     public function getRecap(int $recette) {
             return $this->modele->getRecetteJournee($recette);
     }
-    public function afficheRecap(int $recette) {
+        public function afficheRecap(array $recette) {
             return $this->vue->benefDuJour($recette);
     }
 
@@ -31,18 +31,25 @@
             return $this->vue->recap_semaine($semaine);
     }
 
-    public function getTransactions() {
-            return $this->modele->getTransactions();
+    public function getTransactions(int $jour) {
+            return $this->modele->getTransactions($jour);
     }
     public function afficheTransactions(array $transactions) {
             return $this->vue->transactionsDuJour($transactions);
     }
 
-    public function getProduitsVendus() {
-            return $this->modele->getProdVendus();
+    public function getProduitsVendus(int $jour) {
+            return $this->modele->getProdVendus($jour);
     }
     public function afficheProduitsVendus(array $transactions) {
             return $this->vue->ProduitsVendus($transactions);
+    }
+
+    public function getMoyenneRecetteJour(int $jour) {
+            return $this->modele->getMoyenneRecetteJour($jour);
+    }
+    public function afficheMoyenneRecetteJour(float $moy) {
+            return $this->vue->moyenneRecetteJour($moy);
     }
 
 

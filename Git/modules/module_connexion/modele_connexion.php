@@ -87,6 +87,7 @@ class Modele_connexion extends Connexion {
         $ssql_solde->execute([$_SESSION['idUtilisateur']]);
         $res_solde = $ssql_solde->fetchColumn();
         $_SESSION['solde'] = $res_solde;
+
        
 
 

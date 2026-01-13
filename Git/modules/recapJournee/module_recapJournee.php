@@ -5,27 +5,41 @@ Class module_recapJournee{
 
     public function __construct(){
 
-        $action = $_GET['action'] ?? "recap";
+        $action = $_GET['action'] ?? "recapDuJour";
         $this->cont = new controleur_recapJournee();
-        $this->action = isset($_GET['action']) ? $_GET['action'] : "recap" ;
+        $this->action = isset($_GET['action']) ? $_GET['action'] : "recapDuJour" ;
 
         switch($action) {
-            case "recap":
+            case "recapDuJour":
                 $jour = 0;
                 $recette = $this->cont->getRecap($jour);
                 $this->cont->afficheRecap($recette);
-                break;
-            case "recapSemaine":
+
                 $recapSemaine = $this->cont->getRecapSemaine();
                 $this->cont->afficheRecapSemaine($recapSemaine);
-                break;
-            case "transactions":
-                $transactions = $this->cont->getTransactions();
+
+                $moyenne = $this->cont->getMoyenneRecetteJour($jour);
+                $this->cont->afficheMoyenneRecetteJour($moyenne);
+                $transactions = $this->cont->getTransactions($jour);
                 $this->cont->afficheTransactions($transactions);
-                break;
-            case "produitsVendus":
-                $produits = $this->cont->getProduitsVendus();
+
+                $produits = $this->cont->getProduitsVendus($jour);
                 $this->cont->afficheProduitsVendus($produits);
+
+                break;
+
+            case "recapCertainJour":
+
+                $jour = $_GET['jour'] ?? "0";
+
+                $moyenne = $this->cont->getMoyenneRecetteJour($jour);
+                $this->cont->afficheMoyenneRecetteJour($moyenne);
+                $transactions = $this->cont->getTransactions($jour);
+                $this->cont->afficheTransactions($transactions);
+
+                $produits = $this->cont->getProduitsVendus($jour);
+                $this->cont->afficheProduitsVendus($produits);
+
                 break;
         }
 
