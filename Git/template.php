@@ -13,6 +13,7 @@
             <form id="formDeco" method="post" action="index.php?module=connexion&action=deconnexion">
                 <button id="Deco" type="submit" name="deconnexion">Déconnexion</button>
             </form>
+            <a href="index.php?module=connexion&action=nouvelleAsso">Association</a>
         <?php
         }
         ?>
@@ -24,7 +25,7 @@
             <a href="index.php?module=connexion&action=connexion">Connexion</a>
         <?php
         }
-        else {
+        else if (isset($_SESSION['role']) == true){
             if ($_SESSION['role'] == 1){ // Gestionnaire ?>
                 <a href="index.php?module=recapJournee&action=recap">Récapitulatif du jour</a>
                 <a href="index.php?module=recapJournee&action=recapSemaine">Récapitulatif de la semaine</a>

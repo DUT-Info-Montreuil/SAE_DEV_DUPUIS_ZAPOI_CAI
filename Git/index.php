@@ -1,5 +1,5 @@
 <?php
-$module = $_GET['module'] ?? 'connexion';
+$module = $_GET['module'] ?? '';
 
 session_start();
 
