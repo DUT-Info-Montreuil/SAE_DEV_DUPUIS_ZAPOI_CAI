@@ -54,8 +54,6 @@
 
         }
 
-        
-
         public function getAssos() : array {
             return $this->modele->getAssos();
         }

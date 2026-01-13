@@ -27,7 +27,7 @@ class Modele_connexion extends Connexion {
             return "Vous avez déjà un compte ou ce nom est pris.";
         }
 
-        $role_defaut = 3;
+        $role_defaut = 1;
 
         $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
 

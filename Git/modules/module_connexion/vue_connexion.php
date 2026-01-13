@@ -14,6 +14,13 @@ require_once('utils/vue_generique.php');
                 <p>Mot de passe</p>
                 <input type="password" name="mdp_inscription" maxlength="50" required="true">
                 <br>
+                <p>Associations</p>
+                <select name = "asso_inscription">';
+
+                    foreach($liste_asso as $asso_courante){
+                        echo '<option value="'.$asso_courante['idAsso'].'">'.$asso_courante['nomAsso'].'</option>';
+                    }
+                echo '</select>
                 <input type="submit" value="Inscription">
             </form>
         ';
