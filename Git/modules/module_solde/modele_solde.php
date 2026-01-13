@@ -28,17 +28,15 @@ class Modele_solde extends Connexion{
        $idCompte = $ssql_idCompte->fetchColumn(); // utiliser cette méthode plutôt que fetch/fetchAll , ça donne directement le contenu du tuple au lieu d'un array
        $soldetotal= $solde+$input_solde;
 
-       $sql = "UPDATE compte c
-               INNER JOIN Utilisateur u ON c.idUtilisateur=u.idUtilisateur
-               SET c.solde = :solde
-               WHERE c.idCompte = :idC AND u.idAsso = :idA ";
+       $sql = "UPDATE compte
+               SET solde = :solde
+               WHERE idCompte = :idC";
 
        $ssql = self::$bdd->prepare($sql);
 
        $success = $ssql->execute([
            'solde' => $soldetotal,
            'idC'   => $idCompte,
-           'idA'   => $_SESSION['idAsso']
        ]);
 
        if (!$success) {
@@ -50,10 +48,9 @@ class Modele_solde extends Connexion{
 public function getSolde(){
 
     $idUtilisateur = $_SESSION['idUtilisateur'];
-    $idAsso = $_SESSION['idAsso'];
-    $sql_solde = "SELECT solde FROM compte NATURAL JOIN Utilisateur WHERE idUtilisateur = :idU AND idAsso = :idA";
+    $sql_solde = "SELECT solde FROM compte WHERE idUtilisateur = :idU";
     $ssql_solde = self::$bdd->prepare($sql_solde);
-    $ssql_solde->execute(['idU' => $idUtilisateur, 'idA' => $idAsso]);
+    $ssql_solde->execute(['idU' => $idUtilisateur]);
 
     return $ssql_solde->fetchColumn();
 }
