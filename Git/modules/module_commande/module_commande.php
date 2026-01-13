@@ -23,13 +23,17 @@ switch($action) {
         break;
 
     case 'ajout_produit':
+    var_dump( $_SESSION['solde']);
+    var_dump($this->cont->prix_total());
             if($this->cont->commande_valide()){
+
                 $this->cont->envoyer_formulaire_Commande();
                 $this->vue->message("Commande enregistrée !");
                 $this->cont->prix_total(); // pas idéal d'afficher le prix total après avoir passé commande,  à refaire une fois que nous aurons des connaissances en AJAX
 
             }
             else{
+                $this->cont->updatecommande();
                 $this->vue->message("Echec de la commande");
             }
         break;

@@ -12,9 +12,10 @@ class Modele_commande extends Connexion {
 
     public function ajout_début_commande() {
         $idUtilisateur = $_SESSION['idUtilisateur'];
-        $sql = "INSERT INTO commande(idUtilisateur,date,état) values(:idUtilisateur,NOW(),:etat)";
+        $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
         $ssql = self::$bdd->prepare($sql);
         $success = $ssql->execute([
+        'idAsso'=>1,
         'idUtilisateur'=>$idUtilisateur,
         'etat'=>0
         ]);
@@ -85,7 +86,13 @@ public function commandeEstValide($solde_user, $prix_total) : bool {
     return ($prix_total > 0 && $solde_user >= $prix_total);
 }
 
+public function updatecommande(){
+    $sql = "DELETE FROM commande
+                WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
 
+    $s_sql = self::$bdd->prepare($sql);
+    $s_sql->execute();
+}
 
 }
 

@@ -42,6 +42,9 @@
        	public function affiche(){
 		return $this->vue->affiche();
        	}
+        public function updatecommande(){
+        return $this->modele->updatecommande();
+        }
 
 
 

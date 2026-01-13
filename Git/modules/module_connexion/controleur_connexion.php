@@ -36,7 +36,6 @@
         public function envoyer_formulaire_connexion(){
             $messsage = $this->modele->ajout_formulaire_connexion();
             $this->vue->message($messsage);
-            $this->modele->créerLienHome();
 
         }
         public function déconnexion(){
