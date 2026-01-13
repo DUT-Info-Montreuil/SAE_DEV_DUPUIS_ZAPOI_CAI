@@ -43,7 +43,6 @@
                     </form>
                 <?php endif; ?>
             </div>
-
         </nav>
     </header>
 

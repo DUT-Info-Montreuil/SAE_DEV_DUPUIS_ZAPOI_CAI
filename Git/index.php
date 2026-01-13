@@ -1,4 +1,5 @@
 <?php
+
 $module = $_GET['module'] ?? 'acceuil';
 
 session_start();

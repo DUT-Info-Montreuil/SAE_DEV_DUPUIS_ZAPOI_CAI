@@ -30,7 +30,7 @@ class Modele_solde extends Connexion{
 
        $sql = "UPDATE compte
                SET solde = :solde
-               WHERE idCompte = :idC";
+               WHERE idCompte = :idC and idAsso=".$_SESSION['idAsso']."";
 
        $ssql = self::$bdd->prepare($sql);
 
@@ -48,10 +48,10 @@ class Modele_solde extends Connexion{
 public function getSolde(){
 
     $idUtilisateur = $_SESSION['idUtilisateur'];
-
-    $sql_solde = "SELECT solde FROM compte WHERE idUtilisateur = :idU";
+    $idAsso = $_SESSION['idAsso'];
+    $sql_solde = "SELECT solde FROM compte NATURAL JOIN utilisateur WHERE idUtilisateur = :idU AND idAsso = :idA";
     $ssql_solde = self::$bdd->prepare($sql_solde);
-    $ssql_solde->execute(['idU' => $idUtilisateur]);
+    $ssql_solde->execute(['idU' => $idUtilisateur, 'idA' => $idAsso]);
 
     return $ssql_solde->fetchColumn();
 }
