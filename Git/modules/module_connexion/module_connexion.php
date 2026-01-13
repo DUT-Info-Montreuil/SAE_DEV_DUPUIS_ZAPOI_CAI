@@ -18,14 +18,12 @@ class Mod_connexion {
             case "ajout_inscription":
                 $this->cont->envoyer_formulaire_inscription();
                 break;
-
             case "ajout_connexion":
                 $this->cont->envoyer_formulaire_connexion();
-                header("Location: index.php?module=connexion&action=redirection");
-            break;
+                break;
             case "redirection":
                 
-
+                $_SESSION['idAsso'] = $_POST['association'];
                 if(isset($_POST['association']) && $_POST['association']!="none" && $this->cont->getRole()!=4){
                     if($this->cont->getRole()==3){
                         header("Location: index.php?module=solde&association=".$_POST['association']."&action=page_solde");

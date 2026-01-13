@@ -10,9 +10,9 @@ require_once('utils/vue_generique.php');
         '
             <form method="post" action="index.php?module=connexion&action=ajout_inscription">
                 <p>Identifiant</p>
-                <input type="text" name="login_inscription" maxlength="50">
+                <input type="text" name="login_inscription" maxlength="50" required="true">
                 <p>Mot de passe</p>
-                <input type="password" name="mdp_inscription" maxlength="50">
+                <input type="password" name="mdp_inscription" maxlength="50" required="true">
                 <br>
                 <input type="submit" value="Inscription">
             </form>
@@ -23,10 +23,10 @@ require_once('utils/vue_generique.php');
         '
             <form method="post" action="index.php?module=connexion&action=ajout_connexion">
                     <p>Identifiant</p>
-                    <input type="text" name="login_connexion" maxlength="50">
+                    <input type="text" name="login_connexion" maxlength="50" required="true">
 
                     <p>Mot de passe</p>
-                    <input type="password" name="mdp_connexion" maxlength="50">
+                    <input type="password" name="mdp_connexion" maxlength="50" required="true">
                     <br>
                     <input type="submit" value="Connexion">
             </form>

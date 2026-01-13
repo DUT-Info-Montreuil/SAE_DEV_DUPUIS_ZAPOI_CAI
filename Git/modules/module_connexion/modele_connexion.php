@@ -79,6 +79,7 @@ class Modele_connexion extends Connexion {
         $_SESSION['login'] = $utilisateur['nom'];
         $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
         $_SESSION['connecté'] = true;
+        header("Location: index.php?module=connexion&action=choisirAsso");
        
 
 
