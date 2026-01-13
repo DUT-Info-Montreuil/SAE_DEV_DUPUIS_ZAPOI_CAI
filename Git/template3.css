@@ -1,0 +1,38 @@
+
+
+body {
+    background-color: #f8f9fa;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 1)),
+    url('images/background.jpeg');
+    background-size: cover;
+    color: white;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+    color: #ffc107;
+}
+
+
+footer {
+    font-size: 0.9rem;
+}
+
+main .card {
+    border-radius: 10px;
+    border: none;
+}
+
+#tableauStock{
+    border: 2px solid black;
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-auto-rows: auto;
+    margin: 5px;
+    text-align: center;
+    .TitreColonne{
+        font-weight: bold;
+        border-bottom: 2px solid black;
+    }
+}

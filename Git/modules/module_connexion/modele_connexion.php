@@ -102,6 +102,20 @@ public function déconnexion() {
     $_SESSION['connecté'] = false;
 
 }
+public function créerLienHome(){
+    $role=$this->getRole();
+    $lien='';
+    if($role==1){
+        $lien='index.php?module=recapJournee&action=recap';
+    }
+    else if($role==3){
+        $lien='index.php?module=solde&action=page_solde';
+    }
+    else{
+        $lien='place_holder_barman';
+    }
+    $_SESSION['lien_home']=$lien;
+}
 
 public function getRole(){
      if(isset($_SESSION['login'])){
