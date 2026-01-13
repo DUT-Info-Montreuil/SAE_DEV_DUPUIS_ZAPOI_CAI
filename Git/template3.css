@@ -27,7 +27,7 @@ main .card {
     border: 2px solid black;
     border-radius: 2px;
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(4, auto);
     grid-auto-rows: auto;
     margin: 5px;
     text-align: center;

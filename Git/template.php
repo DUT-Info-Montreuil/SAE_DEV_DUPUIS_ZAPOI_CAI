@@ -25,7 +25,7 @@
                 <ul class="navbar-nav me-auto">
                     <?php if ($_SESSION['connecté']): ?>
                         <?php if ($_SESSION['role'] == 1): // Gestionnaire ?>
-                            <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recap">Récap Jour</a></li>
+                            <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
                         <?php elseif ($_SESSION['role'] == 3): // Client ?>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>

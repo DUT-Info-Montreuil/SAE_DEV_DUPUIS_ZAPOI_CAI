@@ -16,10 +16,7 @@ require_once('utils/vue_generique.php');
     }
 
     public function recap_semaine(array $semaine){
-        echo "<h2>Recapitulatif des 7 deniers jours :</h2>";
-        foreach($semaine as $jour){
-           echo "<p class='ligneRecette'> Recettes de tel jour (à voir comment afficher les jours) : ".$jour."</p>";
-        echo "<h2> Recapitulatif des 7 jours précédants :</h2>";
+        echo "<h2>Recapitulatif des 7 derniers jours :</h2>";
         $i = 0;
         foreach($semaine as $jour){
            $i++;
@@ -27,6 +24,7 @@ require_once('utils/vue_generique.php');
         }
         echo "<br>";
     }
+
 
     public function moyenneRecetteJour(float $moy){
         echo "<h2> Transactions effectuées : </h2>";
