@@ -18,6 +18,8 @@ Class module_recapJournee{
                 $recapSemaine = $this->cont->getRecapSemaine();
                 $this->cont->afficheRecapSemaine($recapSemaine);
 
+                $moyenne = $this->cont->getMoyenneRecetteJour($jour);
+                $this->cont->afficheMoyenneRecetteJour($moyenne);
                 $transactions = $this->cont->getTransactions($jour);
                 $this->cont->afficheTransactions($transactions);
 
@@ -30,6 +32,8 @@ Class module_recapJournee{
 
                 $jour = $_GET['jour'] ?? "0";
 
+                $moyenne = $this->cont->getMoyenneRecetteJour($jour);
+                $this->cont->afficheMoyenneRecetteJour($moyenne);
                 $transactions = $this->cont->getTransactions($jour);
                 $this->cont->afficheTransactions($transactions);
 

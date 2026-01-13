@@ -45,6 +45,13 @@
             return $this->vue->ProduitsVendus($transactions);
     }
 
+    public function getMoyenneRecetteJour(int $jour) {
+            return $this->modele->getMoyenneRecetteJour($jour);
+    }
+    public function afficheMoyenneRecetteJour(float $moy) {
+            return $this->vue->moyenneRecetteJour($moy);
+    }
+
 
 
 }

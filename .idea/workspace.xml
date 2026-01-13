@@ -10,7 +10,6 @@
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +68,8 @@
       <workItem from="1767957441667" duration="217000" />
       <workItem from="1767961652880" duration="4425000" />
       <workItem from="1768227179072" duration="893000" />
-      <workItem from="1768228521219" duration="8618000" />
+      <workItem from="1768228521219" duration="8746000" />
+      <workItem from="1768293580768" duration="16008000" />
     </task>
     <servers />
   </component>
