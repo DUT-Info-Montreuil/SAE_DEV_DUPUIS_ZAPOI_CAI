@@ -33,6 +33,10 @@ class Mod_commande {
                         $this->vue->message("Echec de la commande");
                     }
                 break;
+                
+            case 'prix_total':
+                $this->cont->prix_total();
+                break;
         }
 	}
 
