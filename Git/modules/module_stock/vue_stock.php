@@ -9,7 +9,7 @@ Class Vue_stock extends VueGenerique{
         echo '<h2>Stock des Produits</h2>';
 
         echo '
-                <form method="post" action="index.php?module=commande&action=recherche" id="form-produit">
+                <form method="post" id="form-produit">
                 <input type="search" name="rechercher" placeholder="Rechercher un produit" id="rechercher" oninput="rechercher_produit()">
                 <div id="tableauStock">
 
@@ -56,11 +56,12 @@ private function recherche_dynamique() {
             let corps = document.getElementById("corps-tableau");
             corps.innerHTML = "";
 
-
-            produits.forEach(p => { //forEach dans le style d un lambda un peu, je dis que pour chaque p dans produit je vais faire l instruction qui se trouve dans les {}
+            //forEach dans le style d un lambda un peu, je dis que pour chaque p dans produit je vais faire l instruction qui se trouve dans les {}
+            // utiliser des back ticks (`) si on utilise l insertion avec $
+            produits.forEach(p => {
                 const couleur = (parseInt(p.quantite) >= parseInt(p.seuil)) ? "green" : "red";
                 const texte = (parseInt(p.quantite) >= parseInt(p.seuil)) ? "Disponible" : "Faible";
-                corps.innerHTML += ` // utiliser des back ticks (`) si on utilise l insertion avec $
+                corps.innerHTML += `
                     <div>${p.nom}</div>
                     <div>${p.quantite}</div>
                     <div>${p.seuil}</div>
