@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/controleur_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/module_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +65,7 @@
       <workItem from="1767961652880" duration="4425000" />
       <workItem from="1768227179072" duration="893000" />
       <workItem from="1768228521219" duration="8746000" />
-      <workItem from="1768293580768" duration="16008000" />
+      <workItem from="1768293580768" duration="18966000" />
     </task>
     <servers />
   </component>
