@@ -32,15 +32,22 @@ switch($module) {
         $moduleContent = $mod->affiche();
         break;
     case 'recapJournee':
-            include_once "modules/recapJournee/module_recapJournee.php";
-            $mod = new module_recapJournee();
-            $moduleContent=$mod->affiche();
-            break;
+        include_once "modules/recapJournee/module_recapJournee.php";
+        $mod = new module_recapJournee();
+        $moduleContent=$mod->affiche();
+        break;
     case 'commande':
 	    include_once "modules/module_commande/module_commande.php";
 	    $mod = new Mod_commande();
 	    $moduleContent=$mod->affiche();
 	    break;
+
+	case 'historique':
+        include_once "modules/module_historique/module_historique.php";
+        $mod = new Mod_historique();
+        $moduleContent=$mod->affiche();
+        break;
+
     default:
         echo "<p>Module inconnu.</p>";
         break;
