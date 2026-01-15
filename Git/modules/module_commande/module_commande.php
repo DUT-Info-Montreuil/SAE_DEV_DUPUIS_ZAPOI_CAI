@@ -35,6 +35,7 @@ class Mod_commande {
                 break;
                 
             case 'prix_total':
+                var_dump($this->cont->prix_total());
                 $this->cont->prix_total();
                 break;
         }

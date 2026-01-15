@@ -58,7 +58,10 @@ class Modele_commande extends Connexion {
   public function déduireSolde($montant) : void {
     $solde = $_SESSION['solde'];
     $solde_final = $solde - $montant;
-    $sql = "UPDATE compte set solde = ? FROM compte NATURAL JOIN Utilisateur WHERE idUtilisateur = ? AND idAssociation= ? ";
+    $sql = "UPDATE compte
+            NATURAL JOIN Utilisateur
+            SET solde = ?
+            WHERE idUtilisateur = ? AND idAsso = ?";
     $s_sql= self::$bdd->prepare($sql);
     $s_sql->execute([$solde_final,$_SESSION['idUtilisateur'],$_SESSION['idAsso']]);
 

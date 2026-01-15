@@ -29,9 +29,9 @@
             $this->modele->déduireSolde($prix);
         }
         public function prix_total(){
-            return $this->modele->calculerPrixTotalCommande();
+            $total=$this->modele->calculerPrixTotalCommande();
             header('Content-Type: application/json');
-            $this->vue->message(json_encode(['total' => number_format($total, 2, '.', '')]));
+            echo json_encode(['total' => number_format($total, 2, '.', '')]);
             exit;
 
         }

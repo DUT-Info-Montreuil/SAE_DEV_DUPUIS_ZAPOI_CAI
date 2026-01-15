@@ -30,7 +30,7 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         ';
         $elem += 1;
     }
-    echo '<h3> Total commande : <span id="total-prix">0</span>€</h3>';
+    echo '<h3> Total commande : <span id="total-prix">0</span></h3>';
     echo'<button type="submit">Panier</button>';
     echo '</form>';
     echo '
