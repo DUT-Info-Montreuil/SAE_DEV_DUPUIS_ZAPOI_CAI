@@ -10,7 +10,7 @@ Class Vue_stock extends VueGenerique{
 
         echo '
                 <form method="post" id="form-produit">
-                <input type="search" name="rechercher" placeholder="Rechercher un produit" id="rechercher" oninput="rechercher_produit()">
+                <input type="search" name="rechercher" autocomplete="off" placeholder="Rechercher un produit" id="rechercher" oninput="rechercher_produit()">
                 <div id="tableauStock">
 
                     <div class="TitreColonne">Nom Produit</div>
