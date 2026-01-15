@@ -13,14 +13,16 @@ class Modele_historique extends Connexion{
         $sql = "
             SELECT
                 c.idCommande as id,
-                ( lc.quantite * p.prix ) AS total_ligne,
+                ( lc.quantite * p.prix ) / 100 AS total_ligne,
                 c.date AS jour,
                 c.état as etat
             FROM commande c
             JOIN lignecommande lc ON lc.idCommande = c.idCommande
             JOIN produits p ON p.idProd = lc.idProd
             WHERE c.idUtilisateur = :utilisateur
-            ORDER BY c.date DESC;
+            ORDER BY c.état ASC,
+                     c.date DESC,
+                     total_ligne DESC;
         ";
 
         $stmt = self::$bdd->prepare($sql);
@@ -57,7 +59,7 @@ class Modele_historique extends Connexion{
                 p.idProd AS id,
                 p.nom AS nom,
                 SUM(lc.quantite) AS quantite_totale,
-                SUM(lc.quantite * p.prix) AS total_produit
+                SUM(lc.quantite * p.prix) / 100 AS total_produit
             FROM commande c
             JOIN lignecommande lc ON lc.idCommande = c.idCommande
             JOIN produits p ON p.idProd = lc.idProd
