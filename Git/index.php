@@ -1,5 +1,5 @@
 <?php
-$module = $_GET['module'] ?? 'connexion';
+$module = $_GET['module'] ?? 'acceuil';
 
 session_start();
 
@@ -21,6 +21,11 @@ switch($module) {
         $mod = new Mod_solde();
         $moduleContent = $mod->affiche();
         break;
+    case 'acceuil':
+        include_once "modules/module_acceuil/module_accueil.php";
+        $mod = new Mod_accueil();
+        $moduleContent = $mod->affiche();
+        break;
     case 'stock':
         include_once "modules/module_stock/module_stock.php";
         $mod = new Mod_stock();
@@ -31,6 +36,11 @@ switch($module) {
             $mod = new module_recapJournee();
             $moduleContent=$mod->affiche();
             break;
+    case 'commande':
+	    include_once "modules/module_commande/module_commande.php";
+	    $mod = new Mod_commande();
+	    $moduleContent=$mod->affiche();
+	    break;
     default:
         echo "<p>Module inconnu.</p>";
         break;
@@ -38,4 +48,5 @@ switch($module) {
 
 
 include_once "template.php";
+
 ?>

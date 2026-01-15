@@ -36,6 +36,7 @@
         public function envoyer_formulaire_connexion(){
             $messsage = $this->modele->ajout_formulaire_connexion();
             $this->vue->message($messsage);
+
         }
         public function déconnexion(){
             $this->modele->déconnexion();

@@ -1,60 +1,46 @@
 <?php
-include_once "controleur_connexion.php";
-class Mod_connexion {
+include_once "controleur_commande.php";
+class Mod_commande {
     private $vue;
     private $cont;
 
     public function __construct(){
         $action = $_GET['action'] ?? "inscription";
 
-        $this->vue = new Vue_connexion();
-        $this->cont = new Cont_connexion($this->vue);
+        $this->vue = new Vue_commande();
+        $this->cont = new Cont_commande($this->vue);
+    
 
   
-        switch($action) {
+switch($action) {
+    case 'ajout_debut_commande':
+        $this->cont->afficher_formulaire_débutCommande();
+        break;
 
-            case "ajout_inscription":
-                $this->cont->envoyer_formulaire_inscription();
-                break;
+    case 'traiter_debut_commande':
+        $this->cont->envoyer_formulaire_débutCommande();
+        $this->cont->afficher_formulaire_Commande();
+        break;
 
-            case "ajout_connexion":
-                $this->cont->envoyer_formulaire_connexion();
+    case 'ajout_produit':
+    var_dump( $_SESSION['solde']);
+    var_dump($this->cont->prix_total());
+            if($this->cont->commande_valide()){
 
-                if($this->cont->getRole()==3){
-                    header("Location: index.php?module=solde&action=solde");
-                    exit;
-                }
-                else if($this->cont->getRole()==2){
-                    header("Location: index.php?module=commande&action=commande");
-                    exit;
-                }
-                break;
+                $this->cont->envoyer_formulaire_Commande();
+                $this->vue->message("Commande enregistrée !");
+                $this->cont->prix_total(); // pas idéal d'afficher le prix total après avoir passé commande,  à refaire une fois que nous aurons des connaissances en AJAX
 
-            case "deconnexion":
-                $this->cont->déconnexion();
-                break;
-        }
+            }
+            else{
+                $this->cont->updatecommande();
+                $this->vue->message("Echec de la commande");
+            }
+        break;
 
 
-        $this->cont->exec();
-
- 
-        switch($action) {
-            case "inscription":
-                $asso_array = $this->cont->getAssos();
-                $this->cont->afficher_formulaire_inscription($asso_array);
-                break;
-
-            case "connexion":
-                $this->cont->afficher_formulaire_connexion();
-                break;
-
-            default:
-                if (!$_SESSION['connecté']) {
-                    $this->cont->afficher_formulaire_connexion();
-                }
-        }
-    }
+}
+	}
 
     public function affiche(){
         return $this->cont->affiche();

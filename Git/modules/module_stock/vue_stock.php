@@ -11,7 +11,7 @@ Class Vue_stock extends VueGenerique{
                 <input type="search" placeholder="Rechercher un produit"><button id="rechercher" type="submit">Rechercher</button>
                 <div id="tableauStock">
                 
-                    <div class="TitreColonne">ID</div>
+
                     <div class="TitreColonne">Nom Produit</div>
                     <div class="TitreColonne">Quantité</div>
                     <div class="TitreColonne">Seuil minimum</div>
@@ -22,7 +22,7 @@ Class Vue_stock extends VueGenerique{
             
             foreach($liste_stock as $item){
                 echo '
-                <div>'.$item['idProd'] .'</div>
+
                 <div>'. $item['nom'] .'</div>
                 <div>'. $item['quantite'] .'</div>
                 <div>'. $item['seuil'] .'</div>
@@ -33,8 +33,8 @@ Class Vue_stock extends VueGenerique{
                     else{
                         echo '<span style="color:red">En faible quantité</span>';
                     }
-                '
-                </div>';
+
+                echo'</div>';
             }
             echo '</div>';
         

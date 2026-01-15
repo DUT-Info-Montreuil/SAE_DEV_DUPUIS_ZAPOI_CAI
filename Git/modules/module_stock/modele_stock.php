@@ -17,7 +17,7 @@ class Modele_stock extends Connexion{
     }
 
     public function getStock(): array{
-        $selectStock = self::$bdd->prepare("SELECT stock.idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits");
+        $selectStock = self::$bdd->prepare("SELECT stock.idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits ORDER BY (quantite < seuil) DESC");
         $selectStock->execute();
         $resultStock = $selectStock->fetchAll(PDO::FETCH_ASSOC);
         return $resultStock;

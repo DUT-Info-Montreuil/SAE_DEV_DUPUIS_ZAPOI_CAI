@@ -3,116 +3,101 @@ include_once("utils/connexion.php"); // fichier de connexion à la base
 
 Connexion::initConnexion();
 
-class Modele_connexion extends Connexion {
+class Modele_commande extends Connexion {
 
     public function __construct() {
         // constructeur vide
     }
 
 
-    public function ajout_formulaire_inscription() {
-
-        if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"]) || empty($_POST["asso_inscription"])) {
-            return "Champs manquants";
-        }
-
-        $input_login = $_POST["login_inscription"];
-        $input_mdp   = $_POST["mdp_inscription"];
-        $input_asso  = $_POST["asso_inscription"];
-
-        // Vérifier si le nom existe déjà
-        $existedeja = self::$bdd->prepare("SELECT idUtilisateur FROM Utilisateur WHERE nom = :login");
-        $existedeja->execute(['login' => $input_login]);
-
-        if ($existedeja->fetch()) {
-            return "Vous avez déjà un compte ou ce nom est pris.";
-        }
-
-        $role_defaut = 3;
-
-        $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
-
-
-        $sql = "INSERT INTO Utilisateur (nom, mdp, idRole, idAsso) VALUES (:nom, :mdp, :idRole, :idAsso)";
-        $stmt = self::$bdd->prepare($sql);
-        $success = $stmt->execute([
-            'nom'    => $input_login,
-            'mdp'    => $hash_mdp,
-            'idRole' => $role_defaut,
-            'idAsso' => $input_asso
+    public function ajout_début_commande() {
+        $idUtilisateur = $_SESSION['idUtilisateur'];
+        $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
+        $ssql = self::$bdd->prepare($sql);
+        $success = $ssql->execute([
+        'idAsso'=>1,
+        'idUtilisateur'=>$idUtilisateur,
+        'etat'=>0
         ]);
-
-        if (!$success) {
-            return "Erreur lors de la création de l'utilisateur.";
-        }
-
-        $idUtilisateur = self::$bdd->lastInsertId();
-
-        $sqlCompte = "INSERT INTO compte (solde, idUtilisateur) VALUES (0, :idUtilisateur)";
-        $stmtCompte = self::$bdd->prepare($sqlCompte);
-        $successCompte = $stmtCompte->execute(['idUtilisateur' => $idUtilisateur]);
-
-        if (!$successCompte) {
-            return "Erreur lors de la création du compte.";
-        }
-
-        return "Inscription réussie !";
+        $_SESSION['idCommandeActuelle'] = self::$bdd->lastInsertId();
     }
+    public function ajout_commande() {
 
-
-    public function ajout_formulaire_connexion() {
-        if (empty($_POST["login_connexion"]) || empty($_POST["mdp_connexion"])) {
-            return "Champs manquants";
+        if (!isset($_POST['produits']) || !is_array($_POST['produits'])) {
+            return;
         }
 
-        $input_login = $_POST["login_connexion"];
-        $input_mdp   = $_POST["mdp_connexion"];
-
-        $sql = "SELECT idUtilisateur, nom, mdp FROM Utilisateur WHERE nom = :login";
+        echo'<br>';
+        $sql = "INSERT INTO lignecommande (idCommande, idProd, quantite)
+                VALUES (?, ?, ?)";
         $stmt = self::$bdd->prepare($sql);
-        $stmt->execute(['login' => $input_login]);
-        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$utilisateur || !password_verify($input_mdp, $utilisateur['mdp'])) {
-            return "Login ou mot de passe incorrect.";
+        foreach ($_POST['produits'] as $prod) {
+            $lastID = $_SESSION['idCommandeActuelle'];
+            $id = $prod['id'];
+            $qte = $prod['qte'];
+
+            if ($id && $qte > 0) {
+                $stmt->execute([
+                    $lastID,
+                    $id,
+                    $qte
+                ]);
+            }
         }
-
-
-        $_SESSION['login'] = $utilisateur['nom'];
-        $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
-        $_SESSION['connecté'] = true;
-
-
-        return "Connexion réussie !";
-        
     }
-public function déconnexion() {
-    session_unset();
-    session_destroy();
 
-    // recrée une session vide pour l’affichage du menu
-    session_start();
-    $_SESSION['connecté'] = false;
+  public function getProduits():array{
+         $sql = "SELECT * FROM produits";
+                $stmt = self::$bdd->prepare($sql);
+                $stmt->execute();
+                $produits = $stmt->fetchAll();
 
-}
-public function getRole(){
-     $input_login = $_SESSION['login'];
-     $sql = "SELECT idRole FROM Utilisateur WHERE nom = :login";
-            $stmt = self::$bdd->prepare($sql);
-            $stmt->execute(['login' => $input_login]);
-            $role = $stmt->fetchColumn();
+         return $produits;
+  }
+  public function déduireSolde($montant) : void {
+    $solde = $_SESSION['solde'];
+    $solde_final = $solde - $montant;
+    $sql = "UPDATE compte set solde = ? where idUtilisateur = ?";
+    $s_sql= self::$bdd->prepare($sql);
+    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur']]);
 
-     return $role;
-}
-
+    $_SESSION['solde'] = $solde_final;
 
 
-
-
-    public function getAssos(): array {
-        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM association");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+public function calculerPrixTotalCommande() {
+    $total = 0;
+    if (isset($_POST['produits'])) {
+        foreach ($_POST['produits'] as $prod) {
+            $id = $prod['id'];
+            $qte = (int)$prod['qte'];
+            if ($qte > 0) {
+                $stmt = self::$bdd->prepare("SELECT prix FROM produits WHERE idProd = ?");
+                $stmt->execute([$id]);
+                $prixUnitaire = $stmt->fetchColumn();
+                $total += $prixUnitaire * $qte;
+            }
+        }
     }
+    return $total;
 }
+public function commandeEstValide($solde_user, $prix_total) : bool {
+    return ($prix_total > 0 && $solde_user >= $prix_total);
+}
+
+public function updatecommande(){
+    $sql = "DELETE FROM commande
+                WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
+
+    $s_sql = self::$bdd->prepare($sql);
+    $s_sql->execute();
+}
+
+}
+
+
+
+
+
 ?>

@@ -42,7 +42,7 @@ class Modele_solde extends Connexion{
        if (!$success) {
            return "Problème avec la mise à jour du solde";
        }
-
+        $_SESSION['solde'] = $this->getSolde();
        return "Solde mis à jour avec succès";
    }
 public function getSolde(){

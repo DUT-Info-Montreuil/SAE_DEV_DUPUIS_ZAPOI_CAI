@@ -23,19 +23,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;recapJourneeV1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/etudiants/info/edupuis/local_html/SAE_DEV_DUPUIS_ZAPOI_CAI&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "moduleAccueil",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Git/modules" />
@@ -65,7 +65,12 @@
       <workItem from="1767961652880" duration="4425000" />
       <workItem from="1768227179072" duration="893000" />
       <workItem from="1768228521219" duration="8746000" />
-      <workItem from="1768293580768" duration="18966000" />
+
+
+
+      <workItem from="1768293580768" duration="16008000" />
+      <workItem from="1768315768991" duration="787000" />
+
     </task>
     <servers />
   </component>

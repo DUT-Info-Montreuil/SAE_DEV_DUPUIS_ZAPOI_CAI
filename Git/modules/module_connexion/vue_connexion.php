@@ -52,12 +52,6 @@ require_once('utils/vue_generique.php');
     }
 
 
-
-
-
-
-
-
     
     public function affiche(){
         return $this->getAffichage();
