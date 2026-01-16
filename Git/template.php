@@ -7,7 +7,7 @@
 
     <title>À-ladébauche</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="template3.css">
+    <link rel="stylesheet" href="template6.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -35,7 +35,7 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=gestionUtilisateurs">Gestion Utilisateurs</a></li>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=commande">Gérer les Commandes</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=finCommande">Gérer les Commandes</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
                             <?php elseif ($_SESSION['role'] == 3): // Client ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>

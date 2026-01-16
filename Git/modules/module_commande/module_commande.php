@@ -26,8 +26,6 @@ class Mod_commande {
                         $this->cont->envoyer_formulaire_Commande();
                         $this->vue->message("Commande enregistrée !");
 
-
-
                     }
                     else{
                         $this->cont->updatecommande();
@@ -38,6 +36,8 @@ class Mod_commande {
             case 'prix_total':
                 $this->cont->prix_total();
                 break;
+            case 'finCommande':
+                $this->cont->finaliserCommande();
         }
 	}
 

@@ -36,3 +36,22 @@ main .card {
         border-bottom: 2px solid black;
     }
 }
+
+#listeCommande{
+    border: 2px solid black;
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: auto;
+    margin: 5px;
+    text-align: center;
+    border-right: solid;
+    .TitreColonne{
+        font-weight: bold;
+        border-bottom: 2px solid black;
+    }
+    .elt{
+        border-right:2px solid black;
+        border-bottom: 2px solid black;
+    }
+}

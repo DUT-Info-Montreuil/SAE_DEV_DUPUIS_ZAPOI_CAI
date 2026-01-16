@@ -88,6 +88,38 @@ public function calculerPrixTotalCommande() {
 public function commandeEstValide($solde_user, $prix_total) : bool {
     return ($prix_total > 0 && $solde_user >= $prix_total);
 }
+public function finaliserCommande($idCommande){
+    if(!empty($idCommande)){
+        $sql_fin = "UPDATE commande SET état = 1 WHERE idCommande = ?";
+        $s_sql_fin = self::$bdd->prepare($sql_fin);
+        $s_sql_fin->execute([$idCommande]);
+    }
+}
+public function commandesEnCours(){
+    $sql = "
+        SELECT
+            c.état,
+            c.idCommande AS id,
+            SUM(lc.quantite * p.prix) / 100 AS total_commande
+        FROM commande c
+        JOIN lignecommande lc ON lc.idCommande = c.idCommande
+        JOIN produits p ON p.idProd = lc.idProd
+        WHERE c.état = 0
+        GROUP BY
+            c.état,
+            c.idCommande
+        ORDER BY
+            c.date DESC
+    ";
+
+    $s_sql = self::$bdd->prepare($sql);
+    $s_sql->execute();
+    $res = $s_sql->fetchAll();
+
+    return $res;
+}
+
+
 
 public function updatecommande(){
     $sql = "DELETE FROM commande

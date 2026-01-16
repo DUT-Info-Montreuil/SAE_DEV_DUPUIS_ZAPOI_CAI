@@ -51,6 +51,63 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
     </script>
     ';
 }
+public function finaliser_commande($liste_commande){
+    echo '
+        <form method = "POST" action="index.php?module=commande&action=finCommande" id="form-finCommande">
+        <div id="listeCommande">
+         <div class="TitreColonne">ID de la commande</div>
+            <div class="TitreColonne">Prix de la commande</div>
+            <div class="TitreColonne">Détails de la commande </div>
+            <div class ="TitreColonne">Action</div>';
+
+            foreach($liste_commande as $c){
+            echo'
+
+                <div class="elt">'.$c['id'].'</div>
+                <div class="elt">'.$c['total_commande'].'</div>
+                <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="elt"> Détails de la commande </a>
+
+
+
+                <button type="button" name="finCommande" onclick="finCommandeAJAX('.$c['id'].')">
+                    Finaliser Commande
+                </button>
+
+
+            ';
+            }
+
+
+
+
+
+
+        echo '</div>';
+
+        echo '</form>';
+
+        echo'
+
+    <script>
+    function finCommandeAJAX(id){
+            const formulaire = document.getElementById("form-finCommande");
+            const données = new FormData(formulaire);
+            données.append("idCommande",id);
+
+            fetch("index.php?module=commande&action=finCommande",{
+                method: "POST",
+                body : données
+            }).then(() => {
+                location.reload();
+            });
+    }
+
+    </script>
+
+
+    ';
+}
+
     public function afficher_confirmation_commande($prix) {
         echo "<p>Le prix total est de : " . $prix . " €</p>";
     }
