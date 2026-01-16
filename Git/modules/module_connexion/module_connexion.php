@@ -22,7 +22,7 @@ class Mod_connexion {
                 $this->cont->envoyer_formulaire_connexion();
                 break;
             case "redirection":
-                
+
                 $_SESSION['idAsso'] = $_POST['association'];
                 if(isset($_POST['association']) && $_POST['association']!="none" && $this->cont->getRole()!=4){
                     if($this->cont->getRole()==3){
