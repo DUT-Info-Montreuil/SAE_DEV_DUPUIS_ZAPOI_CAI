@@ -12,17 +12,23 @@ class Modele_historique extends Connexion{
         $utilisateur = $_SESSION['idUtilisateur'];
         $sql = "
             SELECT
-                c.idCommande as id,
-                ( lc.quantite * p.prix ) / 100 AS total_ligne,
+                c.idCommande AS id,
+                SUM(lc.quantite * p.prix) / 100 AS total_commande,
                 c.date AS jour,
-                c.état as etat
+                c.état AS etat
             FROM commande c
             JOIN lignecommande lc ON lc.idCommande = c.idCommande
             JOIN produits p ON p.idProd = lc.idProd
             WHERE c.idUtilisateur = :utilisateur
-            ORDER BY c.état ASC,
-                     c.date DESC,
-                     total_ligne DESC;
+            GROUP BY
+                c.idCommande,
+                c.date,
+                c.état
+            ORDER BY
+                c.état ASC,
+                c.date DESC,
+                total_commande DESC;
+
         ";
 
         $stmt = self::$bdd->prepare($sql);
@@ -38,12 +44,12 @@ class Modele_historique extends Connexion{
 
             $etat = "validé";
             if($commande['etat'] == 0){
-               $etat = "en cours";
+               $etat = "en cours de validation";
             }
 
             $histo_client[$id] = [
                 'id' => $commande['id'],
-                'total' => $commande['total_ligne'],
+                'total' => $commande['total_commande'],
                 'etat' => $etat,
                 'jour' => $commande['jour']
             ];
