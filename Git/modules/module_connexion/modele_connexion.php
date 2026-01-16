@@ -76,7 +76,7 @@ class Modele_connexion extends Connexion {
     }
 
     public function existe($idCompte, $idAsso) : bool {
-        $sql = "SELECT * FROM utilisateur WHERE idCompte = :idCompte AND idAsso = :idAsso";
+        $sql = "SELECT * FROM Utilisateur WHERE idCompte = :idCompte AND idAsso = :idAsso";
         $stmt = self::$bdd->prepare($sql);
         $stmt->execute([
             'idCompte' => $idCompte,
@@ -128,7 +128,7 @@ class Modele_connexion extends Connexion {
         $input_nom = $_POST["nomAsso"];
         $input_siege_social = $_POST["siege_social"];
 
-        $sql=self::$bdd->prepare("INSERT INTO associationTemp (nomAsso, siege_social, idCompte) VALUES ( :nomAsso, :siege_social, :idCompte)");
+        $sql=self::$bdd->prepare("INSERT INTO associationtemp (nomAsso, siege_social, idCompte) VALUES ( :nomAsso, :siege_social, :idCompte)");
         $sql->execute([
             'nomAsso' => $input_nom, 
             'siege_social' => $input_siege_social, 
@@ -139,7 +139,7 @@ class Modele_connexion extends Connexion {
     }
 
     public function valideAsso(){
-        $sql=self::$bdd->prepare("SELECT * FROM associationTemp WHERE IDTemp = ?");
+        $sql=self::$bdd->prepare("SELECT * FROM associationtemp WHERE IDTemp = ?");
         $donneAssoFinal[]= array();
         $id=0;
         foreach($_POST['asso'] as $assoTemp) {
@@ -163,7 +163,7 @@ class Modele_connexion extends Connexion {
     
     }
     public function getListeAssoTemp(){
-        $sql=self::$bdd->prepare("SELECT * FROM associationTemp");
+        $sql=self::$bdd->prepare("SELECT * FROM associationtemp");
         $sql->execute();
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
