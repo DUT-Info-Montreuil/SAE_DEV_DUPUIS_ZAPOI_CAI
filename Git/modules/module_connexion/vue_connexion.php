@@ -14,13 +14,6 @@ require_once('utils/vue_generique.php');
                 <p>Mot de passe</p>
                 <input type="password" name="mdp_inscription" maxlength="50" required="true">
                 <br>
-                <p>Associations</p>
-                <select name = "asso_inscription">';
-
-                    foreach($liste_asso as $asso_courante){
-                        echo '<option value="'.$asso_courante['idAsso'].'">'.$asso_courante['nomAsso'].'</option>';
-                    }
-                echo '</select>
                 <input type="submit" value="Inscription">
             </form>
         ';
@@ -64,10 +57,15 @@ require_once('utils/vue_generique.php');
         }
     }
     public function listeNVAsso($liste_asso){// liste des nouvelles associations en attente de validation
-        echo '<h2>Associations en attente de validation :</h2>';
-        foreach($liste_asso as $asso_en_attente){
-            echo''.$asso_en_attente['nomAsso'].''.$asso_en_attente['siege_social'].$asso_en_attente['login'].'</option>';
+        echo '<h2>Associations en attente de validation :</h2>
+            <form method="post" action="index.php?module=connexion&action=validationAsso">
+            <fieldset>';
+        foreach($liste_asso as $asso_option_attente){
+            echo'<input type="checkbox" name="asso['.$asso_option_attente['IDTemp'].']['.$asso_option_attente['idCompte'].']" value="'.$asso_option_attente['idCompte'].'"><p>Nom de l\'association : '.$asso_option_attente['nom'].'</p>'.$asso_option_attente['siege_social'].'</option>';
         }
+        echo '</fieldset>
+        <button type="submit" value="Valider">Valider</button>
+        </form>';
     }
     public function affiche(){
         return $this->getAffichage();

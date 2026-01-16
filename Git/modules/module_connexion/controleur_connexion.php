@@ -33,6 +33,9 @@
             $this->vue->choisirAsso($liste_asso);
         }
     
+        public function affiche_asso_Temp(){
+            $this->vue->listeNVAsso($this->modele->getlisteAssoTemp());
+        }
         //Fonctions du modèle
         public function envoyer_formulaire_inscription(){
             $message = $this->modele->ajout_formulaire_inscription();
@@ -49,11 +52,22 @@
             $messsage = $this->modele->ajout_formulaire_nouvelleAssoAttente();
             $this->vue->message($messsage);
         }
+
+        public function valideAsso(){
+            $donnees =$this->modele->valideAsso();
+            $this->modele->nouvelleAssoValidee($donnees);
+        }
         public function déconnexion(){
             $this->modele->déconnexion();
 
         }
 
+        public function newUtilisateurClient(){
+            $this->modele->newUtilisateurClient();
+        }
+        public function existe($idCompte, $idAsso) : bool {
+            return $this->modele->existe($idCompte, $idAsso);
+        }
         public function getAssos() : array {
             return $this->modele->getAssos();
         }

@@ -55,7 +55,7 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         return $this->getAffichage();
     }
     public function message($txt){
-        echo "<p>$txt</p>";
+        echo "<p>".$txt."</p>";
     }
 
     }

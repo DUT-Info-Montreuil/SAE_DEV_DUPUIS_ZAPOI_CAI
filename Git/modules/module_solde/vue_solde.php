@@ -21,6 +21,7 @@ require_once ('utils/vue_generique.php');
             echo '<p>Votre solde est de : ' . $solde . '€</p>';
         }
         else{
+            
             echo '<p>Votre solde est de : 0€ </p>';
         }
 
