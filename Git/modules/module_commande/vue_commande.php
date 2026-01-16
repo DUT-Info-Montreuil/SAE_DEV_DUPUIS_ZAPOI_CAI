@@ -42,7 +42,11 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         fetch("index.php?module=commande&action=prix_total",{
             method: "POST",
             body : données
-        }).then(response=>response.json()).then(data=> {document.getElementById("total-prix").innerText = data.total +"€";})
+        })
+        .then(response=>response.json())
+        .then(data=> {
+        document.getElementById("total-prix").innerText = data.total +"€";
+        })
     }
     </script>
     ';
