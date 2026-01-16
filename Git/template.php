@@ -40,6 +40,7 @@
                             <?php elseif ($_SESSION['role'] == 3): // Client ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>
                                 <li class="nav-item"><a class="nav-link btn btn-primary btn-sm text-white ms-lg-2" href="index.php?module=commande&action=ajout_debut_commande">Commander</a></li>
+                                 <li class="nav-item"><a class="nav-link btn btn-primary btn-sm text-white ms-lg-2" href="index.php?module=historique&action=historique_client">Historique des commandes</a></li>
                             <?php endif; ?>
                             <?php else: ?>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=nouvelleAsso">Nouvelle Association</a></li>

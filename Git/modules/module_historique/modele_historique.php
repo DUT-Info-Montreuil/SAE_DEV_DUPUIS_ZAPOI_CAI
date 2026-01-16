@@ -9,7 +9,7 @@ class Modele_historique extends Connexion{
     }
 
     public function getHistoriqueClient() {
-        $utilisateur = $_SESSION['idUtilisateur'];
+        $utilisateur = $_SESSION['idCompte'];
         $sql = "
             SELECT
                 c.idCommande AS id,
