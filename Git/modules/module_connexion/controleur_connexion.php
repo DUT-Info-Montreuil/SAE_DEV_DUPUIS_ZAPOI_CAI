@@ -34,7 +34,13 @@
         }
     
         public function affiche_asso_Temp(){
-            $this->vue->listeNVAsso($this->modele->getlisteAssoTemp());
+            $donneAsso = $this->modele->getlisteAssoTemp();
+            if(!empty($donneAsso)){
+            $this->vue->listeNVAsso($donneAsso);
+            }
+            else{
+                $this->vue->message("Aucune nouvelle association en attente de validation.");
+            }
         }
         //Fonctions du modèle
         public function envoyer_formulaire_inscription(){

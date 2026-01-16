@@ -68,7 +68,7 @@ class Modele_connexion extends Connexion {
         $ssql_solde->execute([$_SESSION['login']]);
         $res_solde = $ssql_solde->fetchColumn();
         $_SESSION['solde'] = $res_solde;
-
+        $_SESSION['idCompte'] = $utilisateur['idCompte'];
         header("Location: index.php?module=connexion&action=choisirAsso");
 
         return "Connexion réussie !";
@@ -87,10 +87,10 @@ class Modele_connexion extends Connexion {
     }
 
     public function newUtilisateurClient() {
-        $sql_Utilisateur = "INSERT INTO utilisateur (login,idRole,idAsso) VALUES (:login, 3, :idAsso)";
+        $sql_Utilisateur = "INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (:idCompte, 3, :idAsso)";
         $stmt = self::$bdd->prepare($sql_Utilisateur);
         $stmt->execute([
-            'login' => $_SESSION['login'],
+            'idCompte' => $_SESSION['idCompte'],
             'idAsso' => $_SESSION['idAsso']
         ]);
 
@@ -128,38 +128,39 @@ class Modele_connexion extends Connexion {
         $input_nom = $_POST["nomAsso"];
         $input_siege_social = $_POST["siege_social"];
 
-        $sqlid = self::$bdd->prepare("SELECT idCompte FROM compte WHERE nom=?");
-        $sqlid->execute([$_SESSION['login']]);
-        $idCompte = $sqlid->fetchColumn();
-
-        $sql=self::$bdd->prepare("INSERT INTO associationTemp (nom, siege_social, idCompte) VALUES ( :nomAsso, :siege_social, :idCompte)");
+        $sql=self::$bdd->prepare("INSERT INTO associationTemp (nomAsso, siege_social, idCompte) VALUES ( :nomAsso, :siege_social, :idCompte)");
         $sql->execute([
             'nomAsso' => $input_nom, 
             'siege_social' => $input_siege_social, 
-            'idCompte' => $idCompte
+            'idCompte' => $_SESSION['idCompte']
         ]);
 
         return "Votre demande d'association a été envoyée et est en attente de validation.";
     }
 
     public function valideAsso(){
-        var_dump($_POST['asso']);
-        $sql=self::$bdd->prepare("SELECT * FROM associationTemp WHERE idTEMP = ? AND idCompte IN ?");
-        $sql->execute([$_POST['asso']['IDTemp'],$_POST['asso']['idCompte']]);
-
+        $sql=self::$bdd->prepare("SELECT * FROM associationTemp WHERE IDTemp = ?");
+        $donneAssoFinal[]= array();
+        $id=0;
         foreach($_POST['asso'] as $assoTemp) {
-            $donneAsso = $sql->fetch(PDO::FETCH_ASSOC);
-            return $donneAsso;
+            $sql->execute([$assoTemp['IDTemp']]);
+            $donneAsso = $sql->fetchALL(PDO::FETCH_ASSOC);
+            $donneAssoFinal[$id]= $donneAsso;
+            $id+=1;
         }
-        $assosTemp = $sql->fetchAll(PDO::FETCH_ASSOC);
-        return $assosTemp;
+
+        return $donneAssoFinal;
     }
     public function nouvelleAssoValidee($donneAsso){
-        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?, ?)");
-        $sql->execute([
-            'nomAsso' => $donneAsso['nomAsso'], 
-            'siege_social'=> $donneAsso['siege_social']
-            ]);
+        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?,?)");
+        foreach($donneAsso as $inter){
+            foreach($inter as $ajout){
+            $sql->execute([$ajout['nomAsso'],$ajout['siege_social']]);
+            }
+        }
+
+        
+    
     }
     public function getListeAssoTemp(){
         $sql=self::$bdd->prepare("SELECT * FROM associationTemp");

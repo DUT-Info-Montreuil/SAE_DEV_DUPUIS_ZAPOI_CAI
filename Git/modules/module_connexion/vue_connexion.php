@@ -57,11 +57,15 @@ require_once('utils/vue_generique.php');
         }
     }
     public function listeNVAsso($liste_asso){// liste des nouvelles associations en attente de validation
+        $idAsso = 0;
         echo '<h2>Associations en attente de validation :</h2>
             <form method="post" action="index.php?module=connexion&action=validationAsso">
             <fieldset>';
         foreach($liste_asso as $asso_option_attente){
-            echo'<input type="checkbox" name="asso['.$asso_option_attente['IDTemp'].']['.$asso_option_attente['idCompte'].']" value="'.$asso_option_attente['idCompte'].'"><p>Nom de l\'association : '.$asso_option_attente['nom'].'</p>'.$asso_option_attente['siege_social'].'</option>';
+            echo'<input type="checkbox" name="asso['.$idAsso.'][IDTemp]" value="'.$asso_option_attente['IDTemp'].'"><p>Nom de l\'association : '.$asso_option_attente['nomAsso'].'</p>'.$asso_option_attente['siege_social'].'<br>';
+            
+            
+            $idAsso+=1;
         }
         echo '</fieldset>
         <button type="submit" value="Valider">Valider</button>

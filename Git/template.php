@@ -23,11 +23,13 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <?php if ($_SESSION['connecté']): ?>
+                    <?php if (isset($_SESSION['connecté']) && !empty($_SESSION['connecté']) ): ?>
                         <?php if(isset($_SESSION['role'])): ?>
                             <?php if ($_SESSION['role'] == 4): // Admin ?>
-                                    <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=newAsso">Gestion nouvelle Association</a></li>
-                            <?php endif; ?>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=newAsso">Gestion nouvelle Association</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=choisirAsso">Choisir Association</a></li>
+                                <?php endif; ?>
+                                
                             <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4 && !empty($_SESSION['idAsso'])): // Gestionnaire ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
@@ -39,17 +41,17 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>
                                 <li class="nav-item"><a class="nav-link btn btn-primary btn-sm text-white ms-lg-2" href="index.php?module=commande&action=ajout_debut_commande">Commander</a></li>
                             <?php endif; ?>
-                        <?php else: ?>
+                            <?php else: ?>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=nouvelleAsso">Nouvelle Association</a></li>
                             <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=choisirAsso">Choisir Association</a></li>
-                        <?php endif; ?>
-                    <?php else: ?>
+                            <?php endif; ?>
+                        <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=inscription">Inscription</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=connexion">Connexion</a></li>
                     <?php endif; ?>
                 </ul>
 
-                <?php if ($_SESSION['connecté']): ?>
+                <?php if (isset($_SESSION['connecté']) && !empty($_SESSION['connecté'])): ?>
                     <form class="d-flex" method="post" action="index.php?module=connexion&action=deconnexion">
                         <button class="btn btn-outline-danger btn-sm" type="submit">Déconnexion</button>
                     </form>

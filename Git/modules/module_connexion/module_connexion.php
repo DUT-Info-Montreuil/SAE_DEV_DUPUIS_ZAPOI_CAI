@@ -22,7 +22,7 @@ class Mod_connexion {
                 $this->cont->envoyer_formulaire_connexion();
                 break;
             case "validationAsso":
-                    $this->cont->valideAsso();
+                $this->cont->valideAsso();
                 break;
             case "redirection":
 
