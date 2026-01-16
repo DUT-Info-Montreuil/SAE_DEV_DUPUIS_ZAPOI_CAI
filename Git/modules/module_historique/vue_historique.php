@@ -10,7 +10,15 @@ require_once ('utils/vue_generique.php');
             echo "<h2>Historique des commandes :</h2> <br>";
             foreach($historique as $commande){
                echo "<div><p class='historique'> Commande ".$commande['id'].' du '.$commande['jour'].
-                   ' (<a href="index.php?module=historique&action=detailHistoClient&idCommande='.$commande['id'].'">détails</a>) : Total : '.number_format($commande['total'],2).' € ,  état : '.$commande['etat'].'</div></p>';
+                   ' (<a href="index.php?module=historique&action=detailHistoClient&idCommande='.$commande['id'].'">détails</a>) : Total :
+                   '.number_format($commande['total'],2).' € ,  état : '.$commande['etat'].'';
+
+                   if(strcmp($commande['etat'], "en cours de validation") == 0){
+                    echo ' <a href="index.php?module=commande&action=annulation&idCommande='.$commande['id'].'">(annuler la commande)</a>';
+                   }
+
+
+                   echo '</div></p>';
 
             }
 

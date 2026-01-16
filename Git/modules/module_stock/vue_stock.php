@@ -19,6 +19,7 @@ Class Vue_stock extends VueGenerique{
                     <div class="TitreColonne">Statut</div>
 
 
+
                     <div id="corps-tableau" style="display : contents;">';
                     $this->affichageDéfaut($liste_stock);
                     echo'</div>';

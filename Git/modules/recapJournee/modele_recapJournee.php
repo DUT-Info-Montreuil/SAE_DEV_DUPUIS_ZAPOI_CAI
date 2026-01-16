@@ -119,7 +119,7 @@ class modele_recapJournee extends Connexion{
                 JOIN produits p ON p.idProd = lc.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
-                GROUP BY p.idProd
+                GROUP BY p.nom, p.prix
                 ORDER BY quantite_totale DESC;
             ";
 
