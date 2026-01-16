@@ -11,7 +11,7 @@ class Modele_commande extends Connexion {
 
 
     public function ajout_début_commande() {
-        $idUtilisateur = $_SESSION['idUtilisateur'];
+        $idUtilisateur = $_SESSION['idCompte'];
         $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
         $ssql = self::$bdd->prepare($sql);
         $success = $ssql->execute([
@@ -61,9 +61,9 @@ class Modele_commande extends Connexion {
     $sql = "UPDATE compte
             NATURAL JOIN Utilisateur
             SET solde = ?
-            WHERE idUtilisateur = ? AND idAsso = ?";
+            WHERE idCompte = ? AND idAsso = ?";
     $s_sql= self::$bdd->prepare($sql);
-    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur'],$_SESSION['idAsso']]);
+    $s_sql->execute([$solde_final,$_SESSION['idCompte'],$_SESSION['idAsso']]);
 
     $_SESSION['solde'] = $solde_final;
 

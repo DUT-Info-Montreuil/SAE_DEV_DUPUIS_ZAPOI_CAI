@@ -25,7 +25,8 @@ class Mod_commande {
 
                         $this->cont->envoyer_formulaire_Commande();
                         $this->vue->message("Commande enregistrée !");
-                     
+
+
 
                     }
                     else{
