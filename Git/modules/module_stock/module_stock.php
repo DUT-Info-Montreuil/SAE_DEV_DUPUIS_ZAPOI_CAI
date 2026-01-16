@@ -16,6 +16,10 @@ Class Mod_stock{
                 break;
             case"recherche":
                 $this->cont->getRecherche();
+                break;
+            case "deduireStock": // TODO vérifier si on a assez dans le stock
+                $this->cont->deduireStock();
+                break;
         }
 
     }

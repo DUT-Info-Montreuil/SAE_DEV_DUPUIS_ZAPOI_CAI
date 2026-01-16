@@ -38,6 +38,7 @@ class Mod_commande {
                 break;
             case 'finCommande':
                 $this->cont->finaliserCommande();
+                break;
         }
 	}
 
