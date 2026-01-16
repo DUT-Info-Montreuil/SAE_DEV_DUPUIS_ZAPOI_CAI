@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="" />
+=======
+    <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
+    </list>
+>>>>>>> ac8342d512aea821c0bacd1861158cf044ea1a7d
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,8 +30,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< HEAD
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
+=======
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/local_html/merge_temporaire/Git",
+>>>>>>> ac8342d512aea821c0bacd1861158cf044ea1a7d
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,7 +75,7 @@
       <workItem from="1768227179072" duration="893000" />
       <workItem from="1768228521219" duration="8746000" />
       <workItem from="1768293580768" duration="16008000" />
-      <workItem from="1768315768991" duration="787000" />
+      <workItem from="1768315768991" duration="1371000" />
     </task>
     <servers />
   </component>

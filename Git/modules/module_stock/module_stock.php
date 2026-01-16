@@ -14,7 +14,10 @@ Class Mod_stock{
             case "affiche_stock":
                 $this->affiche_stock();
                 break;
+            case"recherche":
+                $this->cont->getRecherche();
         }
+
     }
     public function affiche_stock() {
         $this->cont->affiche_stock();

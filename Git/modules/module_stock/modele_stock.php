@@ -9,35 +9,35 @@ class Modele_stock extends Connexion{
 
     }
     
-    public function getRecherche(): array{//TODO
-        $sql = self::$bdd->prepare("SELECT idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits WHERE");
-        $sql->execute();
+    public function getRecherche($nom_produit): array{
+        $sql = self::$bdd->prepare("SELECT idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits WHERE nom LIKE ?");
+        $sql->execute(["%$nom_produit%"]);
         $resultatRecherche = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $resultatRecherche;
     }
 
     public function getStock(): array{
-        $selectStock = self::$bdd->prepare("SELECT stock.idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits ORDER BY (quantite < seuil) DESC");
-        $selectStock->execute();
+        $selectStock = self::$bdd->prepare("SELECT stock.idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits NATURAL JOIN inventaire WHERE idAsso = ? ORDER BY (quantite < seuil) DESC");
+        $selectStock->execute([$_SESSION['idAsso']]);
         $resultStock = $selectStock->fetchAll(PDO::FETCH_ASSOC);
         return $resultStock;
     }
 
     public function getNBProduit(): int{
-        $selectStock = self::$bdd->prepare("SELECT count(*) as nb FROM stock NATURAL JOIN produits ");
-        $selectStock->execute();
+        $selectStock = self::$bdd->prepare("SELECT count(*) as nb FROM stock NATURAL JOIN produits NATURAL JOIN inventaire ");
+        $selectStock->execute([$_SESSION['idAsso']]);
         $resultStock = $selectStock->fetch(PDO::FETCH_ASSOC);
         return (int)$resultStock['nb'];
     }
     public function getNBProduitDisponible(): int{
-        $selectStock = self::$bdd->prepare("SELECT count(*) as dispo FROM stock NATURAL JOIN produits WHERE quantite >= seuil");
-        $selectStock->execute();
+        $selectStock = self::$bdd->prepare("SELECT count(*) as dispo FROM stock NATURAL JOIN produits NATURAL JOIN inventaire WHERE idAsso = ? AND quantite >= seuil");
+        $selectStock->execute([$_SESSION['idAsso']]);
         $resultStock = $selectStock->fetch(PDO::FETCH_ASSOC);
         return (int)$resultStock['dispo'];
     }
     public function getNBProduitFaible(): int{
-        $selectStock = self::$bdd->prepare("SELECT count(*) as faible FROM stock NATURAL JOIN produits WHERE quantite < seuil");
-        $selectStock->execute();
+        $selectStock = self::$bdd->prepare("SELECT count(*) as faible FROM stock NATURAL JOIN produits NATURAL JOIN inventaire WHERE idAsso = ? AND quantite < seuil");
+        $selectStock->execute([$_SESSION['idAsso']]);
         $resultStock = $selectStock->fetch(PDO::FETCH_ASSOC);
         return (int)$resultStock['faible'];
     }

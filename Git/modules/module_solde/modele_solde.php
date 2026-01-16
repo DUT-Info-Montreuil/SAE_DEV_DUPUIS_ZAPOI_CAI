@@ -36,7 +36,7 @@ class Modele_solde extends Connexion{
 
        $success = $ssql->execute([
            'solde' => $soldetotal,
-           'idC'   => $idCompte
+           'idC'   => $idCompte,
        ]);
 
        if (!$success) {
@@ -48,7 +48,6 @@ class Modele_solde extends Connexion{
 public function getSolde(){
 
     $idUtilisateur = $_SESSION['idUtilisateur'];
-
     $sql_solde = "SELECT solde FROM compte WHERE idUtilisateur = :idU";
     $ssql_solde = self::$bdd->prepare($sql_solde);
     $ssql_solde->execute(['idU' => $idUtilisateur]);
