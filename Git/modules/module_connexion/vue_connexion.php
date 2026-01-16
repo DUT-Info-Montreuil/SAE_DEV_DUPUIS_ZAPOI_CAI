@@ -5,35 +5,17 @@ require_once('utils/vue_generique.php');
         public function __construct(){
             parent::__construct();
         }
-
-
-
-
-
-
     public function formulaire_inscription($liste_asso){
         echo
         '
             <form method="post" action="index.php?module=connexion&action=ajout_inscription">
-                    <p>Association</p>
-                    <select name = "asso_inscription">
-                        <option value"" selected disabled> Choisissez une Association</option>
-                       ';
-
-                   foreach($liste_asso as $asso_courante){
-                        echo '<option value="'.$asso_courante['idAsso'].'"">'.$asso_courante['nomAsso'].'</option>';
-                   }
-            echo '</select>';
-
-        echo'
-
-            <p>Identifiant</p>
-            <input type="text" name="login_inscription" maxlength="50">
-            <p>Mot de passe</p>
-            <input type="password" name="mdp_inscription" maxlength="50">
-            <br>
-            <input type="submit" value="Inscription">
-         </form>
+                <p>Identifiant</p>
+                <input type="text" name="login_inscription" maxlength="50" required="true">
+                <p>Mot de passe</p>
+                <input type="password" name="mdp_inscription" maxlength="50" required="true">
+                <br>
+                <input type="submit" value="Inscription">
+            </form>
         ';
     }
     public function formulaire_connexion(){
@@ -41,18 +23,54 @@ require_once('utils/vue_generique.php');
         '
             <form method="post" action="index.php?module=connexion&action=ajout_connexion">
                     <p>Identifiant</p>
-                    <input type="text" name="login_connexion" maxlength="50">
+                    <input type="text" name="login_connexion" maxlength="50" required="true">
 
                     <p>Mot de passe</p>
-                    <input type="password" name="mdp_connexion" maxlength="50">
+                    <input type="password" name="mdp_connexion" maxlength="50" required="true">
                     <br>
                     <input type="submit" value="Connexion">
-         </form>
+            </form>
         ';
     }
 
+    public function formulaireAsso(){
+        echo '
+            <h2>Créer une nouvelle association</h2>
+            <form method="post" action="index.php?module=connexion&action=ajout_association">
+                <p>Nom de l\'association :<p>
+                <input type="text" id="nomAsso" name="nomAsso"/>
+                <p>Siege social de l\'association :</p>
+                <input type="text" id="siege_social" name="siege_social"/>
 
+                <button type="submit">Envoyez</button>
+            </form>
+        ';
+    }
     
+    public function choisirAsso($liste_asso){// choix de l'association après connexion
+        echo '<h2>Choisissez une association :</h2>';
+        foreach($liste_asso as $asso){
+            echo '<form method="post" action="index.php?module=connexion&action=redirection">
+            <input type="hidden" name="association" value="'.$asso['idAsso'].'">
+            <button type="submit"><img src="fonce-fond-abstrait.jpg" alt="Une image du logo" style="width: 15%; height: 2%;"></button>
+            </form>';
+        }
+    }
+    public function listeNVAsso($liste_asso){// liste des nouvelles associations en attente de validation
+        $idAsso = 0;
+        echo '<h2>Associations en attente de validation :</h2>
+            <form method="post" action="index.php?module=connexion&action=validationAsso">
+            <fieldset>';
+        foreach($liste_asso as $asso_option_attente){
+            echo'<input type="checkbox" name="asso['.$idAsso.'][IDTemp]" value="'.$asso_option_attente['IDTemp'].'"><p>Nom de l\'association : '.$asso_option_attente['nomAsso'].'</p>'.$asso_option_attente['siege_social'].'<br>';
+            
+            
+            $idAsso+=1;
+        }
+        echo '</fieldset>
+        <button type="submit" value="Valider">Valider</button>
+        </form>';
+    }
     public function affiche(){
         return $this->getAffichage();
     }

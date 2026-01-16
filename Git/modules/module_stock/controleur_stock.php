@@ -22,6 +22,13 @@ class Cont_stock{
     public function getStock(): array{
         return $this->modele->getStock();
     }
+    public function getRecherche(){
+        $recherche=$_POST['rechercher'] ?? "";
+        $res=$this->modele->getRecherche($recherche);
+        header('Content-Type: application/json');
+        echo json_encode($res);
+        exit;
+    }
 
     
 

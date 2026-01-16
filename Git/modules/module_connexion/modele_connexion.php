@@ -9,56 +9,38 @@ class Modele_connexion extends Connexion {
         // constructeur vide
     }
 
-
     public function ajout_formulaire_inscription() {
 
-        if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"]) || empty($_POST["asso_inscription"])) {
+        if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"])) {
             return "Champs manquants";
         }
 
         $input_login = $_POST["login_inscription"];
         $input_mdp   = $_POST["mdp_inscription"];
-        $input_asso  = $_POST["asso_inscription"];
 
         // Vérifier si le nom existe déjà
-        $existedeja = self::$bdd->prepare("SELECT idUtilisateur FROM Utilisateur WHERE nom = :login");
+        $existedeja = self::$bdd->prepare("SELECT idCompte FROM compte WHERE nom = :login");
         $existedeja->execute(['login' => $input_login]);
 
         if ($existedeja->fetch()) {
             return "Vous avez déjà un compte ou ce nom est pris.";
         }
 
-        $role_defaut = 3;
-
         $hash_mdp = password_hash($input_mdp, PASSWORD_DEFAULT);
 
 
-        $sql = "INSERT INTO Utilisateur (nom, mdp, idRole, idAsso) VALUES (:nom, :mdp, :idRole, :idAsso)";
+        $sql = "INSERT INTO compte (solde,nom,mdp) VALUES (0, :login, :mdp)";
         $stmt = self::$bdd->prepare($sql);
         $success = $stmt->execute([
-            'nom'    => $input_login,
-            'mdp'    => $hash_mdp,
-            'idRole' => $role_defaut,
-            'idAsso' => $input_asso
+            'login' => $input_login,
+            'mdp' => $hash_mdp
         ]);
 
         if (!$success) {
-            return "Erreur lors de la création de l'utilisateur.";
-        }
-
-        $idUtilisateur = self::$bdd->lastInsertId();
-
-        $sqlCompte = "INSERT INTO compte (solde, idUtilisateur) VALUES (0, :idUtilisateur)";
-        $stmtCompte = self::$bdd->prepare($sqlCompte);
-        $successCompte = $stmtCompte->execute(['idUtilisateur' => $idUtilisateur]);
-
-        if (!$successCompte) {
             return "Erreur lors de la création du compte.";
         }
-
         return "Inscription réussie !";
     }
-
 
     public function ajout_formulaire_connexion() {
         if (empty($_POST["login_connexion"]) || empty($_POST["mdp_connexion"])) {
@@ -68,7 +50,7 @@ class Modele_connexion extends Connexion {
         $input_login = $_POST["login_connexion"];
         $input_mdp   = $_POST["mdp_connexion"];
 
-        $sql = "SELECT idUtilisateur, nom, mdp FROM Utilisateur WHERE nom = :login";
+        $sql = "SELECT idCompte, nom, mdp FROM compte WHERE nom = :login";
         $stmt = self::$bdd->prepare($sql);
         $stmt->execute(['login' => $input_login]);
         $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -80,21 +62,40 @@ class Modele_connexion extends Connexion {
 
 
         $_SESSION['login'] = $utilisateur['nom'];
-        $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
         $_SESSION['connecté'] = true;
-        $sql_solde = "SELECT solde from compte where idUtilisateur = ?";
+        $sql_solde = "SELECT solde from compte where nom = ?";
         $ssql_solde = self::$bdd->prepare($sql_solde);
-        $ssql_solde->execute([$_SESSION['idUtilisateur']]);
+        $ssql_solde->execute([$_SESSION['login']]);
         $res_solde = $ssql_solde->fetchColumn();
         $_SESSION['solde'] = $res_solde;
-
-       
-
+        $_SESSION['idCompte'] = $utilisateur['idCompte'];
+        header("Location: index.php?module=connexion&action=choisirAsso");
 
         return "Connexion réussie !";
 
     }
-public function déconnexion() {
+
+    public function existe($idCompte, $idAsso) : bool {
+        $sql = "SELECT * FROM Utilisateur WHERE idCompte = :idCompte AND idAsso = :idAsso";
+        $stmt = self::$bdd->prepare($sql);
+        $stmt->execute([
+            'idCompte' => $idCompte,
+            'idAsso' => $idAsso
+        ]);
+        $count = $stmt->fetchColumn();
+        return !empty($count);
+    }
+
+    public function newUtilisateurClient() {
+        $sql_Utilisateur = "INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (:idCompte, 3, :idAsso)";
+        $stmt = self::$bdd->prepare($sql_Utilisateur);
+        $stmt->execute([
+            'idCompte' => $_SESSION['idCompte'],
+            'idAsso' => $_SESSION['idAsso']
+        ]);
+
+    }
+    public function déconnexion() {
     session_unset();
     session_destroy();
 
@@ -102,37 +103,71 @@ public function déconnexion() {
     session_start();
     $_SESSION['connecté'] = false;
 
-}
+    }
 
-
-public function getRole(){
-     if(isset($_SESSION['login'])){
-     $input_login = $_SESSION['login'];
-     $sql = "SELECT idRole FROM Utilisateur WHERE nom = :login";
+    public function getRole(){
+        if(isset($_SESSION['login']) && isset($_SESSION['idAsso'])){
+        $input_login = $_SESSION['login'];
+        $sql = "SELECT idRole FROM Utilisateur NATURAL JOIN compte WHERE nom = :login AND idAsso = :idAsso";
             $stmt = self::$bdd->prepare($sql);
-            $stmt->execute(['login' => $input_login]);
+            $stmt->execute(['login' => $input_login, 'idAsso' => $_SESSION['idAsso']]);
             $role = $stmt->fetchColumn();
 
-     $_SESSION['role']=$role;
-     return $role;
-     }
-
-
-
-
-
-
-
-}
-
-
-
-
+        $_SESSION['role']=$role;
+        return $role;
+        }
+    }
 
     public function getAssos(): array {
         $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM association");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function ajout_formulaire_nouvelleAssoAttente(){
+        $input_nom = $_POST["nomAsso"];
+        $input_siege_social = $_POST["siege_social"];
+
+        $sql=self::$bdd->prepare("INSERT INTO associationtemp (nomAsso, siege_social, idCompte) VALUES ( :nomAsso, :siege_social, :idCompte)");
+        $sql->execute([
+            'nomAsso' => $input_nom, 
+            'siege_social' => $input_siege_social, 
+            'idCompte' => $_SESSION['idCompte']
+        ]);
+
+        return "Votre demande d'association a été envoyée et est en attente de validation.";
+    }
+
+    public function valideAsso(){
+        $sql=self::$bdd->prepare("SELECT * FROM associationtemp WHERE IDTemp = ?");
+        $donneAssoFinal[]= array();
+        $id=0;
+        foreach($_POST['asso'] as $assoTemp) {
+            $sql->execute([$assoTemp['IDTemp']]);
+            $donneAsso = $sql->fetchALL(PDO::FETCH_ASSOC);
+            $donneAssoFinal[$id]= $donneAsso;
+            $id+=1;
+        }
+
+        return $donneAssoFinal;
+    }
+    public function nouvelleAssoValidee($donneAsso){
+        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?,?)");
+        foreach($donneAsso as $inter){
+            foreach($inter as $ajout){
+            $sql->execute([$ajout['nomAsso'],$ajout['siege_social']]);
+            }
+        }
+
+        
+    
+    }
+    public function getListeAssoTemp(){
+        $sql=self::$bdd->prepare("SELECT * FROM associationtemp");
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
 }
 ?>

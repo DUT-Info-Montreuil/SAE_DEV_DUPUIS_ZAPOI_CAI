@@ -14,15 +14,14 @@ class Modele_solde extends Connexion{
        }
 
        $input_solde = $_POST["solde"];
-       $idUtilisateur = $_SESSION['idUtilisateur'];
+       $idCompte = $_SESSION['idCompte'];
 
-       $sql_idCompte = "SELECT idCompte FROM compte WHERE idUtilisateur = :idU";
+       $sql_idCompte = "SELECT idCompte FROM compte WHERE idCompte = :idC";
        $ssql_idCompte = self::$bdd->prepare($sql_idCompte);
-       $ssql_idCompte->execute(['idU' => $idUtilisateur]);
-
-       $sql_solde = "SELECT solde FROM compte where idUtilisateur = :idU";
+       $ssql_idCompte->execute(['idC' => $idCompte]);
+       $sql_solde = "SELECT solde FROM compte where idCompte = :idC";
        $ssql_solde = self::$bdd->prepare($sql_solde);
-       $ssql_solde->execute(['idU' => $idUtilisateur]);
+       $ssql_solde->execute(['idC' => $idCompte]);
 
        $solde = $ssql_solde->fetchColumn();
        $idCompte = $ssql_idCompte->fetchColumn(); // utiliser cette méthode plutôt que fetch/fetchAll , ça donne directement le contenu du tuple au lieu d'un array
@@ -36,7 +35,7 @@ class Modele_solde extends Connexion{
 
        $success = $ssql->execute([
            'solde' => $soldetotal,
-           'idC'   => $idCompte
+           'idC'   => $idCompte,
        ]);
 
        if (!$success) {
@@ -47,11 +46,10 @@ class Modele_solde extends Connexion{
    }
 public function getSolde(){
 
-    $idUtilisateur = $_SESSION['idUtilisateur'];
-
-    $sql_solde = "SELECT solde FROM compte WHERE idUtilisateur = :idU";
+    $idCompte = $_SESSION['idCompte'];
+    $sql_solde = "SELECT solde FROM compte WHERE idCompte = :idU";
     $ssql_solde = self::$bdd->prepare($sql_solde);
-    $ssql_solde->execute(['idU' => $idUtilisateur]);
+    $ssql_solde->execute(['idU' => $idCompte]);
 
     return $ssql_solde->fetchColumn();
 }

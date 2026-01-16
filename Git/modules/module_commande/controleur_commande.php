@@ -29,9 +29,10 @@
             $this->modele->déduireSolde($prix);
         }
         public function prix_total(){
-
-            $prix = $this->modele->calculerPrixTotalCommande($_SESSION['idCommandeActuelle']);
-            $this->vue->afficher_confirmation_commande($prix);
+            $total=$this->modele->calculerPrixTotalCommande();
+            header('Content-Type: application/json');
+            echo json_encode(['total' => number_format($total, 2, '.', '')]);
+            exit;
 
         }
         public function commande_valide() : bool {
