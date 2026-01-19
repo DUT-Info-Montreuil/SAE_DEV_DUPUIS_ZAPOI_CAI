@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_accueil/vue_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/vue_accueil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/controleur_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/controleur_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/modele_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/modele_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/module_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/module_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template.css" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template3.css" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template3.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template4.css" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template4.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template7.css" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template7.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/template4.css" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template8.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +29,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging restock",
+    "git-widget-placeholder": "restock",
     "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -82,7 +71,7 @@
       <workItem from="1768293580768" duration="16008000" />
       <workItem from="1768315768991" duration="787000" />
       <workItem from="1768565315950" duration="15166000" />
-      <workItem from="1768813311760" duration="7355000" />
+      <workItem from="1768813311760" duration="8018000" />
     </task>
     <servers />
   </component>
