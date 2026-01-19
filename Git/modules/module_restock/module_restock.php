@@ -27,6 +27,11 @@ class Mod_restock {
                 $this->cont->afficherProduitsAchat($prodF);
                 break;
 
+            case "ajoutStock":
+                $id = $_GET['idProd'];
+                $quantite = $_GET['quantite'];
+                $this->cont->ajoutStock($id, $quantite);
+
         }
 	}
 

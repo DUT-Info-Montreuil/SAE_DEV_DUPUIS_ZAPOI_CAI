@@ -62,6 +62,27 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         echo "<p>".$txt."</p>";
     }
 
+    
+
+    public function vueCommandeProduit($prod){
+
+        echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
+        
+        foreach($prod as $p){
+
+            echo "<div id='restockDiv'>";
+
+            echo " <input type='number' name='restock' min='1' max='1000' placeholder='0'>";
+            echo " <button type='submit' name='restock'> bite </button>";
+
+            echo "</div>";
+
+        }
+
+        echo "</form>";
+        
     }
+}
+
 
 ?>

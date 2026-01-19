@@ -17,6 +17,7 @@ Class Vue_stock extends VueGenerique{
                     <div class="TitreColonne">Quantité</div>
                     <div class="TitreColonne">Seuil minimum</div>
                     <div class="TitreColonne">Statut</div>
+                    <div class="TitreColonne">Action</div>
 
 
 
@@ -67,6 +68,9 @@ private function recherche_dynamique() {
                     <div>${p.quantite}</div>
                     <div>${p.seuil}</div>
                     <div style="color:${couleur}">${texte}</div>
+                    <div><a href="index.php?module=commande&action=commandeProduit&idProd=${p.idProd}">
+                                Restock
+                            </a></div>
                 `;
             });
         }
@@ -96,6 +100,7 @@ private function recherche_dynamique() {
                             }
 
                         echo'</div>';
+                        echo' <div> <a href="index.php?module=commande&action=commandeProduit&idProd='.$item['idProd'].'"> Restock </a></div>';
                     }
                     echo '</div>';
     }

@@ -43,6 +43,10 @@ class Mod_commande {
                 $this->cont->messageAnnulation();
                 break;
 
+            case 'commandeProduit':
+                $id = $_GET['idProd'];
+                $prod = $this->cont->recupCommandeProduit($id);
+                $this->cont->afficheCommandeProduit($prod);
 
         }
 	}

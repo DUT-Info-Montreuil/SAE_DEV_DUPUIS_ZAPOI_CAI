@@ -73,6 +73,26 @@ class Modele_restock extends Connexion {
 
     }
 
+    public function ajoutStock($id, $quantite){
+
+        $sql_q = "SELECT quantite FROM stock WHERE idProd = :id";
+
+        $stmt = self::$bdd->prepare($sql_q);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $quantiteCourante = $stmt->fetchColumn();
+
+        $quantiteFinale = $quantite + $quantiteCourante;
+
+        $sql = "UPDATE stock SET quantite = :q WHERE idProd = :id ";
+
+        $stmt2 = self::$bdd->prepare($sql);
+        $stmt2->bindParam(':q', $quantiteFinale);
+        $stmt2->bindParam(':id', $id);
+        $stmt2->execute();
+
+    }
+
 }
 
 
