@@ -40,17 +40,31 @@
 
             return $this->modele->commandeEstValide($_SESSION['solde'], $prixAchat);
         }
+
        	public function affiche(){
 		return $this->vue->affiche();
        	}
+
         public function updatecommande(){
         return $this->modele->updatecommande();
         }
 
-
-
         public function getProduits() : array {
             return $this->modele->getProduits();
+        }
+
+        public function annulationCommande($id){
+            return $this->modele->annulerCommande($id);
+        }
+        public function messageAnnulation(){
+            return $this->vue->message("Commande annulée");
+        }
+
+        public function recupCommandeProduit($id){
+            return $this->modele->commandeProduit($id);
+        }
+        public function afficheCommandeProduit($prod){
+            return $this->vue->vueCommandeProduit($prod);
         }
 
 

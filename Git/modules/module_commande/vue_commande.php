@@ -59,9 +59,28 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         return $this->getAffichage();
     }
     public function message($txt){
-        echo "<p>$txt</p>";
+        echo "<p>".$txt."</p>";
     }
 
+    
+
+public function vueCommandeProduit($prod){
+    foreach($prod as $p){
+
+        echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
+        echo "<div id='restockDiv'>";
+        echo "<p> Fournissseur : ".$p['nomF']."</p>";
+        echo "<p> Produit : ".$p['nom']."</p>";
+        echo "<p> Prix : ".number_format($p['prix']/100,2)." €</p>";
+        echo "<input type='hidden' name='idProd' value='".$p['id']."'>";
+        echo "<input type='number' name='quantite' min='1' max='1000' placeholder='0'>";
+        
+        echo " <button type='submit'>Valider</button>";
+        echo "</div>";
+        echo "</form>";
     }
+}
+}
+
 
 ?>

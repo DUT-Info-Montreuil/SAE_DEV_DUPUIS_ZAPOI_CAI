@@ -5,6 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/controleur_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/controleur_accueil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/module_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/module_accueil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/vue_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/vue_accueil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,19 +35,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
-    "last_opened_file_path": "/home/etudiants/info/dzapoi/local_html/merge_temporaire/Git",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Git/modules" />
@@ -66,7 +78,8 @@
       <workItem from="1768227179072" duration="893000" />
       <workItem from="1768228521219" duration="8746000" />
       <workItem from="1768293580768" duration="16008000" />
-      <workItem from="1768315768991" duration="1371000" />
+      <workItem from="1768315768991" duration="787000" />
+      <workItem from="1768565315950" duration="14379000" />
     </task>
     <servers />
   </component>

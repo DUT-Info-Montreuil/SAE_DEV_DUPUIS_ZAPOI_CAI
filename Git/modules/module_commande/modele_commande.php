@@ -11,7 +11,7 @@ class Modele_commande extends Connexion {
 
 
     public function ajout_début_commande() {
-        $idUtilisateur = $_SESSION['idUtilisateur'];
+        $idUtilisateur = $_SESSION['idCompte'];
         $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
         $ssql = self::$bdd->prepare($sql);
         $success = $ssql->execute([
@@ -61,9 +61,9 @@ class Modele_commande extends Connexion {
     $sql = "UPDATE compte
             NATURAL JOIN Utilisateur
             SET solde = ?
-            WHERE idUtilisateur = ? AND idAsso = ?";
+            WHERE idCompte = ? AND idAsso = ?";
     $s_sql= self::$bdd->prepare($sql);
-    $s_sql->execute([$solde_final,$_SESSION['idUtilisateur'],$_SESSION['idAsso']]);
+    $s_sql->execute([$solde_final,$_SESSION['idCompte'],$_SESSION['idAsso']]);
 
     $_SESSION['solde'] = $solde_final;
 
@@ -84,18 +84,65 @@ public function calculerPrixTotalCommande() {
         }
     }
     return $total;
-}
-public function commandeEstValide($solde_user, $prix_total) : bool {
-    return ($prix_total > 0 && $solde_user >= $prix_total);
-}
+    }
+    public function commandeEstValide($solde_user, $prix_total) : bool {
+        return ($prix_total > 0 && $solde_user >= $prix_total);
+    }
 
-public function updatecommande(){
-    $sql = "DELETE FROM commande
-                WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
+    public function updatecommande(){
+        $sql = "DELETE FROM commande
+                    WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
 
-    $s_sql = self::$bdd->prepare($sql);
-    $s_sql->execute();
-}
+        $s_sql = self::$bdd->prepare($sql);
+        $s_sql->execute();
+    }
+
+    public function annulerCommande($id) {
+
+        $sql_lc = "
+            DELETE FROM lignecommande WHERE idCommande = :id
+        ";
+
+        $s_sql_lc = self::$bdd->prepare($sql_lc);
+        $s_sql_lc->bindParam(':id', $id);
+        $s_sql_lc->execute();
+
+        $sql_c = "
+            DELETE FROM commande WHERE idCommande = :id
+        ";
+
+        $s_sql_c = self::$bdd->prepare($sql_c);
+        $s_sql_c->bindParam(':id', $id);
+        $s_sql_c->execute();
+
+    }
+
+    public function commandeProduit($id) {
+
+         $sql_lc = "
+            SELECT 
+                p.idProd as id,
+                p.nom,
+                p.prix,
+                s.quantite,
+                p.image,
+                f.nom as nomF,
+                f.idFournisseur as idF
+            FROM
+                produits p NATURAL JOIN stock s JOIN prod_fournisseur pf ON p.idProd = pf.idProd JOIN fournisseur f ON f.idFournisseur = pf.idFournisseur       
+            WHERE
+                p.idProd = :id
+        ";
+
+        $s_sql_lc = self::$bdd->prepare($sql_lc);
+        $s_sql_lc->bindParam(':id', $id);
+        $s_sql_lc->execute();
+        
+        
+        return $s_sql_lc->fetchAll();
+    }
+
+
 
 }
 
