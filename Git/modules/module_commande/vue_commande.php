@@ -64,4 +64,17 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
 
     }
 
+    public function produitId($prod){
+
+        echo "Commande";
+        foreach($prod as $p){
+            echo '<input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
+            <input type="number" name="produits['.$elem.'][qte]" min="1" max="'$p['quantite']'" placeholder="0" oninput="refreshPanier()">
+                   <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
+                   <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
+                   <p>'.$p["nom"].' - '.($p["prix"]/100).' €</p>';
+        }
+
+    }
+
 ?>

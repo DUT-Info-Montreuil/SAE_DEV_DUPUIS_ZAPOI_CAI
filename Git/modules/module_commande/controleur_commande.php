@@ -60,6 +60,13 @@
             return $this->vue->message("Commande annulée");
         }
 
+        public function recupProduitId($id){
+            return $this->modele->commanderProduit($id);
+        }
+        public function afficherProduitId($prod){
+            return $this->vue->commanderProduitId($prod);
+        }
+
 
 }
 ?>

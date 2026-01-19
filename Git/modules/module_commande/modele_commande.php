@@ -117,6 +117,29 @@ public function calculerPrixTotalCommande() {
 
     }
 
+    public function commanderProduit(int $id) {
+
+        $sql = "
+
+            SELECT
+                p.idProd as idProd,
+                p.nom as nomP,
+                f.nom as nomF,
+                p.prix as prix
+            FROM
+                produits p NATURAL JOIN stock s INNER JOIN fournisseur f ON f.idFournisseur = p.idFournisseur
+            WHERE
+                p.idProd = :id
+            GROUP BY
+                idProd;
+        ";
+
+        $s_sql_c = self::$bdd->prepare($sql_c);
+        $s_sql_c->bindParam(':id', $id);
+        $s_sql_c->execute();
+
+    }
+
 
 
 }
