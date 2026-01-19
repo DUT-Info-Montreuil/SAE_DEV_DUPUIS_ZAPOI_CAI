@@ -31,7 +31,7 @@ class Mod_connexion {
                     $_SESSION['idAsso'] = $_POST['association'];
                     if($this->cont->existe($_SESSION['idCompte'], $_SESSION['idAsso'])){//Existance de l'utilisateur dans l'asso
                         if($this->cont->getRole()==3){
-                        header("Location: index.php?module=solde&association=".$_SESSION['idAsso']."&action=page_solde");
+                        header("Location: index.php?module=commande&association=".$_SESSION['idAsso']."&action=ajout_debut_commande");
                         exit;
                         }
                         else if($this->cont->getRole()==2){
