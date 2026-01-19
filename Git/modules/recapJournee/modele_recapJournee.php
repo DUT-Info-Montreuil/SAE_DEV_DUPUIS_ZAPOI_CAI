@@ -20,11 +20,12 @@ class modele_recapJournee extends Connexion{
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
                 JOIN produits p ON lc.idProd = p.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
-                AND c.état = 1
+                AND c.état = 1 AND idAssociation = :idAsso
             ";
 
             $stmt = self::$bdd->prepare($sql);
             $stmt->bindValue(':jour', $jour, PDO::PARAM_INT);
+            $stmt->bindValue(':idAsso', $_SESSION['idAsso'], PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetch(PDO::FETCH_ASSOC);

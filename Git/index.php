@@ -42,13 +42,16 @@ switch($module) {
 	    $mod = new Mod_commande();
 	    $moduleContent=$mod->affiche();
 	    break;
-
 	case 'historique':
         include_once "modules/module_historique/module_historique.php";
         $mod = new Mod_historique();
         $moduleContent=$mod->affiche();
         break;
-
+    case "staff":
+        include_once "modules/module_staff/module_staff.php";
+        $mod = new Module_staff();
+        $moduleContent=$mod->affiche();
+        break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

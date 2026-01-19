@@ -25,8 +25,6 @@ class Mod_connexion {
                 $this->cont->valideAsso();
                 break;
             case "redirection":
-
-
                 if(isset($_POST['association']) && $_POST['association']!="none"){
                     $_SESSION['idAsso'] = $_POST['association'];
                     if($this->cont->existe($_SESSION['idCompte'], $_SESSION['idAsso'])){//Existance de l'utilisateur dans l'asso
