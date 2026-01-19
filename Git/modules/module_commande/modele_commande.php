@@ -84,18 +84,40 @@ public function calculerPrixTotalCommande() {
         }
     }
     return $total;
-}
-public function commandeEstValide($solde_user, $prix_total) : bool {
-    return ($prix_total > 0 && $solde_user >= $prix_total);
-}
+    }
+    public function commandeEstValide($solde_user, $prix_total) : bool {
+        return ($prix_total > 0 && $solde_user >= $prix_total);
+    }
 
-public function updatecommande(){
-    $sql = "DELETE FROM commande
-                WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
+    public function updatecommande(){
+        $sql = "DELETE FROM commande
+                    WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
 
-    $s_sql = self::$bdd->prepare($sql);
-    $s_sql->execute();
-}
+        $s_sql = self::$bdd->prepare($sql);
+        $s_sql->execute();
+    }
+
+    public function annulerCommande($id) {
+
+        $sql_lc = "
+            DELETE FROM lignecommande WHERE idCommande = :id
+        ";
+
+        $s_sql_lc = self::$bdd->prepare($sql_lc);
+        $s_sql_lc->bindParam(':id', $id);
+        $s_sql_lc->execute();
+
+        $sql_c = "
+            DELETE FROM commande WHERE idCommande = :id
+        ";
+
+        $s_sql_c = self::$bdd->prepare($sql_c);
+        $s_sql_c->bindParam(':id', $id);
+        $s_sql_c->execute();
+
+    }
+
+
 
 }
 

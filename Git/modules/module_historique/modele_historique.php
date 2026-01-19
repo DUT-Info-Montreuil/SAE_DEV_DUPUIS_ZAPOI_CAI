@@ -70,7 +70,7 @@ class Modele_historique extends Connexion{
             JOIN lignecommande lc ON lc.idCommande = c.idCommande
             JOIN produits p ON p.idProd = lc.idProd
             WHERE c.idCommande = :idCommande
-            GROUP BY p.idProd
+            GROUP BY p.idProd, p.nom
             ORDER BY quantite_totale DESC;
         ";
 
