@@ -42,5 +42,25 @@ class Modele_stock extends Connexion{
         return (int)$resultStock['faible'];
     }
 
+public function deduireStock() {
+    // 1. On récupère l'ID envoyé par le JS (on utilise 'idCommande')
+    $idCom = $_POST['idCommande'] ?? null;
+    if ($idCom) {
+        // 2. On récupère les produits et quantités liés à cette commande
+        // Note : Vérifiez bien si votre colonne s'appelle 'qte_produit' ou 'quantite' dans lignecommande
+        $sql = self::$bdd->prepare("SELECT idProd, quantite FROM lignecommande WHERE idCommande = ?");
+        $sql->execute([$idCom]);
+        $produits = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        // 3. On prépare la mise à jour du stock
+        $sqlUpdate = self::$bdd->prepare("UPDATE stock SET quantite = quantite - ? WHERE idProd = ?");
+
+        foreach ($produits as $p) {
+            // 4. On déduit directement la quantité achetée du stock actuel
+            $sqlUpdate->execute([$p['quantite'], $p['idProd']]);
+        }
+    }
+    exit();
+}
 }
 ?>

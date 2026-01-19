@@ -48,6 +48,18 @@
         public function updatecommande(){
         return $this->modele->updatecommande();
         }
+public function finaliserCommande(){
+    if (isset($_POST['idCommande'])) {
+        $this->modele->finaliserCommande($_POST['idCommande']);
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success']);
+        exit;
+    }
+    else{
+    $commandesEnCours = $this->modele->commandesEnCours();
+    $this->vue->finaliser_commande($commandesEnCours);
+    }
+}
 
         public function getProduits() : array {
             return $this->modele->getProduits();

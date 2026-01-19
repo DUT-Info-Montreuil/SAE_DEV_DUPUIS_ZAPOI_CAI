@@ -5,16 +5,20 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Alacool</title>
+    <title>À-ladébauche</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="template4.css">
+
+    <link rel="stylesheet" href="template7.css">
+
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
     <header class="bg-dark text-white shadow-sm">
         <nav class="navbar navbar-expand-lg navbar-dark container">
-            <a class="navbar-brand fw-bold" href="index.php">ALACOOL
+            <a class="navbar-brand fw-bold" href="index.php">À-LADÉBAUCHE
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -37,7 +41,7 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=gestionUtilisateurs">Gestion Utilisateurs</a></li>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=commande">Gérer les Commandes</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=finCommande">Gérer les Commandes</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
                             <?php elseif ($_SESSION['role'] == 3): // Client ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>

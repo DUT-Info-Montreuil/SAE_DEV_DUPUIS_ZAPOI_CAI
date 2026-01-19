@@ -29,6 +29,9 @@ class Cont_stock{
         echo json_encode($res);
         exit;
     }
+    public function deduireStock(){
+        $this->modele->deduireStock();
+    }
 
     
 

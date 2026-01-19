@@ -37,6 +37,7 @@ class Mod_commande {
                 $this->cont->prix_total();
                 break;
 
+
             case 'annulation':
                 $idCommande = $_GET['idCommande'] ?? "0";
                 $this->cont->annulationCommande($idCommande);
@@ -47,6 +48,11 @@ class Mod_commande {
                 $id = $_GET["idProd"];
                 $prod = $this->cont->recupProduitId($id);
                 $this->cont->afficherProduitId($prod);
+
+            case 'finCommande':
+                $this->cont->finaliserCommande();
+                break;
+
         }
 	}
 
