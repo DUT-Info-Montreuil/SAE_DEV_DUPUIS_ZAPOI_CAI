@@ -48,7 +48,7 @@ class Modele_commande extends Connexion {
     }
 
   public function getProduits():array{
-         $sql = "SELECT * FROM produits";
+         $sql = "SELECT * FROM produits NATURAL JOIN stock";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute();
                 $produits = $stmt->fetchAll();
