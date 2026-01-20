@@ -15,7 +15,7 @@ class Cont_stock{
     }
 
     public function affiche_stock() {
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
             $this->vue->afficheStock($this-> getStock());
         }
         else{
@@ -26,7 +26,7 @@ class Cont_stock{
 
     //Fonctions du modèle
     public function getStock(): array{
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
             return $this->modele->getStock();
         }
         else{
@@ -35,7 +35,7 @@ class Cont_stock{
         
     }
     public function getRecherche(){
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
             $recherche=$_POST['rechercher'] ?? "";
             $res=$this->modele->getRecherche($recherche);
             header('Content-Type: application/json');
@@ -47,7 +47,7 @@ class Cont_stock{
         }
     }
     public function deduireStock(){
-        if($_SESSION['role']==3){
+        if($_SESSION['role']==2){
             $this->modele->deduireStock();
         }
         else{

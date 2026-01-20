@@ -113,6 +113,10 @@ private function recherche_dynamique() {
     public function affiche(){
         return $this->getAffichage();
     }
+
+    public function message($txt){
+        echo "<p>$txt</p>";
+    }
 }
 
 ?>
