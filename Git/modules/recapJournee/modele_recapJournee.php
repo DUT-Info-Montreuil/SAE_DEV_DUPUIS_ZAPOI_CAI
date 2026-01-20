@@ -14,10 +14,11 @@ class modele_recapJournee extends Connexion{
         {
             $sql = "
                 SELECT
-                    COALESCE(SUM(lc.quantite * p.prix), 0) / 100 AS recette,
+                    COALESCE(SUM(lc.quantite * m.prix), 0) / 100 AS recette,
                     DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY) AS jour
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
+                JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON lc.idProd = p.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
@@ -47,10 +48,11 @@ class modele_recapJournee extends Connexion{
                     c.idCommande as id,
                     p.nom as nom,
                     lc.quantite as quantite,
-                    p.prix as prix,
-                    ( lc.quantite * p.prix ) AS total_ligne
+                    m.prix as prix,
+                    ( lc.quantite * m.prix ) AS total_ligne
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
+                JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON p.idProd = lc.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1;
@@ -89,9 +91,10 @@ class modele_recapJournee extends Connexion{
         $sql = "
             SELECT ROUND(AVG(total_commande / 100), 2)
             FROM (
-                SELECT SUM(lc.quantite * p.prix) AS total_commande
+                SELECT SUM(lc.quantite * m.prix) AS total_commande
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
+                JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON p.idProd = lc.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
@@ -112,14 +115,15 @@ class modele_recapJournee extends Connexion{
                 SELECT
                     p.nom as nom,
                     SUM(lc.quantite) AS quantite_totale,
-                    p.prix as prix,
-                    SUM(lc.quantite * p.prix) AS total_produit
+                    m.prix as prix,
+                    SUM(lc.quantite * m.prix) AS total_produit
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
+                JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON p.idProd = lc.idProd
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
-                GROUP BY p.nom, p.prix
+                GROUP BY p.nom, m.prix
                 ORDER BY quantite_totale DESC;
             ";
 

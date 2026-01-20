@@ -20,7 +20,7 @@ Class Vue_stock extends VueGenerique{
 
 
                     <div id="corps-tableau" style="display : contents;">';
-                    $this->affichageDéfaut($liste_stock);
+                    $this->affichageDefaut($liste_stock);
                     echo'</div>';
 
 
@@ -79,7 +79,7 @@ private function recherche_dynamique() {
     public function afficheNBProduit($nb){
         echo '<p id="nb">Nombre de produits en stock : '.$nb.'</p>';
     }
-    public function affichageDéfaut($liste_stock){
+    public function affichageDefaut($liste_stock){
         foreach($liste_stock as $item){
                         echo '
 
@@ -91,9 +91,8 @@ private function recherche_dynamique() {
                                 echo '<span style="color:green">Disponible</span>';
                             }
                             else{
-                                echo '<span style="color:red">En faible quantité</span>';
+                                echo '<span style="color:red">Faible</span>';
                             }
-
                         echo'</div>';
                     }
                     echo '</div>';

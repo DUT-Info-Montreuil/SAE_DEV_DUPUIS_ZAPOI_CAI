@@ -15,7 +15,7 @@ class Modele_commande extends Connexion {
         $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
         $ssql = self::$bdd->prepare($sql);
         $success = $ssql->execute([
-        'idAsso'=>1,
+        'idAsso'=>$_SESSION['idAsso'],
         'idUtilisateur'=>$idUtilisateur,
         'etat'=>0
         ]);
@@ -27,7 +27,6 @@ class Modele_commande extends Connexion {
             return;
         }
 
-        echo'<br>';
         $sql = "INSERT INTO lignecommande (idCommande, idProd, quantite)
                 VALUES (?, ?, ?)";
         $stmt = self::$bdd->prepare($sql);
@@ -47,10 +46,11 @@ class Modele_commande extends Connexion {
         }
     }
 
-  public function getProduits():array{
-         $sql = "SELECT * FROM produits NATURAL JOIN stock";
+  public function getProduitsMenu():array{
+        $idAsso= $_SESSION['idAsso'];
+         $sql = "SELECT * FROM produits NATURAL JOIN menu INNER JOIN stock ON produits.idProd=stock.idProd WHERE menu.idAsso = ?";
                 $stmt = self::$bdd->prepare($sql);
-                $stmt->execute();
+                $stmt->execute([$idAsso]);
                 $produits = $stmt->fetchAll();
 
          return $produits;
@@ -74,10 +74,11 @@ public function calculerPrixTotalCommande() {
     if (isset($_POST['produits'])) {
         foreach ($_POST['produits'] as $prod) {
             $id = $prod['id'];
+            $idAsso = $_SESSION['idAsso'];
             $qte = (int)$prod['qte'];
             if ($qte > 0) {
-                $stmt = self::$bdd->prepare("SELECT prix FROM produits WHERE idProd = ?");
-                $stmt->execute([$id]);
+                $stmt = self::$bdd->prepare("SELECT prix FROM menu WHERE idProd = ? AND idAsso = ?");
+                $stmt->execute([$id,$idAsso]);
                 $prixUnitaire = $stmt->fetchColumn()/100;
                 $total += $prixUnitaire * $qte;
             }
@@ -100,10 +101,10 @@ public function commandesEnCours(){
         SELECT
             c.état,
             c.idCommande AS id,
-            SUM(lc.quantite * p.prix) / 100 AS total_commande
+            SUM(lc.quantite * m.prix) / 100 AS total_commande
         FROM commande c
         JOIN lignecommande lc ON lc.idCommande = c.idCommande
-        JOIN produits p ON p.idProd = lc.idProd
+        JOIN menu m ON (m.idProd = lc.idProd AND c.idAssociation = m.idAsso)
         WHERE c.état = 0
         GROUP BY
             c.état,

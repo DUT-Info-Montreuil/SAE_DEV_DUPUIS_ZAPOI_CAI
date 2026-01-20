@@ -16,7 +16,7 @@
 
         }
         public function afficher_formulaire_Commande(){
-                $produits = $this->getProduits();
+                $produits = $this->modele->getProduitsMenu();
                 $this->vue->formulaire_commande($produits);
         }
 

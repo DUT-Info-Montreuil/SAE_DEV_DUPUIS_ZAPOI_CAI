@@ -13,12 +13,12 @@ class Modele_historique extends Connexion{
         $sql = "
             SELECT
                 c.idCommande AS id,
-                SUM(lc.quantite * p.prix) / 100 AS total_commande,
+                SUM(lc.quantite * m.prix) / 100 AS total_commande,
                 c.date AS jour,
                 c.état AS etat
             FROM commande c
             JOIN lignecommande lc ON lc.idCommande = c.idCommande
-            JOIN produits p ON p.idProd = lc.idProd
+            JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
             WHERE c.idUtilisateur = :utilisateur
             GROUP BY
                 c.idCommande,
@@ -61,15 +61,16 @@ class Modele_historique extends Connexion{
  public function getDetailsCommande($id) {
      $sql = "
          SELECT
-             p.idProd AS id,
+             m.idProd AS id,
              p.nom AS nom,
              SUM(lc.quantite) AS quantite_totale,
-             SUM(lc.quantite * p.prix) / 100 AS total_produit
+             SUM(lc.quantite * m.prix) / 100 AS total_produit
          FROM commande c
          JOIN lignecommande lc ON lc.idCommande = c.idCommande
-         JOIN produits p ON p.idProd = lc.idProd
+         JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
+         JOIN produits p on p.idProd = m.idProd
          WHERE c.idCommande = :idCommande
-         GROUP BY p.idProd, p.nom  -- Correction ici : ajout de p.nom
+         GROUP BY m.idProd, p.nom
          ORDER BY quantite_totale DESC;
      ";
 
@@ -84,22 +85,8 @@ class Modele_historique extends Connexion{
 
 
      foreach ($detailsFetch as $ligne) {
-
      $id = $ligne['id'];
-
-
-     $details_commande[$id] = [
-
-     'id' => $ligne['id'],
-
-     'nom' => $ligne['nom'],
-
-     'quantite' => $ligne['quantite_totale'],
-
-     'total' => $ligne['total_produit']
-
-     ];
-
+     $details_commande[$id] = ['id' => $ligne['id'],'nom' => $ligne['nom'],'quantite' => $ligne['quantite_totale'],'total' => $ligne['total_produit']];
      }
 
      return $details_commande;
