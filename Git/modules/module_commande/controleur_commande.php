@@ -31,7 +31,8 @@
         public function prix_total(){
             $total=$this->modele->calculerPrixTotalCommande();
             header('Content-Type: application/json');
-            echo json_encode(['total' => number_format($total, 2, '.', '')]);
+            echo json_encode(['total' => number_format($total, 2, '.', ''),['status'=>'success']]);
+
             exit;
 
         }

@@ -71,14 +71,11 @@ public function finaliser_commande($liste_commande){
                 <button type="button" name="finCommande" onclick="finCommandeAJAX('.$c['id'].')">
                     Finaliser
                 </button>
+            </div>
 
 
             ';
             }
-
-
-
-
 
 
         echo '</div>';
@@ -97,16 +94,12 @@ public function finaliser_commande($liste_commande){
             const response = await fetch("index.php?module=commande&action=finCommande",{
                 method: "POST",
                 body : données
-            })
+            });
             const reponseJSON = await response.json();
 
-            if(reponseJSON.success){
-                const prodàEnlever = document.getElementById("commande-"+ id);
-                alert("Commande finalisée avec succès !");
-                prodàEnlever.remove();
-            } else {
-                alert("Erreur lors de la finalisation de la commande.");
-            }
+            const prodàEnlever = document.getElementById("commande-"+ id);
+            alert("Commande finalisée avec succès !");
+            prodàEnlever.remove();
 
 
     }
