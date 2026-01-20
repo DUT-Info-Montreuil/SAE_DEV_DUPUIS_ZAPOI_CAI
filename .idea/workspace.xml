@@ -7,17 +7,19 @@
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/controleur_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/controleur_accueil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/module_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/module_accueil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_acceuil/vue_accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_accueil/vue_accueil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/controleur_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/modele_commande.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/modele_historique.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/module_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/module_historique.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/modele_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/modele_restock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/module_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/module_restock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/vue_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/vue_restock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/module_solde/vue_solde.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_solde/vue_solde.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/modele_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Git/utils/connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/utils/connexion.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,19 +37,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "restock2",
+    "last_opened_file_path": "/home/etudiants/info/edupuis/local_html/MVC_3_edupuis",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Git/modules" />

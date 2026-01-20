@@ -1,5 +1,7 @@
 <?php
 
+require_once "html_spe_char.php";
+
 $module = $_GET['module'] ?? 'accueil';
 
 session_start();

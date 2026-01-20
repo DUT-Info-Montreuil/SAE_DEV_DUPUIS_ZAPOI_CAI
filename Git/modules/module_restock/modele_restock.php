@@ -14,18 +14,18 @@ class Modele_restock extends Connexion {
         $sql = "
             SELECT
                 p.nom as nom ,
-                p.prix / 100 as prix,
+                pf.prix / 100 as prix,
                 p.image as image,
                 f.nom as fournisseur
             FROM
-                produits p JOIN fournisseur f ON p.idFournisseur = f.idFournisseur
+                produits p JOIN prof_fournisseur pf ON p.idProd = pf.idProd
+                JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
         ";
 
         $stmt = self::$bdd->prepare($sql);
         $stmt->execute();
 
         $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
         return $produits;
 
@@ -35,11 +35,12 @@ class Modele_restock extends Connexion {
         $sql = "
             SELECT
                 p.nom as nom ,
-                p.prix / 100 as prix,
+                pf.prix / 100 as prix,
                 p.image as image,
                 f.nom as fournisseur
             FROM
-                produits p JOIN fournisseur f ON p.idFournisseur = f.idFournisseur
+                produits p JOIN prof_fournisseur pf ON p.idProd = pf.idProd
+                JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
             WHERE
                 p.idFournisseur = :id
         ";

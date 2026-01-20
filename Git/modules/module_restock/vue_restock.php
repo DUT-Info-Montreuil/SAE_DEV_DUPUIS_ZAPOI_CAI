@@ -9,7 +9,7 @@ require_once('utils/vue_generique.php');
         echo "<h3> Produits à l'achat : </h3> <br>";
         echo "<lu>";
         foreach($produits as $p){
-            echo "<br><li><p>".$p['nom']." , Prix : ".number_format($p['prix'],2)." € , Fournisseur : ".$p['fournisseur']."
+            echo "<br><li><p>". h($p['nom']) ." , Prix : ".number_format($p['prix'],2)." € , Fournisseur : ". h($p['fournisseur']) ."
                 (ICI POSSIBILITE DE COMMANDER CE PRODUIT)
                 </li>";
         }
@@ -19,16 +19,14 @@ require_once('utils/vue_generique.php');
     public function fournisseurs(array $fournisseurs){
          echo '<h2>Choisissez un fournisseur :</h2>';
         foreach($fournisseurs as $f){
-            echo '<form method="post" action="index.php?module=restock&action=produitsF&fournisseur='.$f['id'].'">
-            <input type="hidden" name="fournisseur" value="'.$f['nom'].'">
+            echo '<form method="post" action="index.php?module=restock&action=produitsF&fournisseur='. h($f['id']) .'">
+            <input type="hidden" name="fournisseur" value="'. h($f['nom']) .'">
             <button type="submit"><img src="fonce-fond-abstrait.jpg" alt="Une image du logo" style="width: 15%; height: 2%;">'
-            .$f['nom'].'</button>
+            . h($f['nom']) .'</button>
             </form>';
         }
 
     }
-
-
 
     public function affiche(){
         return $this->getAffichage();

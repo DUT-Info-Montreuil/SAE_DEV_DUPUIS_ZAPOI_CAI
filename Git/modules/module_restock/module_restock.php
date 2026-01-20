@@ -22,13 +22,13 @@ class Mod_restock {
                 break;
 
             case "produitsF":
-                $f = $_GET['fournisseur'] ?? "0";
+                $f = (int) $_GET['fournisseur'] ?? "0";
                 $prodF = $this->cont->recupProduitsF($f);
                 $this->cont->afficherProduitsAchat($prodF);
                 break;
 
             case "ajoutStock":
-                $id = $_POST['idProd'] ?? null; 
+                $id = (int) $_POST['idProd'] ?? null;
                 $quantite = $_POST['quantite'] ?? 0;
 
                 if($id && $quantite > 0){

@@ -19,7 +19,7 @@ class Mod_historique{
                 $this->cont->afficherHistoriqueClient($histo);
                 break;
             case "detailHistoClient":
-                $idCommande = $_GET['idCommande'] ?? "0";
+                $idCommande = (int) $_GET['idCommande'];
                 $detailsCommande = $this->cont-> modDetailsCommande($idCommande);
                 $this->cont->afficherDetailsCommande($detailsCommande);
                 break;

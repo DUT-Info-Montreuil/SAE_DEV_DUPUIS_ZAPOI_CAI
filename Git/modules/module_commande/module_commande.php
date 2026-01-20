@@ -5,7 +5,7 @@ class Mod_commande {
     private $cont;
 
     public function __construct(){
-        $action = $_GET['action'] ?? "inscription";
+        $action = $_GET['action'] ?? "traiter_debut_commande";
 
         $this->vue = new Vue_commande();
         $this->cont = new Cont_commande($this->vue);
@@ -38,13 +38,13 @@ class Mod_commande {
                 break;
 
             case 'annulation':
-                $idCommande = $_GET['idCommande'] ?? "0";
+                $idCommande = (int) $_GET['idCommande'];
                 $this->cont->annulationCommande($idCommande);
                 $this->cont->messageAnnulation();
                 break;
 
             case 'commandeProduit':
-                $id = $_GET['idProd'];
+                $id = (int) $_GET['idProd'];
                 $prod = $this->cont->recupCommandeProduit($id);
                 $this->cont->afficheCommandeProduit($prod);
 
