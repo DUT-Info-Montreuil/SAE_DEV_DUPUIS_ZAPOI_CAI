@@ -85,6 +85,7 @@ public function calculerPrixTotalCommande() {
         }
     }
     return $total;
+
 }
 public function commandeEstValide($solde_user, $prix_total) : bool {
     return ($prix_total > 0 && $solde_user >= $prix_total);
@@ -122,13 +123,72 @@ public function commandesEnCours(){
 
 
 
-public function updatecommande(){
-    $sql = "DELETE FROM commande
-                WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
+    }
+    public function commandeEstValide($solde_user, $prix_total) : bool {
+        return ($prix_total > 0 && $solde_user >= $prix_total);
+    }
 
-    $s_sql = self::$bdd->prepare($sql);
-    $s_sql->execute();
-}
+    public function updatecommande(){
+        $sql = "DELETE FROM commande
+                    WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
+
+        $s_sql = self::$bdd->prepare($sql);
+        $s_sql->execute();
+    }
+
+    public function annulerCommande($id) {
+
+        $sql_lc = "
+            DELETE FROM lignecommande WHERE idCommande = :id
+        ";
+
+        $s_sql_lc = self::$bdd->prepare($sql_lc);
+        $s_sql_lc->bindParam(':id', $id);
+        $s_sql_lc->execute();
+
+        $sql_c = "
+            DELETE FROM commande WHERE idCommande = :id
+        ";
+
+        $s_sql_c = self::$bdd->prepare($sql_c);
+        $s_sql_c->bindParam(':id', $id);
+        $s_sql_c->execute();
+
+    }
+
+    public function commandeProduit($id) {
+        $idAsso=$_SESSION['idAsso']
+         $sql_lc = "
+            SELECT 
+                p.idProd as id,
+                p.nom,
+                m.prix,
+                s.quantite,
+                p.image,
+                f.nom as nomF,
+                f.idFournisseur as idF
+            FROM
+                produits p
+                NATURAL JOIN stock s
+                JOIN menu m on s.idProd = m.idProd
+                JOIN prod_fournisseur pf ON p.idProd = pf.idProd
+                JOIN fournisseur f ON f.idFournisseur = pf.idFournisseur
+            WHERE
+                p.idProd = :id AND
+                idAsso = :Asso;
+        ";
+
+        $s_sql_lc = self::$bdd->prepare($sql_lc);
+        $s_sql_lc->bindParam(':id', $id);
+        $s_sql_lc->bindParam(':Asso', $idAsso);
+        $s_sql_lc->execute();
+        
+        
+        return $s_sql_lc->fetchAll();
+    }
+
+
+
 
 }
 

@@ -28,7 +28,7 @@ class Mod_connexion {
 
 
                 if(isset($_POST['association']) && $_POST['association']!="none"){
-                    $_SESSION['idAsso'] = $_POST['association'];
+                    $_SESSION['idAsso'] = (int) $_POST['association'];
                     if($this->cont->existe($_SESSION['idCompte'], $_SESSION['idAsso'])){//Existance de l'utilisateur dans l'asso
                         if($this->cont->getRole()==3){
                         header("Location: index.php?module=commande&association=".$_SESSION['idAsso']."&action=ajout_debut_commande");

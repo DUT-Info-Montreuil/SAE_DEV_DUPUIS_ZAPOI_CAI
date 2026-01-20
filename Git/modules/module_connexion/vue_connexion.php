@@ -51,7 +51,7 @@ require_once('utils/vue_generique.php');
         echo '<h2>Choisissez une association :</h2>';
         foreach($liste_asso as $asso){
             echo '<form method="post" action="index.php?module=connexion&action=redirection">
-            <input type="hidden" name="association" value="'.$asso['idAsso'].'">
+            <input type="hidden" name="association" value="'. h($asso['idAsso']) .'">
             <button type="submit"><img src="fonce-fond-abstrait.jpg" alt="Une image du logo" style="width: 15%; height: 2%;"></button>
             </form>';
         }
@@ -62,9 +62,8 @@ require_once('utils/vue_generique.php');
             <form method="post" action="index.php?module=connexion&action=validationAsso">
             <fieldset>';
         foreach($liste_asso as $asso_option_attente){
-            echo'<input type="checkbox" name="asso['.$idAsso.'][IDTemp]" value="'.$asso_option_attente['IDTemp'].'"><p>Nom de l\'association : '.$asso_option_attente['nomAsso'].'</p>'.$asso_option_attente['siege_social'].'<br>';
-            
-            
+            echo'<input type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso_option_attente['IDTemp']) .'"><p>Nom de l\'association : '. h($asso_option_attente['nomAsso']) ."</p>". h($asso_option_attente['siege_social']) ."<br>";
+
             $idAsso+=1;
         }
         echo '</fieldset>
@@ -76,7 +75,7 @@ require_once('utils/vue_generique.php');
     }
 
     public function message($txt){
-        echo "<p>$txt</p>";
+        echo "<p>". $txt ."</p>";
     }
 
 

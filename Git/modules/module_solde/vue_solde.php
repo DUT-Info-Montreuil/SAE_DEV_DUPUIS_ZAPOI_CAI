@@ -18,7 +18,7 @@ require_once ('utils/vue_generique.php');
         }
         public function afficheSolde($solde){
         if($solde != NULL){
-            echo '<p>Votre solde est de : ' . $solde . '€</p>';
+            echo '<p>Votre solde est de : ' . h($solde) . '€</p>';
         }
         else{
             

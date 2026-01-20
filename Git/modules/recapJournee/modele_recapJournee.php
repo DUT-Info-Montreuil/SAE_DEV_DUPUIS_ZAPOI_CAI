@@ -123,6 +123,7 @@ class modele_recapJournee extends Connexion{
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
                 GROUP BY p.nom, m.prix
+
                 ORDER BY quantite_totale DESC;
             ";
 

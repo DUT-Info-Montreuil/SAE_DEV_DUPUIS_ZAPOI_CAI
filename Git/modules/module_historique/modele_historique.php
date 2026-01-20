@@ -74,6 +74,7 @@ class Modele_historique extends Connexion{
          ORDER BY quantite_totale DESC;
      ";
 
+
      $stmt = self::$bdd->prepare($sql);
      $stmt->bindParam(':idCommande', $id);
      $stmt->execute();
