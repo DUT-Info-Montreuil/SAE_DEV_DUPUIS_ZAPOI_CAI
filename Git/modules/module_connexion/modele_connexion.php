@@ -153,8 +153,8 @@ class Modele_connexion extends Connexion {
     }
     public function nouvelleAssoValidee($donneAsso){
         $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?,?)");
-        $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');
-        $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');
+        $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');
+        $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');
 
         foreach($donneAsso as $inter){
             foreach($inter as $ajout){
