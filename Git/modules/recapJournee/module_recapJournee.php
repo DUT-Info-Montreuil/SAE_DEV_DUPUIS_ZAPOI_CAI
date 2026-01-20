@@ -26,6 +26,9 @@ Class module_recapJournee{
                 $produits = $this->cont->getProduitsVendus($jour);
                 $this->cont->afficheProduitsVendus($produits);
 
+                $this->cont->afficheEcart();
+
+                $this->cont->afficheEcartJours();
                 break;
 
             case "recapCertainJour":
@@ -41,6 +44,13 @@ Class module_recapJournee{
                 $this->cont->afficheProduitsVendus($produits);
 
                 break;
+            case "ecartStockEntre2J":
+                $liste = $this->cont->getEcartJ1J2();
+                $this->cont->afficheEcartJ1J2($liste);
+                break;
+
+
+
         }
 
     }

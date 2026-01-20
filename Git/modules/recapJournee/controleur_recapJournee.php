@@ -113,7 +113,31 @@
             
     }
 
+    public function afficheEcart(){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+            $liste_ecart = $this->modele->ecartJourJ();
+            $this->vue->afficheEcart($liste_ecart);
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
 
+    public function getEcartJ1J2(){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+            return $this->modele->ecartJourJ1J2();
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+    public function afficheEcartJ1J2($liste){
+        $this->vue->afficheEcartJ1J2($liste);
+    }
+    public function afficheEcartJours(){
+        $this->vue->form_ecartJours();
+    }
 
 }
 ?>

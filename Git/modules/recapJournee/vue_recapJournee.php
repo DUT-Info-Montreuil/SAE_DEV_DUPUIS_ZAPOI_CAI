@@ -45,11 +45,62 @@ require_once('utils/vue_generique.php');
         foreach ($produits as $p) {
              echo "". h($p['nom']).' —  x' . h($p['quantite']) .", total : ".number_format($p['total'], 2)." €  (stock restant : ". h($p['stock']) ." )<br>";
         }
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
+    }
+
+    public function afficheEcart($liste_Ecart){
+        echo "<h2>Ecart du jour</h2>";
+        foreach($liste_Ecart as $prod){
+            echo "<p>";
+            if($prod['ecart']<0){
+                echo"Il y a ".(h($prod['ecart'])*-1)." ". h($prod['nom']) ." vendu aujourd'hui";
+            }
+            else if($prod['ecart']==0){
+                echo"Pas de produit ont été vendu";
+            }
+            else{
+                echo"FF";
+            }
+            echo "</p>";
+        }
+        echo "<p>";
+    }
+
+    public function form_ecartJours(){
+
+        echo '<form method="post" action="index.php?module=recapJournee&action=ecartStockEntre2J">
+
+                <p> Choix du premier jour  :<p>
+                <input type="date" name="J1"/>
+                <p>Choix du second jour  :</p>
+                <input type="date" name="J2"/>
+
+                <button type="submit">Envoyez</button>
+
+            </form>';
+
+    }
+
+    public function afficheEcartJ1J2($liste_Ecart){
+        echo "<h2>Ecart entre ". h($_POST['J1'])." et ". h($_POST['J2'])."</h2>";
+        if($liste_Ecart!=null){
+        foreach($liste_Ecart as $prod){
+            echo "<p>";
+            if($prod['ecart']<0){
+                echo"Il y a ".(h($prod['ecart'])*-1)." ". h($prod['nom']) ." de moins au ". h($_POST['J1']) . " que au ".h($_POST['J2']);
+            }
+            else if($prod['ecart']==0){
+                echo"Pas de produit ont été vendu";
+            }
+            else{
+                echo"Il y a ".(h($prod['ecart']))." ". h($prod['nom']) ." par rapport au ".h();//date2
+            }
+            echo "</p>";
+        }
+        echo "<p>";
+        }
+    else{
+        echo"<p>N'existe pas</p>";
+    }
     }
 
     public function menu(){
@@ -59,7 +110,7 @@ require_once('utils/vue_generique.php');
             
         ';
 
-        }
+    }
 
 
     public function affiche(){

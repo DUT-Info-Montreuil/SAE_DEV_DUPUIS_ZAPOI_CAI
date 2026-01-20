@@ -169,7 +169,7 @@ class modele_recapJournee extends Connexion{
         foreach ($stock as $ligne) {
             $nom = $ligne['nom'];
 
-            $stock_prod[$nom] = [
+            $stock_prod[] = [
                 'nom' => $ligne['nom'],
                 'stock' => (int) $ligne['quantite']
             ];
@@ -177,6 +177,30 @@ class modele_recapJournee extends Connexion{
         return $stock_prod;
     }
 
+    public function ecartJourJ1J2(){
+        $sql1=self::$bdd->prepare("SELECT quantite AS qteJ1,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = ? ORDER BY idStock");
+        $sql1->execute([$_SESSION['idAsso'],$_POST['J1']]);
+        $sql1donne = $sql1->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql2=self::$bdd->prepare("SELECT quantite AS qteJ2,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = ? ORDER BY idStock");
+        $sql2->execute([$_SESSION['idAsso'],$_POST['J2']]);
+        $sql2donne = $sql2->fetchAll(PDO::FETCH_ASSOC);
+
+        var_dump($sql1donne);
+        foreach($sql1donne as $prod){
+            var_dump($prod)  ;
+
+        }
+
+        $final;
+        return $final->fetchColumn(PDO::FETCH_ASSOC);
+    }
+
+    public function ecartJourJ(){
+        $sql=self::$bdd->prepare("SELECT (quantite-qteInit) AS ecart,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ?");
+        $sql->execute([$_SESSION['idAsso']]);
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 
