@@ -1,7 +1,6 @@
 <?php
 include_once("utils/connexion.php"); // creer le fichier base de données
 
-
 Connexion::initConnexion();
 class modele_recapJournee extends Connexion{
 
