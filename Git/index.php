@@ -1,6 +1,8 @@
 <?php
 
-$module = $_GET['module'] ?? 'acceuil';
+require_once "html_spe_char.php";
+
+$module = $_GET['module'] ?? 'accueil';
 
 session_start();
 
@@ -22,8 +24,8 @@ switch($module) {
         $mod = new Mod_solde();
         $moduleContent = $mod->affiche();
         break;
-    case 'acceuil':
-        include_once "modules/module_acceuil/module_accueil.php";
+    case 'accueil':
+        include_once "modules/module_accueil/module_accueil.php";
         $mod = new Mod_accueil();
         $moduleContent = $mod->affiche();
         break;
@@ -42,13 +44,21 @@ switch($module) {
 	    $mod = new Mod_commande();
 	    $moduleContent=$mod->affiche();
 	    break;
-
 	case 'historique':
         include_once "modules/module_historique/module_historique.php";
         $mod = new Mod_historique();
         $moduleContent=$mod->affiche();
         break;
-
+    case 'restock':
+        include_once "modules/module_restock/module_restock.php";
+        $mod = new Mod_restock();
+        $moduleContent=$mod->affiche();
+        break;
+    case "staff":
+        include_once "modules/module_staff/module_staff.php";
+        $mod = new Module_staff();
+        $moduleContent=$mod->affiche();
+        break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

@@ -21,25 +21,35 @@ class Mod_connexion {
             case "ajout_connexion":
                 $this->cont->envoyer_formulaire_connexion();
                 break;
+            case "validationAsso":
+                $this->cont->valideAsso();
+                break;
             case "redirection":
+                if(isset($_POST['association']) && $_POST['association']!="none"){
+                    $_SESSION['idAsso'] = (int) $_POST['association'];
+                    if($this->cont->existe($_SESSION['idCompte'], $_SESSION['idAsso'])){//Existance de l'utilisateur dans l'asso
+                        if($this->cont->getRole()==3){
 
-                $_SESSION['idAsso'] = $_POST['association'];
-                if(isset($_POST['association']) && $_POST['association']!="none" && $this->cont->getRole()!=4){
-                    if($this->cont->getRole()==3){
-                        header("Location: index.php?module=solde&association=".$_POST['association']."&action=page_solde");
+                        header("Location: index.php?module=solde&action=page_solde");
                         exit;
+                        }
+                        else if($this->cont->getRole()==2){
+                            header("Location: index.php?module=commande&action=commande");
+                            exit;
+                        }
+                        else if ($this->cont->getRole()==1 || $this->cont->getRole()==4){
+                            header("Location: index.php?module=stock&association=&action=affiche_stock");
+                            exit;
+                        }
                     }
-                    else if($this->cont->getRole()==2){
-                        header("Location: index.php?module=commande&association=".$_POST['association']."&action=commande");
-                        exit;
+                    else{
+                        $this->cont->newUtilisateurClient();
+                        header("Location: index.php?module=connexion&action=choisirAsso");
                     }
-                    else if ($this->cont->getRole()==1){
-                        header("Location: index.php?module=stock&association=".$_POST['association']."&action=affiche_stock");
-                        exit;
-                    }
+                    
                 }
                 else{
-                    header("Location: index.php?module=connexion&action=choisirAsso");
+                    header("Location: index.php?module=connexion&action=redirection");
                 }
                 break;
             case "deconnexion":
@@ -50,8 +60,7 @@ class Mod_connexion {
 
         switch($action) {
             case "inscription":
-                $asso_array = $this->cont->getAssos();
-                $this->cont->afficher_formulaire_inscription($asso_array);
+                $this->cont->afficher_formulaire_inscription();
                 break;
             case "connexion":
                 $this->cont->afficher_formulaire_connexion();
@@ -60,12 +69,20 @@ class Mod_connexion {
                 $this->cont->afficher_formulaire_asso();
                 break;
             case "choisirAsso":
+                if($_SESSION["login"] == "admin"){
+                    $_SESSION["role"] = 4;
+                }
                 $asso = $this->cont->getAssos();
                 $this->cont->choixAsso($asso);
+                break;
+            case "newAsso":
+                $this->cont->affiche_asso_Temp();
+                break;
             default:
                 if (!$_SESSION['connecté']) {
                     $this->cont->afficher_formulaire_connexion();
                 }
+                break;
         }
     }
 

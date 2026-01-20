@@ -17,10 +17,12 @@ Class Vue_stock extends VueGenerique{
                     <div class="TitreColonne">Quantité</div>
                     <div class="TitreColonne">Seuil minimum</div>
                     <div class="TitreColonne">Statut</div>
+                    <div class="TitreColonne">Action</div>
+
 
 
                     <div id="corps-tableau" style="display : contents;">';
-                    $this->affichageDéfaut($liste_stock);
+                    $this->affichageDefaut($liste_stock);
                     echo'</div>';
 
 
@@ -66,6 +68,9 @@ private function recherche_dynamique() {
                     <div>${p.quantite}</div>
                     <div>${p.seuil}</div>
                     <div style="color:${couleur}">${texte}</div>
+                    <div><a href="index.php?module=commande&action=commandeProduit&idProd=${p.idProd}">
+                                Restock
+                            </a></div>
                 `;
             });
         }
@@ -79,34 +84,38 @@ private function recherche_dynamique() {
     public function afficheNBProduit($nb){
         echo '<p id="nb">Nombre de produits en stock : '.$nb.'</p>';
     }
-    public function affichageDéfaut($liste_stock){
+    public function affichageDefaut($liste_stock){
         foreach($liste_stock as $item){
                         echo '
 
-                        <div>'. $item['nom'] .'</div>
-                        <div>'. $item['quantite'] .'</div>
-                        <div>'. $item['seuil'] .'</div>
+                        <div>'. h($item['nom']) .'</div>
+                        <div>'. h($item['quantite']) .'</div>
+                        <div>'. h($item['seuil']) .'</div>
                         <div>';
                             if($item["quantite"] >= $item["seuil"]){
                                 echo '<span style="color:green">Disponible</span>';
                             }
                             else{
-                                echo '<span style="color:red">En faible quantité</span>';
+                                echo '<span style="color:red">Faible</span>';
                             }
-
                         echo'</div>';
+                        echo' <div> <a href="index.php?module=commande&action=commandeProduit&idProd='. h($item['idProd']) .'"> Restock </a></div>';
                     }
                     echo '</div>';
     }
     public function afficheNBDispo($dispo){
-        echo '<p id="nb">Nombre de produits disponibles : '.$dispo.'</p>';
+        echo '<p id="nb">Nombre de produits disponibles : '. h($dispo) .'</p>';
     }
 
     public function afficheNBFaible($faible){
-        echo '<p id="nb">Nombre de produits en faible quantité : '.$faible.'</p>';
+        echo '<p id="nb">Nombre de produits en faible quantité : '. h($faible) .'</p>';
     }
     public function affiche(){
         return $this->getAffichage();
+    }
+
+    public function message($txt){
+        echo "<p>$txt</p>";
     }
 }
 

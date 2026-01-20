@@ -7,7 +7,7 @@ Class Vue_accueil extends VueGenerique{
     public function afficher_accueil() {
 
             echo '<div class="card shadow-sm p-4">
-                    <h1 class="text-center mb-4 text-primary">Bienvenue sur ALACOOL</h1>
+                    <h1 class="text-center mb-4 text-primary">Bienvenue sur À-ladébauche</h1>
 
                     <h3 class="mt-4">Objectifs du Projet</h3>
                     <p>L’objectif principal est de remplacer l’ancien système de cartes physiques par une solution numérique sécurisée et fluide, permettant une gestion en temps réel des stocks et des flux financiers.</p>

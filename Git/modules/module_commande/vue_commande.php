@@ -21,11 +21,13 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
     foreach($liste_prod as $p){
         $id = $p['idProd'];
         echo '
+
             <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
-            <input type="number" name="produits['.$elem.'][qte]" min="1" max="100" placeholder="0" oninput="refreshPanier()">
+            <input type="number" name="produits['.$elem.'][qte]" min="0" max='.$p["quantite"].' placeholder="0" oninput="refreshPanier()">
                 <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
 
-            <p>'.$p["nom"].' - '.($p["prix"]/100).' €</p>
+
+            <p>'.h($p["nom"]).' - '.( h($p["prix"]/100)).' €</p>
 
         ';
         $elem += 1;
@@ -35,33 +37,113 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
     echo '</form>';
     echo '
     <script>
-     function refreshPanier(){
+     async function refreshPanier(){
         const formulaire = document.getElementById("form-commande");
         const données = new FormData(formulaire);
 
-        fetch("index.php?module=commande&action=prix_total",{
+        const reponse = await fetch("index.php?module=commande&action=prix_total",{
             method: "POST",
             body : données
-        })
-        .then(response=>response.json())
-        .then(data=> {
-        document.getElementById("total-prix").innerText = data.total +"€";
-        })
+            });
+
+        const reponseJSON = await reponse.json();
+        document.getElementById("total-prix").innerText = reponseJSON.total +"€";
+
     }
     </script>
     ';
 }
+public function finaliser_commande($liste_commande){
+    echo '
+        <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
+        <div id="listeCommande">
+            <div class="TitreColonne">ID de la commande</div>
+            <div class="TitreColonne">Prix de la commande</div>
+            <div class="TitreColonne">Détails de la commande </div>
+            <div class ="TitreColonne">Action</div>';
+            foreach($liste_commande as $c){
+
+            echo'
+                <div id = "commande-'.$c["id"].'" class=ligneCommande style="display : contents;">
+                <div class="elt">'.$c["id"].'</div>
+                <div class="elt">'.$c['total_commande'].'</div>
+                <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="elt"> Détails </a>
+
+
+                <button type="button" name="finCommande" onclick="finCommandeAJAX('.$c['id'].')">
+                    Finaliser
+                </button>
+            </div>
+
+
+            ';
+            }
+
+
+        echo '</div>';
+
+        echo '</form>';
+
+        echo'
+
+    <script>
+    async function finCommandeAJAX(id){
+            const formulaire = document.getElementById("form-finCommande");
+            const données = new FormData(formulaire);
+            données.append("idCommande",id);
+
+
+            const response = await fetch("index.php?module=commande&action=finCommande",{
+                method: "POST",
+                body : données
+            });
+            const reponseJSON = await response.json();
+
+            const prodàEnlever = document.getElementById("commande-"+ id);
+            alert("Commande finalisée avec succès !");
+            prodàEnlever.remove();
+
+
+    }
+
+    </script>
+
+
+    ';
+}
+
     public function afficher_confirmation_commande($prix) {
-        echo "<p>Le prix total est de : " . $prix . " €</p>";
+        echo "<p>Le prix total est de : " . h($prix) . " €</p>";
     }
 
     public function affiche(){
         return $this->getAffichage();
     }
     public function message($txt){
-        echo "<p>$txt</p>";
+        echo "<p>". $txt ."</p>";
     }
 
+    
+
+    public function vueCommandeProduit($prod){
+        foreach($prod as $p){
+
+            echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
+            echo "<div id='restockDiv'>";
+            echo "<p> Fournissseur : ". h($p['nomF']) ."</p>";
+            echo "<p> Produit : ". h($p['nom']) ."</p>";
+            echo "<p> Prix : ". number_format($p['prix']/100,2) ." €</p>";
+            echo "<input type='hidden' name='idProd' value='". h($p['id']) ."'>";
+            echo "<input type='number' name='quantite' min='1' max='1000' placeholder='0'>";
+
+            echo " <button type='submit'>Valider</button>";
+            echo "</div>";
+            echo "</form>";
+        }
     }
+
+
+}
+
 
 ?>
