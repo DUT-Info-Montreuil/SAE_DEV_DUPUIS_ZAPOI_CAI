@@ -12,21 +12,45 @@
         }
         //Fonctions de la vue
         public function afficherHistoriqueClient(array $histo){
-            $this->vue->historiqueClient($histo);
+            if($_SESSION['role']==3){
+                $this->vue->historiqueClient($histo);
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+        
         }
 
         public function afficherDetailsCommande(array $details){
+            if($_SESSION['role']==3){
+
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
             $this->vue->detailsCommande($details);
         }
 
 
         //Fonctions du modèle
         public function modHistoriqueClient() : array {
-            return $this->modele->getHistoriqueClient();
+            if($_SESSION['role']==3){
+                return $this->modele->getHistoriqueClient();
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            return vide[null];
         }
 
         public function modDetailsCommande($details) : array {
-            return $this->modele->getDetailsCommande($details);
+            if($_SESSION['role']==3){
+                return $this->modele->getDetailsCommande($details);
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            return vide[null];
         }
 
 

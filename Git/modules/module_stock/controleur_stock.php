@@ -15,23 +15,37 @@ class Cont_stock{
     }
 
     public function affiche_stock() {
+        if($_SESSION['role']==1){
+
+        }
+        else{
+            die("Droit requis non perçu.");
+        }
         $this->vue->afficheStock($this-> getStock());
     }
 
     //Fonctions du modèle
     public function getStock(): array{
-        return $this->modele->getStock();
+        if($_SESSION['role']==1){
+            return $this->modele->getStock();
+        }
+        else{
+            die("Droit requis non perçu.");
+        }
+        
     }
     public function getRecherche(){
-        $recherche=$_POST['rechercher'] ?? "";
-        $res=$this->modele->getRecherche($recherche);
-        header('Content-Type: application/json');
-        echo json_encode($res);
-        exit;
+        if($_SESSION['role']==3){
+            $recherche=$_POST['rechercher'] ?? "";
+            $res=$this->modele->getRecherche($recherche);
+            header('Content-Type: application/json');
+            echo json_encode($res);
+            exit;
+        }
+        else{
+            die("Droit requis non perçu.");
+        }
     }
-
-    
-
 
 }
 ?>

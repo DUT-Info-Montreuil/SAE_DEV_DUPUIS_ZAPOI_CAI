@@ -18,38 +18,98 @@
     }
 
     public function getRecap(int $recette) {
+        if($_SESSION['role']==1){
+
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
             return $this->modele->getRecetteJournee($recette);
     }
         public function afficheRecap(array $recette) {
+                if($_SESSION['role']==1){
+
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
             return $this->vue->benefDuJour($recette);
     }
 
     public function getRecapSemaine() {
+        if($_SESSION['role']==1){
+
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
             return $this->modele->getRecapSemaine();
     }
     public function afficheRecapSemaine(array $semaine) {
+        if($_SESSION['role']==1){
+
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
             return $this->vue->recap_semaine($semaine);
     }
 
     public function getTransactions(int $jour) {
-            return $this->modele->getTransactions($jour);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                return $this->modele->getTransactions($jour);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+            
     }
     public function afficheTransactions(array $transactions) {
-            return $this->vue->transactionsDuJour($transactions);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                 return $this->vue->transactionsDuJour($transactions);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+           
     }
 
     public function getProduitsVendus(int $jour) {
-            return $this->modele->getProdVendus($jour);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                return $this->modele->getProdVendus($jour);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+            
     }
     public function afficheProduitsVendus(array $transactions) {
-            return $this->vue->ProduitsVendus($transactions);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                return $this->vue->ProduitsVendus($transactions);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+            
     }
 
     public function getMoyenneRecetteJour(int $jour) {
-            return $this->modele->getMoyenneRecetteJour($jour);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                return $this->modele->getMoyenneRecetteJour($jour);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+            
     }
     public function afficheMoyenneRecetteJour(float $moy) {
-            return $this->vue->moyenneRecetteJour($moy);
+        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+                return $this->vue->moyenneRecetteJour($moy);
+        }
+        else{
+                die("Droit requis non perçu.");
+        }
+            
     }
 
 

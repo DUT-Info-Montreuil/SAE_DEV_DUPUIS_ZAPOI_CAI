@@ -31,15 +31,15 @@ class Mod_connexion {
                     $_SESSION['idAsso'] = $_POST['association'];
                     if($this->cont->existe($_SESSION['idCompte'], $_SESSION['idAsso'])){//Existance de l'utilisateur dans l'asso
                         if($this->cont->getRole()==3){
-                        header("Location: index.php?module=solde&association=".$_SESSION['idAsso']."&action=page_solde");
+                        header("Location: index.php?module=solde&action=page_solde");
                         exit;
                         }
                         else if($this->cont->getRole()==2){
-                            header("Location: index.php?module=commande&association=".$_SESSION['idAsso']."&action=commande");
+                            header("Location: index.php?module=commande&action=commande");
                             exit;
                         }
                         else if ($this->cont->getRole()==1 || $this->cont->getRole()==4){
-                            header("Location: index.php?module=stock&association=".$_SESSION['idAsso']."&action=affiche_stock");
+                            header("Location: index.php?module=stock&association=&action=affiche_stock");
                             exit;
                         }
                     }
@@ -71,7 +71,7 @@ class Mod_connexion {
                 $this->cont->afficher_formulaire_asso();
                 break;
             case "choisirAsso":
-                if($_SESSION["login"]== "admin"){
+                if($_SESSION["login"] == "admin"){
                     $_SESSION["role"] = 4;
                 }
                 $asso = $this->cont->getAssos();

@@ -12,45 +12,88 @@
         }
         //Fonctions de la vue
         public function afficher_formulaire_débutCommande(){
+            if ($_SESSION['role']==3) {
                 $this->vue->formulaire_début_commande();
-
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
         }
         public function afficher_formulaire_Commande(){
+            if ($_SESSION['role']==3) {
                 $produits = $this->getProduits();
                 $this->vue->formulaire_commande($produits);
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            
         }
 
         public function envoyer_formulaire_débutCommande(){
-            $this->modele->ajout_début_commande();
+            if ($_SESSION['role']==3) {
+                $this->modele->ajout_début_commande();
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
         }
         public function envoyer_formulaire_Commande(){
-            $this->modele->ajout_commande();
-            $prix = $this->modele->calculerPrixTotalCommande($_SESSION['idCommandeActuelle']);
-            $this->modele->déduireSolde($prix);
+            if ($_SESSION['role']==3) {
+                $this->modele->ajout_commande();
+                $prix = $this->modele->calculerPrixTotalCommande();
+                $this->modele->déduireSolde($prix);
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            
         }
         public function prix_total(){
-            $total=$this->modele->calculerPrixTotalCommande();
-            header('Content-Type: application/json');
-            echo json_encode(['total' => number_format($total, 2, '.', '')]);
-            exit;
+            if ($_SESSION['role']==3) {
+                $total=$this->modele->calculerPrixTotalCommande();
+                header('Content-Type: application/json');
+                echo json_encode(['total' => number_format($total, 2, '.', '')]);
+                exit;
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
 
         }
         public function commande_valide() : bool {
-            $prixAchat = $this->modele->calculerPrixTotalCommande();
-
+            if ($_SESSION['role']==3) {
+                $prixAchat = $this->modele->calculerPrixTotalCommande();
             return $this->modele->commandeEstValide($_SESSION['solde'], $prixAchat);
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            
         }
        	public function affiche(){
 		return $this->vue->affiche();
        	}
         public function updatecommande(){
-        return $this->modele->updatecommande();
+            if($_SESSION['role']==3){
+                return $this->modele->updatecommande();
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            return vide[null];
         }
 
 
 
         public function getProduits() : array {
-            return $this->modele->getProduits();
+            if($_SESSION['role']==3){
+                return $this->modele->getProduits();
+            }
+            else{
+                die("Droit requis non perçu.");
+            }
+            return vide[null];
         }
 
 
