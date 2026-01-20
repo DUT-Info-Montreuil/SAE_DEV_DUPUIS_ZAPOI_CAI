@@ -34,17 +34,19 @@ require_once('utils/vue_generique.php');
     }
 
     public function formulaireAsso(){
-        echo '
+        echo "
             <h2>Créer une nouvelle association</h2>
-            <form method="post" action="index.php?module=connexion&action=ajout_association">
-                <p>Nom de l\'association :<p>
-                <input type="text" id="nomAsso" name="nomAsso"/>
+            <form method='post' action='index.php?module=connexion&action=ajout_association' enctype='multipart/form-data'>
+                <p>Nom de l'association :<p>
+                <input type='text' id='nomAsso' name='nomAsso'/>
                 <p>Siege social de l\'association :</p>
-                <input type="text" id="siege_social" name="siege_social"/>
+                <input type='text' id='siege_social' name='siege_social'/>
+                <p>Logo de l'association :</p>
+                <input type='file' name='logo_asso'/>
 
-                <button type="submit">Envoyez</button>
+                <button type='submit'>Envoyez</button>
             </form>
-        ';
+        ";
     }
     
     public function choisirAsso($liste_asso){// choix de l'association après connexion
@@ -52,7 +54,7 @@ require_once('utils/vue_generique.php');
         foreach($liste_asso as $asso){
             echo '<form method="post" action="index.php?module=connexion&action=redirection">
             <input type="hidden" name="association" value="'. h($asso['idAsso']) .'">
-            <button type="submit"><img src="fonce-fond-abstrait.jpg" alt="Une image du logo" style="width: 15%; height: 2%;"></button>
+            <button type="submit"><img src="'. h($asso['chemin_logo']).'" alt="Une image du logo" style="width: 20%; height: 80%;"></button>
             </form>';
         }
     }

@@ -119,7 +119,7 @@ class Modele_connexion extends Connexion {
     }
 
     public function getAssos(): array {
-        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso FROM association");
+        $stmt = self::$bdd->prepare("SELECT idAsso,nomAsso,chemin_logo FROM association");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -134,6 +134,17 @@ class Modele_connexion extends Connexion {
             'siege_social' => $input_siege_social, 
             'idCompte' => $_SESSION['idCompte']
         ]);
+        $id = self::$bdd->lastInsertId();
+        $logo=$this->uploadLogoAsso($id);
+
+        if($logo!=null){
+            $update_sql = "UPDATE associationtemp SET chemin_logo = ? WHERE IDTemp = ?";
+            $s_sql=self::$bdd->prepare($update_sql);
+            $s_sql->execute([$logo,$id]);
+        }
+        else{
+            return "Problème avec le fichier image";
+        }
 
         return "Votre demande d'association a été envoyée et est en attente de validation.";
     }
@@ -152,13 +163,13 @@ class Modele_connexion extends Connexion {
         return $donneAssoFinal;
     }
     public function nouvelleAssoValidee($donneAsso){
-        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?,?)");
+        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social,chemin_logo) VALUES (?,?,?)");
         $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');
         $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');
 
         foreach($donneAsso as $inter){
             foreach($inter as $ajout){
-            $sql->execute([$ajout['nomAsso'],$ajout['siege_social']]);
+            $sql->execute([$ajout['nomAsso'],$ajout['siege_social'],$ajout['chemin_logo']]);
             $lastID=self::$bdd->lastInsertId();
             $sql_init_gestionnaire->execute([$ajout['idCompte'],$lastID]);
             $sql_init_suppadmin->execute([$lastID]);
@@ -177,6 +188,30 @@ class Modele_connexion extends Connexion {
         $sql->execute();
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
+public function uploadLogoAsso($id): ?string {
+    if (isset($_FILES['logo_asso']) && $_FILES['logo_asso']['error'] === 0) {
+        $tmp = $_FILES['logo_asso']['tmp_name'];
+        $name = $_FILES['logo_asso']['name'];
+
+        $mime = mime_content_type($tmp);
+
+        if (strpos($mime, "image/") === 0) {
+            $destination = "images/" . $id . "_" . $name;
+            if (move_uploaded_file($tmp, $destination)) {
+                return $destination;
+            }
+            else {
+                echo "Erreur lors du déplacement du fichier.";
+                return null;
+            }
+        } else {
+            echo "Le fichier n'est pas une image.";
+            return null;
+        }
+    }
+
+    return null;
+}
 
     
 }
