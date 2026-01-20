@@ -54,8 +54,11 @@ switch($module) {
         $mod = new Mod_restock();
         $moduleContent=$mod->affiche();
         break;
-
-
+    case "staff":
+        include_once "modules/module_staff/module_staff.php";
+        $mod = new Module_staff();
+        $moduleContent=$mod->affiche();
+        break;
     default:
         echo "<p>Module inconnu.</p>";
         break;

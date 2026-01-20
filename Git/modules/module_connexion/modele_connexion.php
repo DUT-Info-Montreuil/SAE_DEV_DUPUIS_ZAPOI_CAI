@@ -153,14 +153,24 @@ class Modele_connexion extends Connexion {
     }
     public function nouvelleAssoValidee($donneAsso){
         $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social) VALUES (?,?)");
+        $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');
+        $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');
+
         foreach($donneAsso as $inter){
             foreach($inter as $ajout){
             $sql->execute([$ajout['nomAsso'],$ajout['siege_social']]);
+            $lastID=self::$bdd->lastInsertId();
+            $sql_init_gestionnaire->execute([$ajout['idCompte'],$lastID]);
+            $sql_init_suppadmin->execute([$lastID]);
             }
         }
-
         
-    
+        $sql_cleaning=self::$bdd->prepare('DELETE FROM associationtemp WHERE nomAsso = ? AND siege_social = ?');
+        foreach($donneAsso as $inter){
+            foreach($inter as $del){
+            $sql_cleaning->execute([$del['nomAsso'],$del['siege_social']]);
+            }
+        }
     }
     public function getListeAssoTemp(){
         $sql=self::$bdd->prepare("SELECT * FROM associationtemp");

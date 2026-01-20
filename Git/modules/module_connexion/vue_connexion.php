@@ -60,13 +60,16 @@ require_once('utils/vue_generique.php');
         $idAsso = 0;
         echo '<h2>Associations en attente de validation :</h2>
             <form method="post" action="index.php?module=connexion&action=validationAsso">
-            <fieldset>';
+            <div id="listeNVAsso">
+            <div class=TitreColonne></div>
+            <div class=TitreColonne>Nom de l\'association</div>
+            <div class=TitreColonne>Siège social</div>';
         foreach($liste_asso as $asso_option_attente){
             echo'<input type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso_option_attente['IDTemp']) .'"><p>Nom de l\'association : '. h($asso_option_attente['nomAsso']) ."</p>". h($asso_option_attente['siege_social']) ."<br>";
 
             $idAsso+=1;
         }
-        echo '</fieldset>
+        echo '</div>
         <button type="submit" value="Valider">Valider</button>
         </form>';
     }

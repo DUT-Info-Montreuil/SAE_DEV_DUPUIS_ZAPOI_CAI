@@ -27,7 +27,7 @@ main .card {
     border: 2px solid black;
     border-radius: 2px;
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(4, auto);
     grid-auto-rows: auto;
     margin: 5px;
     text-align: center;
@@ -37,24 +37,6 @@ main .card {
     }
 }
 
-#listeCommande{
-    border: 2px solid black;
-    border-radius: 2px;
-    display: grid;
-    grid-template-columns: repeat(2, auto) repeat(2, 10%);
-    grid-auto-rows: auto;
-    margin: 5px;
-    text-align: center;
-    border-right: solid;
-    .TitreColonne{
-        font-weight: bold;
-        border-bottom: 2px solid black;
-    }
-    .elt{
-        border-right:2px solid black;
-        border-bottom: 2px solid black;
-    }
-}
 #listeMembres{
     border: 2px solid black;
     border-radius: 2px;
@@ -72,3 +54,4 @@ main .card {
         padding: 10%;
     }
 }
+
