@@ -35,17 +35,16 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
     echo '</form>';
     echo '
     <script>
-     function refreshPanier(){
+     async function refreshPanier(){
         const formulaire = document.getElementById("form-commande");
         const données = new FormData(formulaire);
 
-        fetch("index.php?module=commande&action=prix_total",{
+        const reponse = await fetch("index.php?module=commande&action=prix_total",{
             method: "POST",
             body : données
-        })
-        .then(response=>response.json())
-        .then(data=> {
-        document.getElementById("total-prix").innerText = data.total +"€";
+
+        const reponseJSON = await reponse.json());
+        document.getElementById("total-prix").innerText = reponseJSON.total +"€";
         })
     }
     </script>
