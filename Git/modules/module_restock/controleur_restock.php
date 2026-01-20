@@ -11,27 +11,69 @@
         }
 
         public function recupProduitsAchat(){
-            return $this->modele->getProduitsAchat();
+            if($_SESSION['role']==1){
+                return $this->modele->getProduitsAchat();
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
         public function afficherProduitsAchat($p){
-            return $this->vue->produitsAchat($p);
+            if($_SESSION['role']==1){
+                return $this->vue->produitsAchat($p);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
 
         public function recupFournisseurs(){
-            return $this->modele->getFournisseurs();
+            if($_SESSION['role']==1){
+                return $this->modele->getFournisseurs();
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
         public function afficherFournisseurs($f){
-            return $this->vue->fournisseurs($f);
+            if($_SESSION['role']==1){
+                return $this->vue->fournisseurs($f);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
 
         public function recupProduitsF($id){
-            return $this->modele->getProduitsFournisseur($id);
+            if($_SESSION['role']==1){
+                return $this->modele->getProduitsFournisseur($id);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
         public function afficherProduitsFournisseur($pf){
-            return $this->vue->fournisseurs($pf);
+            if($_SESSION['role']==1){
+                return $this->vue->fournisseurs($pf);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
         public function ajoutStock($id, $quantite){
-            return $this->modele->ajoutStock($id, $quantite);
+            if($_SESSION['role']==1){
+                return $this->modele->ajoutStock($id, $quantite);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
 
        	public function affiche(){

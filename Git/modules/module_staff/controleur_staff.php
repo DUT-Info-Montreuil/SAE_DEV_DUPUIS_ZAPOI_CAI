@@ -10,18 +10,28 @@ class Cont_staff{
     }
 
     public function gestionMembre(){
-        $membres = $this->modele->getMembres();
-        $this->vue->listeMembre($membres);
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
+            $membres = $this->modele->getMembres();
+            $this->vue->listeMembre($membres);
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
     }
 
     public function promoteMembre(){
-        if(isset($_POST['role']) && isset($_POST['choix'])){
-            $role = $_POST['role'];
-            foreach($_POST['choix'] as $idCompte){
-                $this->modele->promoteMembre($idCompte, $role);
+        if($_SESSION['role']==1){
+            if(isset($_POST['role']) && isset($_POST['choix'])){
+                $role = $_POST['role'];
+                foreach($_POST['choix'] as $idCompte){
+                    $this->modele->promoteMembre($idCompte, $role);
+                }
             }
+            $this->gestionMembre();
         }
-        $this->gestionMembre();
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
     }
     public function affiche(){
         return $this->vue->affiche();
