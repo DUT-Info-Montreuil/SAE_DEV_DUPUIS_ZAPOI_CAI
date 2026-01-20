@@ -65,5 +65,8 @@ require_once('utils/vue_generique.php');
     public function affiche(){
         return $this->getAffichage();
     }
+    public function message($txt){
+        echo "<p>$txt</p>";
+    }
 }
 ?>

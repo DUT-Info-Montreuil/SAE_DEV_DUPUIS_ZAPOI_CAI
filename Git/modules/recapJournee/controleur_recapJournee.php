@@ -18,7 +18,7 @@
     }
 
     public function getRecap($recette) {
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->modele->getRecetteJournee($recette);
         }
         else{
@@ -28,7 +28,7 @@
     }
 
     public function afficheRecap(array $recette) {
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->vue->benefDuJour($recette);
         }
         else{
@@ -38,7 +38,7 @@
     }
 
     public function getRecapSemaine() {
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->modele->getRecapSemaine();
         }
         else{
@@ -47,7 +47,7 @@
 
     }
     public function afficheRecapSemaine(array $semaine) {
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->vue->recap_semaine($semaine);
         }
         else{
@@ -57,7 +57,7 @@
     }
 
     public function getTransactions(int $jour) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->modele->getTransactions($jour);
         }
         else{
@@ -66,7 +66,7 @@
             
     }
     public function afficheTransactions(array $transactions) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
              return $this->vue->transactionsDuJour($transactions);
         }
         else{
@@ -76,7 +76,7 @@
     }
 
     public function getProduitsVendus(int $jour) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->getProdVendus($jour);
         }
         else{
@@ -85,7 +85,7 @@
             
     }
     public function afficheProduitsVendus(array $transactions) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->vue->ProduitsVendus($transactions);
         }
         else{
@@ -95,7 +95,7 @@
     }
 
     public function getMoyenneRecetteJour(int $jour) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->modele->getMoyenneRecetteJour($jour);
         }
         else{
@@ -104,7 +104,7 @@
             
     }
     public function afficheMoyenneRecetteJour(float $moy) {
-        if($_SESSION['role']==1 && $_SESSION['role'] == 4){
+        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
             return $this->vue->moyenneRecetteJour($moy);
         }
         else{
