@@ -18,7 +18,7 @@ class Modele_restock extends Connexion {
                 p.image as image,
                 f.nom as fournisseur
             FROM
-                produits p JOIN prof_fournisseur pf ON p.idProd = pf.idProd
+                produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
         ";
 
@@ -39,10 +39,10 @@ class Modele_restock extends Connexion {
                 p.image as image,
                 f.nom as fournisseur
             FROM
-                produits p JOIN prof_fournisseur pf ON p.idProd = pf.idProd
+                produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
             WHERE
-                p.idFournisseur = :id
+                pf.idFournisseur = :id
         ";
 
         $stmt = self::$bdd->prepare($sql);
