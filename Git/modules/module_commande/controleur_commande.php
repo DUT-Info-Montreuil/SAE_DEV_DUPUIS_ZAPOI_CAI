@@ -50,7 +50,7 @@ public function finaliserCommande(){
     if (isset($_POST['idCommande'])) {
         $this->modele->finaliserCommande($_POST['idCommande']);
         header('Content-Type: application/json');
-        echo json_encode(['status' => 'success']);
+        echo json_encode(['status' => 'success']); 
         exit;
     }
     else{

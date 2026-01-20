@@ -54,16 +54,15 @@ public function finaliser_commande($liste_commande){
     echo '
         <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
         <div id="listeCommande">
-         <div class="TitreColonne">ID de la commande</div>
+            <div class="TitreColonne">ID de la commande</div>
             <div class="TitreColonne">Prix de la commande</div>
             <div class="TitreColonne">Détails de la commande </div>
             <div class ="TitreColonne">Action</div>';
-            $id=0;
             foreach($liste_commande as $c){
 
             echo'
-
-                <div class="elt" name="commande" value='.$c["id"].'>'.$c['id'].'</div>
+                <div id = "commande-'.$c["id"].'" class=ligneCommande style="display : contents;">
+                <div class="elt">'.$c["id"].'</div>
                 <div class="elt">'.$c['total_commande'].'</div>
                 <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="elt"> Détails </a>
 
@@ -74,7 +73,6 @@ public function finaliser_commande($liste_commande){
 
 
             ';
-            $id+=1;
             }
 
 
@@ -89,25 +87,26 @@ public function finaliser_commande($liste_commande){
         echo'
 
     <script>
-    function finCommandeAJAX(id){
+    async function finCommandeAJAX(id){
             const formulaire = document.getElementById("form-finCommande");
             const données = new FormData(formulaire);
             données.append("idCommande",id);
 
 
-            fetch("index.php?module=commande&action=finCommande",{
+            const response = await fetch("index.php?module=commande&action=finCommande",{
                 method: "POST",
                 body : données
             })
-                .then(response=> {
-                    return fetch("index.php?module=stock&action=deduireStock&val=idCommande",{
-                method: "POST",
-                body : données
-                });
-            })
-            .then(() => {
-            location.reload();
-            });
+            const reponseJSON = await response.json();
+
+            if(reponseJSON.success){
+                const prodàEnlever = document.getElementById("commande-"+ id);
+                alert("Commande finalisée avec succès !");
+                prodàEnlever.remove();
+            } else {
+                alert("Erreur lors de la finalisation de la commande.");
+            }
+
 
     }
 
