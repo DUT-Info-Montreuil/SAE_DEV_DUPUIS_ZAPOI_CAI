@@ -40,7 +40,6 @@
 
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=listProduits">Achat de produits</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=gestionUtilisateurs">Gestion Utilisateurs</a></li>
 
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=staff&action=gestionMembre">Gestion Utilisateurs</a></li>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>

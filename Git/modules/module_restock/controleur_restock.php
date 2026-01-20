@@ -11,7 +11,7 @@
         }
 
         public function recupProduitsAchat(){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->getProduitsAchat();
             }
             else{
@@ -20,7 +20,7 @@
 
         }
         public function afficherProduitsAchat($p){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->vue->produitsAchat($p);
             }
             else{
@@ -30,7 +30,7 @@
         }
 
         public function recupFournisseurs(){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->getFournisseurs();
             }
             else{
@@ -39,7 +39,7 @@
 
         }
         public function afficherFournisseurs($f){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->vue->fournisseurs($f);
             }
             else{
@@ -49,7 +49,7 @@
         }
 
         public function recupProduitsF($id){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->getProduitsFournisseur($id);
             }
             else{
@@ -58,7 +58,7 @@
 
         }
         public function afficherProduitsFournisseur($pf){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->vue->fournisseurs($pf);
             }
             else{
@@ -67,7 +67,7 @@
 
         }
         public function ajoutStock($id, $quantite){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->ajoutStock($id, $quantite);
             }
             else{

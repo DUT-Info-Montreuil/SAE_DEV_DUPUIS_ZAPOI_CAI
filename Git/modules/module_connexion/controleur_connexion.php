@@ -11,15 +11,8 @@
 
         }
         //Fonctions de la vue
-        public function afficher_formulaire_inscription($donneAsso){
-            if ($donneAsso != null) {
-                $this->vue->formulaire_inscription($donneAsso);
-            }
-            else{
-                $this->vue->message("Aucune association disponible. Veuillez en créer une.");
-                header("Location: index.php?module=connexion&action=");
-            }
-    
+        public function afficher_formulaire_inscription(){
+            $this->vue->formulaire_inscription();
         }
         public function afficher_formulaire_connexion(){
                 $this->vue->formulaire_connexion();

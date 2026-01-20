@@ -14,16 +14,25 @@ require_once ('utils/vue_generique.php');
             <div class=TitreColonne>Rôle</div>";
             $id = 0;
             foreach($membres as $membre){
-                echo "<input type='checkbox' name='choix[".$membre['idCompte']."]' value='".$membre['idCompte']."'>
+                if($_SESSION['role']==1){
+                    echo "<input type='checkbox' name='choix[".$membre['idCompte']."]' value='".$membre['idCompte']."'/>";
+                }
+                else{
+                    echo"<div></div>";
+                }
+                echo"
                 <div>".$membre['nom']."</div> 
                 <div>".$membre['role']."</div>";
                 $id++;
             }
+        if($_SESSION['role']==1){
+
             echo"</div>
             <button type='submit' name='role' value='1'>Mettre en gestionnaire</button>
             <button type='submit' name='role' value='2'>Mettre en barman</button>
-            <button type='submit' name='role' value='3'>Mettre en client</button>
-            </form>";
+            <button type='submit' name='role' value='3'>Mettre en client</button>";
+            }
+            echo"</form>";
         }
 
         public function affiche(){

@@ -60,8 +60,7 @@ class Mod_connexion {
 
         switch($action) {
             case "inscription":
-                $asso_array = $this->cont->getAssos();
-                $this->cont->afficher_formulaire_inscription($asso_array);
+                $this->cont->afficher_formulaire_inscription();
                 break;
             case "connexion":
                 $this->cont->afficher_formulaire_connexion();

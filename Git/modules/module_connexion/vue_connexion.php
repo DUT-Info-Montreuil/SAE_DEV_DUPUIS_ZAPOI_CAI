@@ -5,7 +5,7 @@ require_once('utils/vue_generique.php');
         public function __construct(){
             parent::__construct();
         }
-    public function formulaire_inscription($liste_asso){
+    public function formulaire_inscription(){
         echo
         '
             <form method="post" action="index.php?module=connexion&action=ajout_inscription">
