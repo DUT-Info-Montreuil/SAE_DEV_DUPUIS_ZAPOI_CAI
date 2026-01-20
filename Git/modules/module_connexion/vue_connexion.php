@@ -43,6 +43,17 @@ require_once('utils/vue_generique.php');
                 <input type='text' id='siege_social' name='siege_social'/>
                 <p>Logo de l'association :</p>
                 <input type='file' name='logo_asso'/>
+                <div id=docsLegal>Documents à déposer
+                    <div class=eltLegal>
+                        <input type='file' name='docLegal1'/>
+                    </div>
+                    <div class=eltLegal>
+                        <input type='file' name='docLegal2'/>
+                    </div>
+                    <div class=eltLegal>
+                        <input type='file' name='docLegal3'/>
+                    </div>
+                </div>
 
                 <button type='submit'>Envoyez</button>
             </form>
@@ -66,11 +77,23 @@ require_once('utils/vue_generique.php');
             <div class=TitreColonne></div>
             <div class=TitreColonne>Nom de l\'association</div>
             <div class=TitreColonne>Siège social</div>';
-        foreach($liste_asso as $asso_option_attente){
-            echo'<input type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso_option_attente['IDTemp']) .'"><p>Nom de l\'association : '. h($asso_option_attente['nomAsso']) ."</p>". h($asso_option_attente['siege_social']) ."<br>";
+            foreach($liste_asso as $asso_option_attente){
+                echo '<input type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso_option_attente['IDTemp']) .'">';
+                echo '<p>Nom de l\'association : '. h($asso_option_attente['nomAsso']) .'</p>';
+                echo h($asso_option_attente['siege_social']) . "<br>";
 
-            $idAsso+=1;
-        }
+                echo '<div>';
+
+                    for ($i = 1; $i <= 3; $i++) {
+                        $chemin = "docsLegaux/" . h($asso_option_attente['IDTemp']) . "_" . h($asso_option_attente['nomAsso']) . "_doc" . $i . ".pdf";
+                        var_dump($chemin);
+                        echo '<a href="' . $chemin . '" target="_blank">Document ' . $i . '</a> ';
+                    }
+                echo '</div>';
+
+                $idAsso += 1;
+            }
+
         echo '</div>
         <button type="submit" value="Valider">Valider</button>
         </form>';

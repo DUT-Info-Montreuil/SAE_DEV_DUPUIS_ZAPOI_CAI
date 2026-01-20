@@ -136,7 +136,7 @@ class Modele_connexion extends Connexion {
         ]);
         $id = self::$bdd->lastInsertId();
         $logo=$this->uploadLogoAsso($id);
-
+        $docs=$this->uploadFichiersLegaux($id);
         if($logo!=null){
             $update_sql = "UPDATE associationtemp SET chemin_logo = ? WHERE IDTemp = ?";
             $s_sql=self::$bdd->prepare($update_sql);
@@ -191,26 +191,57 @@ class Modele_connexion extends Connexion {
 public function uploadLogoAsso($id): ?string {
     if (isset($_FILES['logo_asso']) && $_FILES['logo_asso']['error'] === 0) {
         $tmp = $_FILES['logo_asso']['tmp_name'];
-        $name = $_FILES['logo_asso']['name'];
+
 
         $mime = mime_content_type($tmp);
-
-        if (strpos($mime, "image/") === 0) {
-            $destination = "images/" . $id . "_" . $name;
-            if (move_uploaded_file($tmp, $destination)) {
-                return $destination;
-            }
-            else {
-                echo "Erreur lors du déplacement du fichier.";
-                return null;
-            }
-        } else {
+        if (strpos($mime, "image/") !== 0) {
             echo "Le fichier n'est pas une image.";
             return null;
         }
-    }
 
+
+
+        $extension = pathinfo($_FILES['logo_asso']['name'], PATHINFO_EXTENSION);
+
+        $destination = "images/" . $id . "_" . $_POST['nomAsso'] . "." . $extension;
+
+        if (move_uploaded_file($tmp, $destination)) {
+            return $destination;
+        } else {
+            echo "Erreur lors du déplacement du fichier.";
+            return null;
+        }
+    }
     return null;
+}
+public function uploadFichiersLegaux($id): array {
+    $destinations = [];
+    $champs = ['docLegal1', 'docLegal2', 'docLegal3'];
+
+    $nomAssoClean = preg_replace('/[^A-Za-z0-9\-]/', '', $_POST['nomAsso']);
+
+
+    $i = 1;
+
+    foreach ($champs as $champ) {
+        if (isset($_FILES[$champ]) && $_FILES[$champ]['error'] === 0) {
+            $tmp = $_FILES[$champ]['tmp_name'];
+            $extension = pathinfo($_FILES[$champ]['name'], PATHINFO_EXTENSION);
+            $mime = mime_content_type($tmp);
+            if ($mime === "application/pdf") {
+                $destination = "docsLegaux/" . $id . "_" . $nomAssoClean . "_doc" . $i . "." . $extension;
+                if (move_uploaded_file($tmp, $destination)) {
+                    $destinations[$champ] = $destination;
+                } else {
+                    echo "Erreur lors du déplacement du fichier : $champ";
+                }
+            } else {
+                echo "Format de fichier non autorisé pour : $champ";
+            }
+        }
+        $i++;
+    }
+    return $destinations;
 }
 
     
