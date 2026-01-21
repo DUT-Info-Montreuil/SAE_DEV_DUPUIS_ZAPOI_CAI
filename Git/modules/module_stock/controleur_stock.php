@@ -88,7 +88,7 @@ class Cont_stock{
             foreach($prod as $item){
                 $this->modele->changeInfo($item['idProd'],$item['prix'],$item['seuil']);
             }
-            header("Location : index.php?module=stock&action=affiche_stock");
+            header("Location: index.php?module=stock&action=affiche_stock");
         }
         else{
             $this->vue->message('Droit requis non perçu.');
@@ -100,7 +100,7 @@ class Cont_stock{
             foreach($prod as $item){
                 $this->modele->ajouterProduitMenu($item['idProd'],$item['prix'],$item['seuil']);
             }
-            header("Location : index.php?module=stock&action=affiche_stock"); 
+            header("Location: index.php?module=stock&action=affiche_stock"); 
         }
         else{
             $this->vue->message('Droit requis non perçu.');
