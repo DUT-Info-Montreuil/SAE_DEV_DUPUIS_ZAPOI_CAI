@@ -5,64 +5,143 @@ require_once('utils/vue_generique.php');
             parent::__construct();
         }
 
-public function formulaire_début_commande(){
+    public function formulaire_début_commande(){
 
-    echo '
-        <form method="post" action="index.php?module=commande&action=traiter_debut_commande">
-                <p>Cliquer pour commencer une nouvelle commande : </p>
-                <input type="submit" value="Démarrer la commande">
-                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
-        </form>
-    ';
-}
-
-public function formulaire_commande($liste_prod){
-echo '<form method="post" action="index.php?module=commande&action=ajout_produit" id="form-commande">';
-    $elem = 0;
-    foreach($liste_prod as $p){
-        $id = $p['idProd'];
         echo '
+            <form method="post" action="index.php?module=commande&action=traiter_debut_commande">
+                    <p>Cliquer pour commencer une nouvelle commande : </p>
 
-            <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
-            <input type="number" name="produits['.$elem.'][qte]" min="0" max='.$p["quantite"].' placeholder="0" oninput="refreshPanier()">
-                <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
+                    <button type="submit" class="btn btn-success btn-lg mt-3">
+                        Commander
+                    </button>
 
-
-            <p>'.h($p["nom"]).' - '.( h($p["prix"]/100)).' €</p>
-
+                    <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
+            </form>
         ';
-        $elem += 1;
     }
-    echo '<h3> Total commande : <span id="total-prix">0</span></h3>';
-    echo'<button type="submit">Panier</button>';
-    echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
-    echo '</form>';
-    echo '
-    <script>
-     async function refreshPanier(){
-        const formulaire = document.getElementById("form-commande");
-        const données = new FormData(formulaire);
 
-        const reponse = await fetch("index.php?module=commande&action=prix_total",{
-            method: "POST",
-            body : données
+    public function formulaire_commande($liste_prod, $type){
+
+
+        echo '
+        <form method="post" id="form-type" action="index.php?module=commande&action=reload" class="mb-4">
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+        ';
+
+        foreach($type as $i){
+            echo '
+                <button
+                    type="submit"
+                    name="bouton_type"
+                    value="'.h($i['idType']).'"
+                    class="btn btn-outline-primary"
+                >
+                    '.h($i['type']).'
+                </button>
+            ';
+        }
+
+        echo '
+                <button type="submit" name="bouton_type" value="reset" class="btn btn-outline-secondary">
+                    Tout
+                </button>
+            </div>
+        </form>
+        ';
+
+
+        echo '
+        <form method="post" action="index.php?module=commande&action=ajout_produit" id="form-commande">
+            <div class="row g-4">
+        ';
+
+        $elem = 0;
+        foreach($liste_prod as $p){
+            $id = $p['idProd'];
+
+            echo '
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="'.$p["image"].'" class="card-img-top p-3" alt="'.h($p["nom"]).'" style="height:180px; object-fit:contain;">
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">'.h($p["nom"]).'</h5>
+                        <p class="card-text fw-bold">'.(h($p["prix"]/100)).' €</p>
+
+                        <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
+
+                        <div class="mt-auto">
+                            <label class="form-label">Quantité</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="produits['.$elem.'][qte]"
+                                min="0"
+                                max="'.$p["quantite"].'"
+                                value="0"
+                                oninput="refreshPanier()"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+            $elem++;
+        }
+
+        echo '
+            </div>
+
+            <div class="mt-4 p-4 bg-light rounded shadow-sm text-center">
+                <h3>
+                    Total commande :
+                    <span id="total-prix" class="fw-bold text-success">0 €</span>
+                </h3>
+
+                <button type="submit" class="btn btn-success btn-lg mt-3">
+                    🛒 Ajouter au panier
+                </button>
+            </div>
+
+            <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'">
+        </form>
+        ';
+
+
+        echo '
+        <script>
+        async function refreshPanier(){
+            const formulaire = document.getElementById("form-commande");
+            const données = new FormData(formulaire);
+
+            const reponse = await fetch("index.php?module=commande&action=prix_total",{
+                method: "POST",
+                body : données
             });
 
-        const reponseJSON = await reponse.json();
-        document.getElementById("total-prix").innerText = reponseJSON.total +"€";
-
+            const reponseJSON = await reponse.json();
+            document.getElementById("total-prix").innerText = reponseJSON.total + " €";
+        }
+        </script>
+        ';
     }
-    </script>
-    ';
-}
+
 public function finaliser_commande($liste_commande){
     echo '
-        <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
-        <div id="listeCommande">
-            <div class="TitreColonne">ID de la commande</div>
-            <div class="TitreColonne">Prix de la commande</div>
-            <div class="TitreColonne">Détails de la commande </div>
-            <div class ="TitreColonne">Action</div>';
+        <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-8">
+                        <div class="card shadow-lg">
+                            <div class="card-body p-4">
+                                <h2 class="card-title text-center mb-4">Historique de vos commandes</h2>
+                                <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
+                                 <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
+                                <div id="listeCommande" class="mb-3">
+                                    <div class="TitreColonne">ID de la commande</div>
+                                    <div class="TitreColonne">Prix de la commande</div>
+                                    <div class="TitreColonne">Détails de la commande </div>
+                                    <div class ="TitreColonne">Action</div>
+                                </div>';
             foreach($liste_commande as $c){
 
             echo'
@@ -83,7 +162,12 @@ public function finaliser_commande($liste_commande){
 
 
         echo '</div>';
-        echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+
 
         echo '</form>';
 

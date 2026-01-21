@@ -24,8 +24,23 @@ class Cont_commande {
 
     public function afficher_formulaire_Commande() {
         if ($_SESSION['role'] == 3) {
-            $produits = $this->modele->getProduitsMenu();
-            $this->vue->formulaire_commande($produits);
+
+            $types = $this->getTypes();
+            $type='';
+            if(isset($_POST['bouton_type'])){
+                $type = $_POST['bouton_type'];
+            }
+
+            if($type==null || $type=='reset'){
+
+                $produits = $this->modele->getProduitsMenu();
+                $this->vue->formulaire_commande($produits,$types);
+
+            }
+            else{
+                $produits = $this->modele->getProdParType($type);
+                $this->vue->formulaire_commande($produits,$types);
+            }
         } else {
             $this->vue->message('Droit requis non perçu.');
         }
@@ -66,6 +81,9 @@ class Cont_commande {
         } else {
             $this->vue->message('Droit requis non perçu.');
         }
+    }
+    public function getTypes(){
+        return $this->modele->getTypes();
     }
 
     public function commande_valide() {

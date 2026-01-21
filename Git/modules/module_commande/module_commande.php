@@ -20,6 +20,8 @@ class Mod_commande {
                 $this->cont->afficher_formulaire_Commande();
                 break;
 
+            case 'reload':
+                $this->cont->afficher_formulaire_Commande();
             case 'ajout_produit':
                     if($this->cont->commande_valide()){
 
@@ -50,7 +52,8 @@ class Mod_commande {
             case 'commandeProduit':
                 $id = (int) $_GET['idProd'];
                 $prod = $this->cont->recupCommandeProduit($id);
-                $this->cont->afficheCommandeProduit($prod);
+                $type = $this->cont->getTypes();
+                $this->cont->afficheCommandeProduit($prod,$type);
 
 
         }

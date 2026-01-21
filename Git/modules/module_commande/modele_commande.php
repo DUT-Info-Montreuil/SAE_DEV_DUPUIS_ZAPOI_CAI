@@ -48,13 +48,24 @@ class Modele_commande extends Connexion {
 
   public function getProduitsMenu():array{
         $idAsso= $_SESSION['idAsso'];
-         $sql = "SELECT * FROM produits NATURAL JOIN menu INNER JOIN stock ON produits.idProd=stock.idProd WHERE menu.idAsso = ?";
+         $sql = "SELECT menu.idProd,produits.idType,nom,image,type.type,menu.prix,stock.quantite
+         FROM menu NATURAL JOIN produits NATURAL JOIN type INNER JOIN stock ON produits.idProd=stock.idProd NATURAL JOIN inventaire
+         WHERE menu.idAsso = ? AND date=CURRENT_DATE-1";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute([$idAsso]);
                 $produits = $stmt->fetchAll();
 
          return $produits;
   }
+  public function getTypes(){
+    $sql="SELECT * FROM type";
+    $stmt=self::$bdd->prepare($sql);
+    $stmt->execute();
+    $types = $stmt->fetchAll();
+    return $types;
+  }
+
+
   public function déduireSolde($montant) : void {
     $solde = $_SESSION['solde'];
     $solde_final = $solde - $montant;
@@ -152,6 +163,17 @@ public function commandesEnCours(){
         $s_sql_c->bindParam(':id', $id);
         $s_sql_c->execute();
 
+    }
+    public function getProdParType($idType){
+        $idAsso= $_SESSION['idAsso'];
+         $sql = "SELECT *
+         FROM menu NATURAL JOIN produits INNER JOIN stock ON produits.idProd=stock.idProd  NATURAL JOIN inventaire
+         WHERE menu.idAsso = ? AND produits.idType = ? AND date = CURRENT_DATE-1";
+                $stmt = self::$bdd->prepare($sql);
+                $stmt->execute([$idAsso,$idType]);
+                $produits = $stmt->fetchAll();
+
+         return $produits;
     }
 
     public function commandeProduit($id) {

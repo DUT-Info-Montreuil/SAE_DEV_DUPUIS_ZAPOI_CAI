@@ -7,13 +7,28 @@ require_once ('utils/vue_generique.php');
         public function formulaire_solde(){
             echo
             '
-            <form method = "post" action="index.php?module=solde&action=ajout_solde">
-                <label for="solde">Solde à ajouter :</label>
-                <input type="number" id="solde" name="solde" min="10" max="100"/>
-                <br>
-                <button type="submit">Valider</button>
-                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
-            </form>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card shadow-lg">
+                            <div class="card-body card-body p-4">
+                                <h2 class="card-title text-center mb-4"> Ajouter solde </h2>
+                                <form method = "post" action="index.php?module=solde&action=ajout_solde">
+                                <div class="mb-3">
+                                <label for="solde" class="form-label">Solde à ajouter :</label>
+                                <input type="number" class="form-control" id="solde" name="solde" min="10" max="100"/ placeholder="Entrez un montant entre 10 et 100"required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg"> Valider </button>
+                                </div>
+                                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
+                                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
 
             ';
         }

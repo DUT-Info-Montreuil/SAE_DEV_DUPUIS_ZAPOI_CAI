@@ -34,7 +34,7 @@ class Mod_connexion {
                         exit;
                         }
                         else if($this->cont->getRole()==2){
-                            header("Location: index.php?module=commande&action=commande");
+                            header("Location: index.php?module=commande&action=finCommande");
                             exit;
                         }
                         else if ($this->cont->getRole()==1 || $this->cont->getRole()==4){

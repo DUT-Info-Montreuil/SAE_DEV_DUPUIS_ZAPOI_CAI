@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
-    <link rel="stylesheet" href="template8.css">
+    <link rel="stylesheet" href="template9.css">
 
 
 </head>
@@ -44,7 +44,7 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=staff&action=gestionMembre">Gestion Utilisateurs</a></li>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=finCommande">Gérer les Commandes</a></li>
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
+                                <!--This is a comment. Comments are not displayed in the browser<li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>-->
                             <?php elseif ($_SESSION['role'] == 3): // Client ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>
                                 <li class="nav-item"><a class="nav-link btn btn-primary btn-sm text-white ms-lg-2" href="index.php?module=commande&action=ajout_debut_commande">Commander</a></li>
