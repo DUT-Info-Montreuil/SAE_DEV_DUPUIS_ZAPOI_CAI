@@ -41,6 +41,9 @@ class Modele_solde extends Connexion{
        if (!$success) {
            return "Problème avec la mise à jour du solde";
        }
+        $sql_historique = "INSERT into historique_solde(idCompte,montant,dateT) values(?,?,CURRENT_DATE())";
+        $s_sql_historique = self::$bdd->prepare($sql_historique);
+        $s_sql_historique->execute([$idCompte,$input_solde]);
         $_SESSION['solde'] = $this->getSolde();
        return "Solde mis à jour avec succès";
    }
