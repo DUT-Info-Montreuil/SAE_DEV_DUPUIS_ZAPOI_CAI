@@ -6,18 +6,28 @@ require_once('utils/vue_generique.php');
         }
 
     public function produitsAchat(array $produits){
-        echo "<h3> Produits à l'achat : </h3> <br>";
-        echo "<lu>";
+        echo '<h3> Produits à l\'achat : </h3> <br>
+        
+        <form method="post" action="index.php?module=restock&action=ajoutStock">';
+        
         foreach($produits as $p){
-            echo "<br><li><p>". h($p['nom']) ." , Prix : ".number_format($p['prix'],2)." € , Fournisseur : ". h($p['fournisseur']) ."
-                (ICI POSSIBILITE DE COMMANDER CE PRODUIT)
-                </li>";
+            echo '<br><li><p>'. h($p['nom']) .' , Prix : '.number_format($p['prix'],2).' € , Fournisseur : '. h($p['fournisseur']) .'
+
+                <input type="hidden" name="inventaire[]" value="'. h($p['idInventaire']) .'">
+                <input type="hidden" name="produit[]" value="'. h($p['idProd']) .'">
+                <input type="number" name="quantite[]" min="0" max="1000" placeholder="0">';
+           
         }
-        echo "</lu>";
+
+        echo '<button type="submit"> Commander </button>
+        </form>
+        ';
+             
     }
 
     public function fournisseurs(array $fournisseurs){
          echo '<h2>Choisissez un fournisseur :</h2>';
+
         foreach($fournisseurs as $f){
             echo '<form method="post" action="index.php?module=restock&action=produitsF&fournisseur='. h($f['id']) .'">
             <input type="hidden" name="fournisseur" value="'. h($f['nom']) .'">

@@ -22,9 +22,9 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
         $id = $p['idProd'];
         echo '
 
-            <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
-            <input type="number" name="produits['.$elem.'][qte]" min="0" max='.$p["quantite"].' placeholder="0" oninput="refreshPanier()">
-                <img src="'.$p["image"].'" alt="'.$p["nom"].'" width="100">
+            <input type="hidden" name="produits['.$elem.'][id]" value="'. h($id).'">
+            <input type="number" name="produits['.$elem.'][qte]" min="0" max='. h($p["quantite"]).' placeholder="0" oninput="refreshPanier()">
+                <img src="'. h($p["image"]).'" alt="'. h($p["nom"]).'" width="100">
 
 
             <p>'.h($p["nom"]).' - '.( h($p["prix"]/100)).' €</p>
@@ -64,13 +64,13 @@ public function finaliser_commande($liste_commande){
             foreach($liste_commande as $c){
 
             echo'
-                <div id = "commande-'.$c["id"].'" class=ligneCommande style="display : contents;">
-                <div class="elt">'.$c["id"].'</div>
-                <div class="elt">'.$c['total_commande'].'</div>
-                <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="elt"> Détails </a>
+                <div id = "commande-'. h($c["id"]) .'" class=ligneCommande style="display : contents;">
+                <div class="elt">'. h($c["id"]) .'</div>
+                <div class="elt">'. h($c['total_commande']) .'</div>
+                <a href="index.php?module=historique&action=detailHistoClient&idCommande='. h($c["id"]) .'" class="elt"> Détails </a>
 
 
-                <button type="button" name="finCommande" onclick="finCommandeAJAX('.$c['id'].')">
+                <button type="button" name="finCommande" onclick="finCommandeAJAX('. h($c["id"]) .')">
                     Finaliser
                 </button>
             </div>

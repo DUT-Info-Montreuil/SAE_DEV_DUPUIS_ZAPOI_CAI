@@ -28,11 +28,13 @@ class Mod_restock {
                 break;
 
             case "ajoutStock":
-                $id = (int) $_POST['idProd'] ?? null;
-                $quantite = $_POST['quantite'] ?? 0;
+                $idProd = (array) $_POST['produit'] ?? null;
+                $idInventaire = (array) $_POST['inventaire'] ?? null;
+                $quantite = (array) $_POST['quantite'] ?? null;
 
-                if($id && $quantite > 0){
-                    $this->cont->ajoutStock($id, $quantite);
+
+                if($idProd && $idInventaire && $quantite){
+                    $this->cont->ajoutStock($idProd, $idInventaire, $quantite);
                     echo "Stock mis à jour avec succès !";
                 }
                 break;

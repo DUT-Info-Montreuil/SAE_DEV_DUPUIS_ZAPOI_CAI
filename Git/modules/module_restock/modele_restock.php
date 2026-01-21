@@ -14,12 +14,20 @@ class Modele_restock extends Connexion {
         $sql = "
             SELECT
                 p.nom as nom ,
+                p.idProd ,
                 pf.prix / 100 as prix,
                 p.image as image,
-                f.nom as fournisseur
+                f.nom as fournisseur,
+                f.idFournisseur as idF,
+                i.idInventaire 
             FROM
                 produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+                JOIN stock s ON s.idProd = p.idProd 
+                JOIN inventaire i ON i.idInventaire = s.idInventaire
+            WHERE
+                i.date = CURRENT_DATE
+            GROUP BY p.idProd, f.idFournisseur            
         ";
 
         $stmt = self::$bdd->prepare($sql);
@@ -35,14 +43,21 @@ class Modele_restock extends Connexion {
         $sql = "
             SELECT
                 p.nom as nom ,
+                p.idProd ,
                 pf.prix / 100 as prix,
                 p.image as image,
-                f.nom as fournisseur
+                f.nom as fournisseur,
+                f.idFournisseur as idF,
+                i.idInventaire 
             FROM
                 produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+                JOIN stock s ON s.idProd = p.idProd 
+                JOIN inventaire i ON i.idInventaire = s.idInventaire
             WHERE
                 pf.idFournisseur = :id
+                AND i.date = CURRENT_DATE
+            GROUP BY p.idProd, f.idFournisseur
         ";
 
         $stmt = self::$bdd->prepare($sql);
@@ -74,22 +89,24 @@ class Modele_restock extends Connexion {
 
     }
 
-    public function ajoutStock($id, $quantite){
+    public function ajoutStock($idProd, $idInventaire, $quantite){
 
-        $sql_q = "SELECT quantite FROM stock WHERE idProd = :id";
+        $sql_q = "SELECT quantite FROM stock NATURAL JOIN inventaire WHERE idProd = :idProd AND idInventaire = :idInventaire";
 
         $stmt = self::$bdd->prepare($sql_q);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':idProd', $idProd);
+        $stmt->bindParam(':idInventaire', $idInventaire);
         $stmt->execute();
         $quantiteCourante = $stmt->fetchColumn();
 
         $quantiteFinale = $quantite + $quantiteCourante;
 
-        $sql = "UPDATE stock SET quantite = :q WHERE idProd = :id ";
+        $sql = "UPDATE stock SET quantite = :q WHERE idProd = :idProd AND idInventaire = :idInventaire";
 
         $stmt2 = self::$bdd->prepare($sql);
         $stmt2->bindParam(':q', $quantiteFinale);
-        $stmt2->bindParam(':id', $id);
+        $stmt2->bindParam(':idProd', $idProd);
+        $stmt2->bindParam(':idInventaire', $idInventaire);
         $stmt2->execute();
 
     }

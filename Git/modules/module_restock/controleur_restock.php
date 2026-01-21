@@ -66,9 +66,19 @@
             }
 
         }
-        public function ajoutStock($id, $quantite){
+        public function ajoutStock($idProd, $idInventaire, $quantite){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-                return $this->modele->ajoutStock($id, $quantite);
+                foreach($idProd as $key => $p){
+                    $qte = (int) $quantite[$key];
+                    if($qte > 0){
+                        $idInv = (int) $idInventaire[$key];
+                        $this->modele->ajoutStock($p, $idInv, $qte);
+                    }
+
+                    
+
+                }
+                
             }
             else{
                 $this->vue->message('Droit requis non perçu.');

@@ -54,12 +54,8 @@ require_once('utils/vue_generique.php');
             if($prod['ecart']<0){
                 echo"Il y a ".(h($prod['ecart'])*-1)." ". h($prod['nom']) ." vendu aujourd'hui";
             }
-            else if($prod['ecart']==0){
-                echo"Pas de produit ont été vendu";
-            }
-            else{
-                echo"FF";
-            }
+            
+            
             echo "</p>";
         }
         echo "<p>";
