@@ -23,6 +23,24 @@ class Cont_stock{
         }
 
     }
+    public function affiche_stockFaible() {
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
+            $this->vue->afficheNBFaible($this-> modele -> getNBProduitFaible());
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+
+    }
+
+    public function afficheProduit(){
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
+            $this->vue->afficheProduit($this->modele->getHorsMenu());
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
 
     //Fonctions du modèle
     public function getStock(): array{
@@ -49,6 +67,40 @@ class Cont_stock{
     public function deduireStock(){
         if($_SESSION['role']==2){
             $this->modele->deduireStock();
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+    public function affiche_menu(){
+        if($_SESSION['role']==1){
+            $this->vue->affiche_menu($this->modele->getMenu());
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+    public function changement(){
+        if($_SESSION['role']==1 && isset($_POST['produit'])){
+            $prod=$_POST['produit'];
+            foreach($prod as $item){
+                $this->modele->changeInfo($item['idProd'],$item['prix'],$item['seuil']);
+            }
+            header("Location : index.php?module=stock&action=affiche_stock");
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+    public function ajouterNewProduit(){
+        if($_SESSION['role']==1 && isset($_POST['produit'])){
+            $prod = $_POST['produit'];
+            foreach($prod as $item){
+                $this->modele->ajouterProduitMenu($item['idProd'],$item['prix'],$item['seuil']);
+            }
+            header("Location : index.php?module=stock&action=affiche_stock"); 
         }
         else{
             $this->vue->message('Droit requis non perçu.');
