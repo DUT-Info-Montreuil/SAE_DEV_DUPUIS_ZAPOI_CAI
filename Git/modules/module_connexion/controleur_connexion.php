@@ -14,7 +14,7 @@
             $this->checker_csrf = new Token_CSRF();
 
         }
-        //Fonctions de la vue
+
         public function afficher_formulaire_inscription(){
             $this->vue->formulaire_inscription();
         }

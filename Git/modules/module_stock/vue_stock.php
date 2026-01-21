@@ -8,14 +8,15 @@ Class Vue_stock extends VueGenerique{
     public function afficheStock($liste_stock){
         echo'
         <form method="post" id="form-produit">
-         <input type="search" name="rechercher" autocomplete="off" placeholder="Rechercher un produit" id="rechercher" oninput="rechercher_produit()">
          <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card shadow-lg border-0 rounded-3">
                     <div class="card-header bg-dark text-white text-center py-3">
-                        <h2 class="mb-0 text-uppercase fw-bold" style="letter-spacing: 2px;">Stock</h2>
+                        <h2 class="mb-0 text-uppercase fw-bold" style="letter-spacing: 2px;">Stock</h2><br>
+                        <input type="search" name="rechercher" autocomplete="off" placeholder="Rechercher un produit" id="rechercher" oninput="rechercher_produit()">
                     </div>
+
                     <div class="card-body p-0"> <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">

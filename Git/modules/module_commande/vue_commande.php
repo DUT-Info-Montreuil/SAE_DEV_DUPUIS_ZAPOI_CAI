@@ -128,6 +128,7 @@ require_once('utils/vue_generique.php');
 
 public function finaliser_commande($liste_commande) {
     echo '
+    <form method="post" action="index.php?module=commande&action=finCommande" id="form-finCommande">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -173,7 +174,8 @@ public function finaliser_commande($liste_commande) {
                 </div>
             </div>
         </div>
-    </div>';
+    </div>
+    </form>';
 
 
         echo'

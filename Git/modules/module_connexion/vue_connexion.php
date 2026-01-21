@@ -183,7 +183,7 @@ public function listeNVAsso($liste_asso) {
                 <td>' . h($asso['siege_social']) . '</td>
                 <td class="text-center">';
 
-                // Boucle pour les documents
+
                 for ($i = 1; $i <= 3; $i++) {
                     $chemin = "docsLegaux/" . h($asso['IDTemp']) . "_" . h($asso['nomAsso']) . "_doc" . $i . ".pdf";
                     echo '<a href="' . $chemin . '" target="_blank" class="btn btn-sm btn-outline-danger me-1">
