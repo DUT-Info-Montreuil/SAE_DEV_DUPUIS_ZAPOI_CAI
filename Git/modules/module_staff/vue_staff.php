@@ -32,6 +32,7 @@ require_once ('utils/vue_generique.php');
             <button type='submit' name='role' value='2'>Mettre en barman</button>
             <button type='submit' name='role' value='3'>Mettre en client</button>";
             }
+            echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
             echo"</form>";
         }
 

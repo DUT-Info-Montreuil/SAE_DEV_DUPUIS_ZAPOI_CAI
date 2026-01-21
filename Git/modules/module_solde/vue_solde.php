@@ -12,6 +12,7 @@ require_once ('utils/vue_generique.php');
                 <input type="number" id="solde" name="solde" min="10" max="100"/>
                 <br>
                 <button type="submit">Valider</button>
+                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             </form>
 
             ';

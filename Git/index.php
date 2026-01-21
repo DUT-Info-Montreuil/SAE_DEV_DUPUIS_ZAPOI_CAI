@@ -1,18 +1,21 @@
 <?php
-
-require_once "html_spe_char.php";
-
-$module = $_GET['module'] ?? 'accueil';
-
 session_start();
 
 
-if (!isset($_SESSION['token'])) {
-    $_SESSION['token'] = [];
+require_once "html_spe_char.php";
+require_once "utils/token_csrf.php";
+
+
+
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
 
-// 2. Chargement du contenu du module
+
+
+
+$module = $_GET['module'] ?? 'accueil';
 switch($module) {
     case 'connexion':
         include_once "modules/module_connexion/module_connexion.php";

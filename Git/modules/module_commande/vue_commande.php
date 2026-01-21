@@ -11,6 +11,7 @@ public function formulaire_début_commande(){
         <form method="post" action="index.php?module=commande&action=traiter_debut_commande">
                 <p>Cliquer pour commencer une nouvelle commande : </p>
                 <input type="submit" value="Démarrer la commande">
+                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
         </form>
     ';
 }
@@ -34,6 +35,7 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
     }
     echo '<h3> Total commande : <span id="total-prix">0</span></h3>';
     echo'<button type="submit">Panier</button>';
+    echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
     echo '</form>';
     echo '
     <script>
@@ -81,6 +83,7 @@ public function finaliser_commande($liste_commande){
 
 
         echo '</div>';
+        echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
 
         echo '</form>';
 
@@ -138,6 +141,7 @@ public function finaliser_commande($liste_commande){
 
             echo " <button type='submit'>Valider</button>";
             echo "</div>";
+            echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
             echo "</form>";
         }
     }

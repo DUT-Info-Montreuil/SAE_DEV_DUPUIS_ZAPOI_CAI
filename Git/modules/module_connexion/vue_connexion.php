@@ -15,6 +15,7 @@ require_once('utils/vue_generique.php');
                 <input type="password" name="mdp_inscription" maxlength="50" required="true">
                 <br>
                 <input type="submit" value="Inscription">
+                <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             </form>
         ';
     }
@@ -29,6 +30,7 @@ require_once('utils/vue_generique.php');
                     <input type="password" name="mdp_connexion" maxlength="50" required="true">
                     <br>
                     <input type="submit" value="Connexion">
+                    <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             </form>
         ';
     }
@@ -56,6 +58,7 @@ require_once('utils/vue_generique.php');
                 </div>
 
                 <button type='submit'>Envoyez</button>
+                <input type='hidden' name='token_csrf' value = '".$_SESSION['token']."'>
             </form>
         ";
     }
@@ -66,6 +69,7 @@ require_once('utils/vue_generique.php');
             echo '<form method="post" action="index.php?module=connexion&action=redirection">
             <input type="hidden" name="association" value="'. h($asso['idAsso']) .'">
             <button type="submit"><img src="'. h($asso['chemin_logo']).'" alt="Une image du logo" style="width: 20%; height: 80%;"></button>
+            <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             </form>';
         }
     }
@@ -96,6 +100,7 @@ require_once('utils/vue_generique.php');
 
         echo '</div>
         <button type="submit" value="Valider">Valider</button>
+        <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
         </form>';
     }
     public function affiche(){

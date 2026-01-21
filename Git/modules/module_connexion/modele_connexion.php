@@ -10,7 +10,6 @@ class Modele_connexion extends Connexion {
     }
 
     public function ajout_formulaire_inscription() {
-
         if (empty($_POST["login_inscription"]) || empty($_POST["mdp_inscription"])) {
             return "Champs manquants";
         }
@@ -95,15 +94,19 @@ class Modele_connexion extends Connexion {
         ]);
 
     }
-    public function déconnexion() {
+public function déconnexion() {
     session_unset();
     session_destroy();
 
-    // recrée une session vide pour l’affichage du menu
     session_start();
     $_SESSION['connecté'] = false;
+    $_SESSION['token'] = bin2hex(random_bytes(32));
 
-    }
+    header("Location: index.php?module=accueil");
+    exit();
+
+
+}
 
     public function getRole(){
         if(isset($_SESSION['login']) && isset($_SESSION['idAsso'])){

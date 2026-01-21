@@ -23,6 +23,7 @@ require_once('utils/vue_generique.php');
             <input type="hidden" name="fournisseur" value="'. h($f['nom']) .'">
             <button type="submit"><img src="fonce-fond-abstrait.jpg" alt="Une image du logo" style="width: 15%; height: 2%;">'
             . h($f['nom']) .'</button>
+            <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             </form>';
         }
 
