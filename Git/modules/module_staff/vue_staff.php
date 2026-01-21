@@ -5,36 +5,70 @@ require_once ('utils/vue_generique.php');
             parent::__construct();
         }
 
-        public function listeMembre($membres){
-            echo"<h2>Liste des membres</h2>
-            <form method='post' action='index.php?module=staff&action=promoteMembre'>
-            <div id='listeMembres'>
-            <div class=TitreColonne></div>
-            <div class=TitreColonne>Nom</div>
-            <div class=TitreColonne>Rôle</div>";
-            $id = 0;
-            foreach($membres as $membre){
-                if($_SESSION['role']==1){
-                    echo "<input type='checkbox' name='choix[".$membre['idCompte']."]' value='".$membre['idCompte']."'/>";
-                }
-                else{
-                    echo"<div></div>";
-                }
-                echo"
-                <div>".$membre['nom']."</div> 
-                <div>".$membre['role']."</div>";
-                $id++;
-            }
-        if($_SESSION['role']==1){
+public function listeMembre($membres) {
+    echo '
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-header bg-dark text-white text-center py-3">
+                        <h2 class="card-title mb-0"> Gestion des Membres </h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <form method="post" action="index.php?module=staff&action=promoteMembre">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>';
+                                           
+                                            if ($_SESSION['role'] == 1) {
+                                                echo '<th class="text-center" style="width: 50px;">Sélection</th>';
+                                            }
+    echo '                                  <th class="ps-4">Nom</th>
+                                            <th class="pe-4">Rôle actuel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
 
-            echo"</div>
-            <button type='submit' name='role' value='1'>Mettre en gestionnaire</button>
-            <button type='submit' name='role' value='2'>Mettre en barman</button>
-            <button type='submit' name='role' value='3'>Mettre en client</button>";
-            }
-            echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">';
-            echo"</form>";
+    foreach ($membres as $membre) {
+        echo '<tr>';
+        
+      
+        if ($_SESSION['role'] == 1) {
+            echo '<td class="text-center">
+                    <input class="form-check-input" type="checkbox" name="choix[' . $membre['idCompte'] . ']" value="' . $membre['idCompte'] . '">
+                  </td>';
         }
+
+        echo '  <td class="ps-4 fw-bold">' . h($membre['nom']) . '</td>
+                <td class="pe-4 text-muted">' . h($membre['role']) . '</td>
+              </tr>';
+    }
+
+    echo '          </tbody>
+                                </table>
+                            </div>';
+
+ 
+    if ($_SESSION['role'] == 1) {
+        echo '
+        <div class="card-footer bg-light p-3 text-center">
+            <div class="btn-group" role="group">
+                <button type="submit" name="role" value="1" class="btn btn-outline-primary">Mettre en Gestionnaire</button>
+                <button type="submit" name="role" value="2" class="btn btn-outline-info">Mettre en Barman</button>
+                <button type="submit" name="role" value="3" class="btn btn-outline-secondary">Mettre en Client</button>
+            </div>
+            <input type="hidden" name="token_csrf" value="' . $_SESSION['token'] . '">
+        </div>';
+    }
+
+    echo '      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+}
 
         public function affiche(){
             return $this->getAffichage();

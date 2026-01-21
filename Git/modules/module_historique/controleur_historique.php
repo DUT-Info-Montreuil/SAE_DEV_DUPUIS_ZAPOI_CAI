@@ -22,7 +22,7 @@
         }
 
         public function afficherDetailsCommande(array $details){
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==3 || $_SESSION['role']==2){
 
             }
             else{
@@ -44,7 +44,7 @@
         }
 
         public function modDetailsCommande($details) : array {
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==3 || $_SESSION['role']==2){
                 return $this->modele->getDetailsCommande($details);
             }
             else{

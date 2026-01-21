@@ -126,50 +126,55 @@ require_once('utils/vue_generique.php');
         ';
     }
 
-public function finaliser_commande($liste_commande){
+public function finaliser_commande($liste_commande) {
     echo '
-        <div class="container mt-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-8">
-                        <div class="card shadow-lg">
-                            <div class="card-body p-4">
-                                <h2 class="card-title text-center mb-4">Historique de vos commandes</h2>
-                                <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
-                                 <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
-                                <div id="listeCommande" class="mb-3">
-                                    <div class="TitreColonne">ID de la commande</div>
-                                    <div class="TitreColonne">Prix de la commande</div>
-                                    <div class="TitreColonne">Détails de la commande </div>
-                                    <div class ="TitreColonne">Action</div>
-                                </div>';
-            foreach($liste_commande as $c){
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-header bg-dark text-white text-center py-3">
+                        <h3 class="mb-0 text-uppercase fw-bold" style="letter-spacing: 2px;">Historique de vos commandes</h3>
+                    </div>
+                    <div class="card-body p-0"> <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">ID Commande</th>
+                                        <th>Prix Total</th>
+                                        <th class="text-center">Détails</th>
+                                        <th class="text-end pe-4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
 
-            echo'
-                <div id = "commande-'.$c["id"].'" class=ligneCommande style="display : contents;">
-                <div class="elt">'.$c["id"].'</div>
-                <div class="elt">'.$c['total_commande'].'</div>
-                <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="elt"> Détails </a>
+    foreach ($liste_commande as $c) {
+        echo '
+                                    <tr id="commande-'.$c["id"].'">
+                                        <td class="ps-4 fw-bold text-primary">#'.$c["id"].'</td>
+                                        <td><span class="badge bg-success fs-6">'.number_format($c['total_commande'], 2, ',', ' ').' €</span></td>
+                                        <td class="text-center">
+                                            <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="btn btn-outline-secondary btn-sm">
+                                                <i class="bi bi-search me-1"></i> Voir Détails
+                                            </a>
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <button type="button" class="btn btn-dark btn-sm px-4" onclick="finCommandeAJAX('.$c['id'].')">
+                                                Finaliser
+                                            </button>
+                                        </td>
+                                    </tr>';
+    }
 
-
-                <button type="button" name="finCommande" onclick="finCommandeAJAX('.$c['id'].')">
-                    Finaliser
-                </button>
+    echo '
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>';
 
-
-            ';
-            }
-
-
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-
-
-        echo '</form>';
 
         echo'
 

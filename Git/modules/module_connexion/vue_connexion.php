@@ -136,7 +136,7 @@ public function formulaireAsso(){
 }
 
     
-    public function choisirAsso($liste_asso){// choix de l'association après connexion
+    public function choisirAsso($liste_asso){
         echo '<h2>Choisissez une association :</h2>
              <div class="d-flex gap-3">';
         foreach($liste_asso as $asso){
@@ -150,36 +150,68 @@ public function formulaireAsso(){
         }
    echo' </div>';
     }
-    public function listeNVAsso($liste_asso){// liste des nouvelles associations en attente de validation
-        $idAsso = 0;
-        echo '<h2>Associations en attente de validation :</h2>
-            <form method="post" action="index.php?module=connexion&action=validationAsso">
-            <div id="listeNVAsso">
-            <div class=TitreColonne></div>
-            <div class=TitreColonne>Nom de l\'association</div>
-            <div class=TitreColonne>Siège social</div>';
-            foreach($liste_asso as $asso_option_attente){
-                echo '<input type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso_option_attente['IDTemp']) .'">';
-                echo '<p>Nom de l\'association : '. h($asso_option_attente['nomAsso']) .'</p>';
-                echo h($asso_option_attente['siege_social']) . "<br>";
+public function listeNVAsso($liste_asso) {
+    echo '
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-header bg-dark text-white text-center py-3">
+                        <h2 class="card-title mb-0"> Associations en attente de validation </h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <form method="post" action="index.php?module=connexion&action=validationAsso">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px;"></th>
+                                            <th class="ps-4">Nom de l\'association</th>
+                                            <th>Siège social</th>
+                                            <th class="text-center">Documents légaux</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
 
-                echo '<div>';
+    $idAsso = 0;
+    foreach ($liste_asso as $asso) {
+        echo '<tr>
+                <td class="text-center">
+                    <input class="form-check-input" type="checkbox" name="asso['. h($idAsso) .'][IDTemp]" value="'. h($asso['IDTemp']) .'">
+                </td>
+                <td class="ps-4 fw-bold">' . h($asso['nomAsso']) . '</td>
+                <td>' . h($asso['siege_social']) . '</td>
+                <td class="text-center">';
 
-                    for ($i = 1; $i <= 3; $i++) {
-                        $chemin = "docsLegaux/" . h($asso_option_attente['IDTemp']) . "_" . h($asso_option_attente['nomAsso']) . "_doc" . $i . ".pdf";
-                        var_dump($chemin);
-                        echo '<a href="' . $chemin . '" target="_blank">Document ' . $i . '</a> ';
-                    }
-                echo '</div>';
+                // Boucle pour les documents
+                for ($i = 1; $i <= 3; $i++) {
+                    $chemin = "docsLegaux/" . h($asso['IDTemp']) . "_" . h($asso['nomAsso']) . "_doc" . $i . ".pdf";
+                    echo '<a href="' . $chemin . '" target="_blank" class="btn btn-sm btn-outline-danger me-1">
+                            <i class="bi bi-file-pdf"></i> Doc ' . $i . '
+                          </a>';
+                }
 
-                $idAsso += 1;
-            }
-
-        echo '</div>
-        <button type="submit" value="Valider">Valider</button>
-        <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
-        </form>';
+        echo '  </td>
+              </tr>';
+        $idAsso++;
     }
+
+    echo '          </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer bg-light p-3 text-end">
+                                <input type="hidden" name="token_csrf" value="' . $_SESSION['token'] . '">
+                                <button type="submit" class="btn btn-success px-4">
+                                    <i class="bi bi-check-circle"></i> Valider la sélection
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+}
     public function affiche(){
         return $this->getAffichage();
     }

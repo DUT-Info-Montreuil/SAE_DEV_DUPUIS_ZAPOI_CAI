@@ -65,15 +65,7 @@
         }
             
     }
-    public function afficheTransactions(array $transactions) {
-        if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-             return $this->vue->transactionsDuJour($transactions);
-        }
-        else{
-            $this->vue->message('Droit requis non perçu.');
-        }
-           
-    }
+
 
     public function getProduitsVendus(int $jour) {
         if($_SESSION['role']==1 || $_SESSION['role'] == 4){
@@ -103,9 +95,9 @@
         }
             
     }
-    public function afficheMoyenneRecetteJour(float $moy) {
+    public function afficheMoyenneRecetteJour(float $moy, array $transactions) {
         if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-            return $this->vue->moyenneRecetteJour($moy);
+            return $this->vue->moyenneRecetteJour($moy,$transactions);
         }
         else{
             $this->vue->message('Droit requis non perçu.');
