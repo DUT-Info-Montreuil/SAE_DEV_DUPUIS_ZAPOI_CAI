@@ -10,7 +10,7 @@ class Modele_stock extends Connexion{
     }
     
     public function getRecherche($nom_produit): array{
-        $sql = self::$bdd->prepare("SELECT idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits NATURAL JOIN inventaire NATURAL JOIN menu WHERE nom LIKE ? AND idAsso = ?");
+        $sql = self::$bdd->prepare("SELECT idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits NATURAL JOIN inventaire NATURAL JOIN menu WHERE nom LIKE ? AND idAsso = ? ");//TODO penser à mettre la date dans le WHERE
         $sql->execute(["%$nom_produit%",$_SESSION['idAsso']]);
         $resultatRecherche = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $resultatRecherche;

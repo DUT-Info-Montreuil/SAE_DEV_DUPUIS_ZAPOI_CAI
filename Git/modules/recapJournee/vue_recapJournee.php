@@ -80,27 +80,28 @@ require_once('utils/vue_generique.php');
 
     }
 
-    public function afficheEcartJ1J2($liste_Ecart){
+    public function afficheEcartJ1J2($liste_qte){
         echo "<h2>Ecart entre ". h($_POST['J1'])." et ". h($_POST['J2'])."</h2>";
-        if($liste_Ecart!=null){
-        foreach($liste_Ecart as $prod){
+        if($liste_qte!=null){
+            foreach($liste_qte as $prod){
+
+                echo "<p>";
+                if(($prod['qteJ1']-$prod["qteJ2"])<0){
+                    echo"Il y a ".(h(($prod['qteJ1']-$prod["qteJ2"]))*-1)." ". h($prod['nom']) ." de moins au ". h($_POST['J1']) . " qu'au ".h($_POST['J2']);
+                }
+                else if(($prod['qteJ1']-$prod["qteJ2"])==0){
+                    echo"Pas de produit ont été vendu";
+                }
+                else{
+                    echo"Il y a ".(h(($prod['qteJ1']-$prod["qteJ2"])))." ". h($prod['nom']) ." de plus au ".h($_POST['J1']) . " qu'au ".h($_POST['J2']);//date2
+                }
+                echo "</p>";
+            }
             echo "<p>";
-            if($prod['ecart']<0){
-                echo"Il y a ".(h($prod['ecart'])*-1)." ". h($prod['nom']) ." de moins au ". h($_POST['J1']) . " que au ".h($_POST['J2']);
-            }
-            else if($prod['ecart']==0){
-                echo"Pas de produit ont été vendu";
-            }
-            else{
-                echo"Il y a ".(h($prod['ecart']))." ". h($prod['nom']) ." par rapport au ".h();//date2
-            }
-            echo "</p>";
         }
-        echo "<p>";
+        else{
+            echo"<p>N'existe pas</p>";
         }
-    else{
-        echo"<p>N'existe pas</p>";
-    }
     }
 
     public function menu(){

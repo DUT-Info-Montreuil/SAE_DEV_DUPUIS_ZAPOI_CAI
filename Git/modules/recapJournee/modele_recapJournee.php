@@ -178,22 +178,50 @@ class modele_recapJournee extends Connexion{
     }
 
     public function ecartJourJ1J2(){
-        $sql1=self::$bdd->prepare("SELECT quantite AS qteJ1,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = ? ORDER BY idStock");
-        $sql1->execute([$_SESSION['idAsso'],$_POST['J1']]);
-        $sql1donne = $sql1->fetchAll(PDO::FETCH_ASSOC);
+        $sql=self::$bdd->prepare("(
+                                       SELECT
+                                           p.idProd,
+                                           p.nom,
+                                           s1.quantite AS qteJ1,
+                                           COALESCE(s2.quantite, 0) AS qteJ2
+                                       FROM inventaire i1
+                                       JOIN stock s1 ON s1.idInventaire = i1.idInventaire
+                                       JOIN produits p ON p.idProd = s1.idProd
+                                       LEFT JOIN inventaire i2
+                                           ON i2.date = :J2 AND i2.idAsso = i1.idAsso
+                                       LEFT JOIN stock s2
+                                           ON s2.idInventaire = i2.idInventaire
+                                          AND s2.idProd = s1.idProd
+                                       WHERE i1.date = :J1
+                                         AND i1.idAsso = :idAsso
+                                   )
 
-        $sql2=self::$bdd->prepare("SELECT quantite AS qteJ2,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = ? ORDER BY idStock");
-        $sql2->execute([$_SESSION['idAsso'],$_POST['J2']]);
-        $sql2donne = $sql2->fetchAll(PDO::FETCH_ASSOC);
+                                   UNION
 
-        var_dump($sql1donne);
-        foreach($sql1donne as $prod){
-            var_dump($prod)  ;
+                                   (
+                                       SELECT
+                                           p.idProd,
+                                           p.nom,
+                                           COALESCE(s1.quantite, 0) AS qteJ1,
+                                           s2.quantite AS qteJ2
+                                       FROM inventaire i2
+                                       JOIN stock s2 ON s2.idInventaire = i2.idInventaire
+                                       JOIN produits p ON p.idProd = s2.idProd
+                                       LEFT JOIN inventaire i1
+                                           ON i1.date = :J1 AND i1.idAsso = i2.idAsso
+                                       LEFT JOIN stock s1
+                                           ON s1.idInventaire = i1.idInventaire
+                                          AND s1.idProd = s2.idProd
+                                       WHERE i2.date = :J2
+                                         AND i2.idAsso = :idAsso
+                                   );
+");
 
-        }
-
-        $final;
-        return $final->fetchColumn(PDO::FETCH_ASSOC);
+        $sql->bindParam(':J2', $_POST['J2']);
+        $sql->bindParam(':J1', $_POST['J1']);
+        $sql->bindParam(':idAsso', $_SESSION['idAsso']);
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function ecartJourJ(){
