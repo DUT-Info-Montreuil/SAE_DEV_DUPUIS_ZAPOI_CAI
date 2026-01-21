@@ -24,11 +24,19 @@ class Mod_historique{
                 $this->cont->afficherDetailsCommande($detailsCommande);
                 break;
 
+            case "historiqueAchatFournisseur":
+                $histo = $this->cont->modHistoriqueAsso(); //TODO utiliser vue deja fait pour client
+                $this->cont->afficherHistoriqueAsso($histo);
+                break;
+
+            case "detailHistoAchat":
+                $idCommande = (int) $_GET['idCommande'];
+                $detailsCommande = $this->cont->modDetailsCommande($idCommande);
+                $this->cont->afficherDetailsCommande($detailsCommande);
+                break;
         }
 
     }
-
-
 
     public function affiche(){
         return $this->cont->affiche();

@@ -13,7 +13,7 @@
         //Fonctions de la vue
         public function afficherHistoriqueClient(array $histo){
             if($_SESSION['role']==3){
-                $this->vue->historiqueClient($histo);
+                $this->vue->historique($histo);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
@@ -21,14 +21,24 @@
         
         }
 
-        public function afficherDetailsCommande(array $details){
-            if($_SESSION['role']==3){
-
+        public function afficherHistoriqueAsso(array $histo){
+            if($_SESSION['role']==1){
+                $this->vue->historique($histo);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            $this->vue->detailsCommande($details);
+
+        }
+
+        public function afficherDetailsCommande(array $details){
+            if($_SESSION['role']==3 || $_SESSION['role']==1){
+                $this->vue->detailsCommande($details);
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
 
 
@@ -43,9 +53,21 @@
             return vide[null];
         }
 
+        public function modHistoriqueAsso() {
+            if($_SESSION['role']==1){
+                return $this->modele->getHistoriqueAsso();
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+            return vide[null];
+        }
+
         public function modDetailsCommande($details) : array {
             if($_SESSION['role']==3){
                 return $this->modele->getDetailsCommande($details);
+            }elseif($_SESSION['role']==1){
+                return $this->modele->getDetailsAchat($details);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');

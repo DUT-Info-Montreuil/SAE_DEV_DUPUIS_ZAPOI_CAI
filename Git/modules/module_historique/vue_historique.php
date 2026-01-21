@@ -6,17 +6,24 @@ require_once ('utils/vue_generique.php');
         }
 
 
-        public function historiqueClient(array $historique){
-            echo "<h2>Historique des commandes :</h2> <br>";
+        public function historique(array $historique){
+
+            $action = 'detailHistoClient';
+            if($_SESSION['role'] == 3){
+                echo "<h2>Historique des commandes :</h2> <br>";
+            }else{
+                echo "<h2>Historique des achats :</h2> <br>";
+                $action = 'detailHistoAchat';
+            }
+
             foreach($historique as $commande){
                echo "<div><p class='historique'> Commande ". h($commande['id']) .' du '. h($commande['jour']) .
-                   ' (<a href="index.php?module=historique&action=detailHistoClient&idCommande='. h($commande['id']) .'">détails</a>) : Total :
+                   ' (<a href="index.php?module=historique&action='.$action.'&idCommande='. h($commande['id']) .'">détails</a>) : Total :
                    '.number_format($commande['total'],2).' € ,  état : '. h($commande['etat']) .'';
 
                    if(strcmp($commande['etat'], "en cours de validation") == 0){
                     echo ' <a href="index.php?module=commande&action=annulation&idCommande='. h($commande['id']) .'">(annuler la commande)</a>';
                    }
-
 
                    echo '</div></p>';
 

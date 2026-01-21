@@ -12,6 +12,16 @@ require_once('utils/vue_generique.php');
             echo "<br><li><p>". h($p['nom']) ." , Prix : ".number_format($p['prix'],2)." € , Fournisseur : ". h($p['fournisseur']) ."
                 (ICI POSSIBILITE DE COMMANDER CE PRODUIT)
                 </li>";
+
+
+
+
+                //TODO A FAIRE AVEC DEDOU SAH
+
+
+
+
+
         }
         echo "</lu>";
     }

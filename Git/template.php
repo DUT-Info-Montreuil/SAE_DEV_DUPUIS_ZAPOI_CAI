@@ -42,6 +42,7 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
 
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=staff&action=gestionMembre">Gestion Utilisateurs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=historique&action=historiqueAchatFournisseur">Historique achats</a></li>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=finCommande">Gérer les Commandes</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
