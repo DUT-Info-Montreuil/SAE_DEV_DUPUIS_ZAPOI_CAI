@@ -157,6 +157,7 @@ class modele_recapJournee extends Connexion{
         $sql = "
             SELECT nom, quantite
             FROM produits p JOIN stock s ON p.idProd = s.idProd
+            JOIN inventaire i ON i.idInventaire = s.idInventaire
         ";
 
         $stmt = self::$bdd->prepare($sql);
@@ -179,42 +180,42 @@ class modele_recapJournee extends Connexion{
 
     public function ecartJourJ1J2(){
         $sql=self::$bdd->prepare("(
-                                       SELECT
-                                           p.idProd,
-                                           p.nom,
-                                           s1.quantite AS qteJ1,
-                                           COALESCE(s2.quantite, 0) AS qteJ2
-                                       FROM inventaire i1
-                                       JOIN stock s1 ON s1.idInventaire = i1.idInventaire
-                                       JOIN produits p ON p.idProd = s1.idProd
-                                       LEFT JOIN inventaire i2
-                                           ON i2.date = :J2 AND i2.idAsso = i1.idAsso
-                                       LEFT JOIN stock s2
-                                           ON s2.idInventaire = i2.idInventaire
-                                          AND s2.idProd = s1.idProd
-                                       WHERE i1.date = :J1
-                                         AND i1.idAsso = :idAsso
-                                   )
+                        SELECT
+                            p.idProd,
+                            p.nom,
+                            s1.quantite AS qteJ1,
+                            COALESCE(s2.quantite, 0) AS qteJ2
+                        FROM inventaire i1
+                        JOIN stock s1 ON s1.idInventaire = i1.idInventaire
+                        JOIN produits p ON p.idProd = s1.idProd
+                        LEFT JOIN inventaire i2
+                            ON i2.date = :J2 AND i2.idAsso = i1.idAsso
+                        LEFT JOIN stock s2
+                            ON s2.idInventaire = i2.idInventaire
+                            AND s2.idProd = s1.idProd
+                        WHERE i1.date = :J1
+                            AND i1.idAsso = :idAsso
+                    )
 
-                                   UNION
+                    UNION
 
-                                   (
-                                       SELECT
-                                           p.idProd,
-                                           p.nom,
-                                           COALESCE(s1.quantite, 0) AS qteJ1,
-                                           s2.quantite AS qteJ2
-                                       FROM inventaire i2
-                                       JOIN stock s2 ON s2.idInventaire = i2.idInventaire
-                                       JOIN produits p ON p.idProd = s2.idProd
-                                       LEFT JOIN inventaire i1
-                                           ON i1.date = :J1 AND i1.idAsso = i2.idAsso
-                                       LEFT JOIN stock s1
-                                           ON s1.idInventaire = i1.idInventaire
-                                          AND s1.idProd = s2.idProd
-                                       WHERE i2.date = :J2
-                                         AND i2.idAsso = :idAsso
-                                   );
+                    (
+                        SELECT
+                            p.idProd,
+                            p.nom,
+                            COALESCE(s1.quantite, 0) AS qteJ1,
+                            s2.quantite AS qteJ2
+                        FROM inventaire i2
+                        JOIN stock s2 ON s2.idInventaire = i2.idInventaire
+                        JOIN produits p ON p.idProd = s2.idProd
+                        LEFT JOIN inventaire i1
+                            ON i1.date = :J1 AND i1.idAsso = i2.idAsso
+                        LEFT JOIN stock s1
+                            ON s1.idInventaire = i1.idInventaire
+                            AND s1.idProd = s2.idProd
+                        WHERE i2.date = :J2
+                            AND i2.idAsso = :idAsso
+                    );
 ");
 
         $sql->bindParam(':J2', $_POST['J2']);
@@ -225,7 +226,11 @@ class modele_recapJournee extends Connexion{
     }
 
     public function ecartJourJ(){
+<<<<<<< HEAD
         $sql=self::$bdd->prepare("SELECT (quantite-qteInit) AS ecart,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = CURRENT_DATE");
+=======
+        $sql=self::$bdd->prepare("SELECT (quantite-qteInit) AS ecart, nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = CURRENT_DATE");
+>>>>>>> 87e3edc99d6cf2f558001ec438d77b7ba29c79e9
         $sql->execute([$_SESSION['idAsso']]);
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }

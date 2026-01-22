@@ -133,8 +133,13 @@ public function afficheEcart($liste_Ecart){
             if($prod['ecart']<0){
                 echo"Il y a ".(h($prod['ecart'])*-1)." ". h($prod['nom']) ." vendu aujourd'hui";
             }
+<<<<<<< HEAD
 
 
+=======
+            
+            
+>>>>>>> 87e3edc99d6cf2f558001ec438d77b7ba29c79e9
             echo "</p>";
         }
         echo "<p>";

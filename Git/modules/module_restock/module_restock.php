@@ -27,14 +27,42 @@ class Mod_restock {
                 $this->cont->afficherProduitsAchat($prodF);
                 break;
 
-            case "ajoutStock":
-                $id = (int) $_POST['idProd'] ?? null;
-                $quantite = $_POST['quantite'] ?? 0;
+            case "ajoutAchat":
+                $idProd = (array) $_POST['produit'] ?? null;
+                $quantite = (array) $_POST['quantite'] ?? null;
+                $prix = (array) $_POST['prix'] ?? null;
+                $idF = (array) $_POST['fournisseur'] ?? null;
 
-                if($id && $quantite > 0){
-                    $this->cont->ajoutStock($id, $quantite);
-                    echo "Stock mis à jour avec succès !";
+                $fonds = $this->cont->fondsSuffisants($idProd, $quantite, $prix);
+
+                if($fonds && $idProd && $quantite){
+                    $this->cont->ajoutAchat($idProd, $quantite, $prix, $idF);
                 }
+
+                break;
+
+            case "afficherAchats";
+
+                $achats = $this->cont->recupAchats();
+                $this->cont->afficherAchats($achats);
+                break;
+
+            case "detailsAchat";
+                $idAchat = $_GET['idAchat'];
+                $details = $this->cont->recupDetailsAchat($idAchat);
+                $this->cont->afficherDetailsAchat($details);
+                break;
+
+            case "ajoutStock";
+
+                $idAchat = $_POST['idAchat'];
+                $details = $this->cont->recupDetailsAchat($idAchat);
+
+                $this->cont->parcourirLignes($details);
+
+                $this->cont->finaliserAchat($idAchat);
+
+                echo "Stock mis à jour avec succès !";
                 break;
 
         }

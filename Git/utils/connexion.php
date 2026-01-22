@@ -12,7 +12,11 @@
 
 
 
+
             //self::$bdd = new PDO('mysql:host=localhost;dbname=gestion_bar;charset=utf8', 'root', '');
+
+
+            //self::$bdd = new PDO('mysql:host=localhost;dbname=saeweb;charset=utf8', 'root', '');
 
 
 
