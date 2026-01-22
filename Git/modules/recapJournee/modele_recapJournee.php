@@ -109,18 +109,20 @@ class modele_recapJournee extends Connexion{
         return (float) $stmt->fetchColumn();
     }
 
-    public function getProdVendus(int $jour) {
+    public function getProdVendus( $jour) {
 
             $sql = "
                 SELECT
                     p.nom as nom,
                     SUM(lc.quantite) AS quantite_totale,
                     m.prix as prix,
-                    SUM(lc.quantite * m.prix) AS total_produit
+                    SUM(lc.quantite * m.prix) AS total_produit,
+                    s.quantite AS qteStock
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
                 JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON p.idProd = lc.idProd
+                JOIN stock s ON s.idInventaire
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
                 AND c.état = 1
                 GROUP BY p.nom, m.prix
@@ -146,7 +148,7 @@ class modele_recapJournee extends Connexion{
                     'quantite' => (int) $ligne['quantite_totale'],
                     'prix' => (float) $ligne['prix'] / 100,
                     'total' => (float) $ligne['total_produit'] / 100,
-                    'stock' => $stock[$nom]['stock'] ?? 0
+                    'stock' => $ligne['qteStock'] ?? 0
                 ];
             }
 

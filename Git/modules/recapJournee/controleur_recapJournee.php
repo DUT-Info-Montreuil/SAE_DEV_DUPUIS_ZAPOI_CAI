@@ -67,7 +67,7 @@
     }
 
 
-    public function getProduitsVendus(int $jour) {
+    public function getProduitsVendus($jour) {
         if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 return $this->modele->getProdVendus($jour);
         }
