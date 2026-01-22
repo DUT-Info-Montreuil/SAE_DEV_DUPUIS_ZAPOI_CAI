@@ -28,15 +28,11 @@ class Mod_restock {
                 break;
 
             case "ajoutAchat":
-                $idProd = (array) $_POST['produit'] ?? null;
-                $quantite = (array) $_POST['quantite'] ?? null;
-                $prix = (array) $_POST['prix'] ?? null;
-                $idF = (array) $_POST['fournisseur'] ?? null;
 
-                $fonds = $this->cont->fondsSuffisants($idProd, $quantite, $prix);
+                $fonds = $this->cont->fondsSuffisants();
 
-                if($fonds && $idProd && $quantite){
-                    $this->cont->ajoutAchat($idProd, $quantite, $prix, $idF);
+                if($fonds){
+                    $this->cont->ajoutAchat();
                 }
 
                 break;

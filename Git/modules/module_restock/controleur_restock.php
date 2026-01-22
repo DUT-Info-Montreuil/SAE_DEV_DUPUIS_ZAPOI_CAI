@@ -67,17 +67,15 @@
 
         }
 
-        public function fondsSuffisants($idProd, $quantite, $prix): bool{
+        public function fondsSuffisants(): bool{
 
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 $montant_total = 0;
-                foreach($idProd as $key => $p){
-                    $qte = (int) $quantite[$key];
-                    $montant_total += $qte * $prix[$key];
-                }
-                var_dump($montant_total);
-                $fonds = $this->modele->fonds();
-                $reste = $fonds - $montant_total;
+                foreach($_POST['produit'] as $p){
+                    $montant_total += (int)$p['qte'] * (float)$p['prix'];
+                }//TODO vérifier avec le solde de l'asso
+
+                $reste = 2;
                 if($reste > 0){
                     return true;
                 }else{
@@ -103,16 +101,15 @@
 
         }
 
-        public function ajoutAchat($idProd, $quantite, $prix,  $idF){
+        public function ajoutAchat(){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-                foreach($idF as $indF => $f){
-                    $idAchat = $this->modele->ajoutAchat($idF[$indF]);
-                    foreach($idProd as $indP => $p){
-                        $qte = (int) $quantite[$indP];
-                        $prix_la = (int) $prix[$indP];
-                        $this->modele->ajoutLigneAchat($idAchat, $p, $qte, $prix_la);
+                $idAchat = $this->modele->ajoutAchat();
+                foreach($_POST['produit'] as $p){
+                    if($p['qte']>0){
+                        $this->modele->ajoutLigneAchat($idAchat,$p);
                     }
                 }
+                $this->modele->updateAchat();
             }else{
                  $this->vue->message('Droit requis non perçu.');
              }

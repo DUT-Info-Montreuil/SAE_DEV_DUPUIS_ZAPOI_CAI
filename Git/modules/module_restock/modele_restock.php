@@ -81,28 +81,28 @@ class Modele_restock extends Connexion {
     }
 
 
-    public function ajoutAchat($idF){
-
-        $sql = "INSERT INTO achat (date, idFournisseur, idAsso) VALUES (CURRENT_DATE, :idF, :idAsso);";
+    public function ajoutAchat(){
+        $sql = "INSERT INTO achat (date, idAsso) VALUES (CURRENT_DATE, :idAsso);";
 
         $stmt = self::$bdd->prepare($sql);
-        $stmt->bindParam(':idF', $idF);
         $stmt->bindParam(':idAsso', $_SESSION['idAsso']);
         $stmt->execute();
+
         $idAchat = self::$bdd->lastInsertId();
+
         return $idAchat;
 
     }
 
 
-    public function ajoutLigneAchat($idAchat, $idProd, $quantite, $prix){
-
-        $sql = "INSERT INTO ligneAchat (idAchat, idProd, quantite) VALUES (:idAchat, :idProd, :quantite);";
+    public function ajoutLigneAchat($idAchat,$p){
+        $sql = "INSERT INTO ligneAchat (idAchat, idProd, idFournisseur, quantite) VALUES (:idAchat, :idProd, :idFournisseur, :quantite);";
 
         $stmt = self::$bdd->prepare($sql);
         $stmt->bindParam(':idAchat', $idAchat);
-        $stmt->bindParam(':idProd', $idProd);
-        $stmt->bindParam(':quantite', $quantite);
+        $stmt->bindParam(':idProd', $p['idProd']);
+        $stmt->bindParam(':quantite', $p['qte']);
+        $stmt->bindParam(':idFournisseur', $p['idF']);
         $stmt->execute();
 
     }
@@ -113,21 +113,21 @@ class Modele_restock extends Connexion {
             SELECT
                 a.idAchat as id,
                 a.date,
-                a.idFournisseur,
+                la.idFournisseur,
                 a.état,
                 SUM(la.quantite * pf.prix) / 100 as total_achat
             FROM
                 achat a
                 JOIN ligneAchat la ON a.idAchat = la.idAchat
-                JOIN fournisseur f ON f.idFournisseur = a.idFournisseur
+                JOIN fournisseur f ON f.idFournisseur = la.idFournisseur
                 JOIN prod_fournisseur pf ON (f.idFournisseur = pf.idFournisseur AND la.idProd = pf.idProd)
                 JOIN produits p ON p.idProd = la.idProd
             WHERE
                 a.idAsso = :idAsso
             GROUP BY
-                a.idAchat, a.date, a.idFournisseur, a.état
+                a.idAchat, a.date, la.idFournisseur, a.état
             ORDER BY
-                a.état DESC,
+                a.état,
                 a.date DESC
         ";
 
@@ -168,7 +168,7 @@ class Modele_restock extends Connexion {
                  SUM(la.quantite * pf.prix) / 100 AS total_produit
              FROM achat a
              JOIN ligneAchat la ON la.idAchat = a.idAchat
-             JOIN fournisseur f ON f.idFournisseur = a.idFournisseur
+             JOIN fournisseur f ON f.idFournisseur = la.idFournisseur
              JOIN prod_fournisseur pf ON (f.idFournisseur = pf.idFournisseur AND la.idProd = pf.idProd)
              JOIN produits p ON p.idProd = la.idProd
              WHERE a.idAchat = :idAchat
@@ -194,6 +194,14 @@ class Modele_restock extends Connexion {
 
          return $details_achat;
      }
+
+    public function updateAchat(){
+        $sql = "DELETE FROM achat
+                    WHERE idAchat NOT IN (SELECT distinct(idAchat) FROM ligneAchat)";
+
+        $s_sql = self::$bdd->prepare($sql);
+        $s_sql->execute();
+    }
 
     public function finaliserAchat($idAchat){
         if(!empty($idAchat)){

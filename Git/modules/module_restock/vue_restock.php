@@ -9,15 +9,15 @@ require_once('utils/vue_generique.php');
         echo '<h3> Produits à l\'achat : </h3> <br>
         
         <form method="post" action="index.php?module=restock&action=ajoutAchat">';
-        
+        $index=0;
         foreach($produits as $p){
             echo '<br><li><p>'. h($p['nom']) .' , Prix : '.number_format($p['prix'],2).' € , Fournisseur : '. h($p['fournisseur']) .'
 
-                <input type="hidden" name="produit[]" value="'. h($p['idProd']) .'">
-                <input type="hidden" name="prix[]" value="'. h($p['prix']) .'">
-                <input type="hidden" name="fournisseur[]" value="'. h($p['idF']) .'">
-                <input type="number" name="quantite[]" min="0" max="1000" placeholder="0">';
-           
+                <input type="hidden" name="produit['.$index.'][idProd]" value="'. h($p['idProd']) .'">
+                <input type="hidden" name="produit['.$index.'][prix]" value="'. h($p['prix']) .'">
+                <input type="hidden" name="produit['.$index.'][idF]" value="'. h($p['idF']) .'">
+                <input type="number" name="produit['.$index.'][qte]" min="0" max="1000" value="0" placeholder="0">';
+           $index++;
         }
 
         echo '<button type="submit"> Commander </button>
