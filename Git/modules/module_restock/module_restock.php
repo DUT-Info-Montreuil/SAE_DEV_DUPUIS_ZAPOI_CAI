@@ -52,11 +52,12 @@ class Mod_restock {
             case "ajoutStock";
 
                 $idAchat = $_POST['idAchat'];
+                var_dump($idAchat);
                 $details = $this->cont->recupDetailsAchat($idAchat);
 
                 $this->cont->parcourirLignes($details);
 
-                $this->cont->finaliserAchat($idAchat);
+                $this->cont->finaliserAchat($idAchat);//
 
                 echo "Stock mis à jour avec succès !";
                 break;

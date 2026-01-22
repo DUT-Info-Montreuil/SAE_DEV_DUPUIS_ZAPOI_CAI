@@ -121,9 +121,9 @@ class Cont_restock {
         public function parcourirLignes($lignes){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 foreach($lignes as $l){
+
                     $id = $l['id'];
                     $q = $l['quantite'];
-                    var_dump($id);
                     if($id && $q){
                         $this->ajoutStock($id, $q);
 

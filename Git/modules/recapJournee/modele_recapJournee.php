@@ -226,11 +226,9 @@ class modele_recapJournee extends Connexion{
     }
 
     public function ecartJourJ(){
-<<<<<<< HEAD
-        $sql=self::$bdd->prepare("SELECT (quantite-qteInit) AS ecart,nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = CURRENT_DATE");
-=======
+
         $sql=self::$bdd->prepare("SELECT (quantite-qteInit) AS ecart, nom FROM stock NATURAL JOIN inventaire NATURAL JOIN produits WHERE idAsso = ? AND date = CURRENT_DATE");
->>>>>>> 87e3edc99d6cf2f558001ec438d77b7ba29c79e9
+
         $sql->execute([$_SESSION['idAsso']]);
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }

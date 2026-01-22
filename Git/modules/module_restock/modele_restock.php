@@ -154,6 +154,7 @@ class Modele_restock extends Connexion {
                 'total' => $achat['total_achat']
             ];
         }
+
         return $achats;
 
 

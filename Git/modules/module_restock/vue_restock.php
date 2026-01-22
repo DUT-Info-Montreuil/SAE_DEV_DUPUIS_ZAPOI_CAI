@@ -47,6 +47,7 @@ require_once('utils/vue_generique.php');
 
         echo '
             <form method = "POST" action="index.php?module=restock&action=ajoutStock">
+            <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>
             <div id="listeCommande">
                 <div class="TitreColonne">ID de la commande</div>
                 <div class="TitreColonne">Date de la commande</div>
@@ -54,13 +55,11 @@ require_once('utils/vue_generique.php');
                 <div class="TitreColonne">Etat commande </div>
                 <div class="TitreColonne">Détails de la commande </div>
                 <div class ="TitreColonne">Action</div>';
+                $index=0;
                 foreach($liste_achats as $a){
 
                 echo'
-
-                    <input type="hidden" name="idAchat" value="'. h($a['id']) .'">
-
-                    <div id = "achat-'. h($a["id"]) .'" class=ligneCommande style="display : contents;">
+                    <div id = "achat-'. h($a["id"]) .'" class="ligneCommande" style="display : contents;">
 
                     <div class="elt">'. h($a["id"]) .'</div>
                     <div class="elt">'. h($a["date"]) .'</div>
@@ -69,10 +68,11 @@ require_once('utils/vue_generique.php');
                     <a href="index.php?module=restock&action=detailsAchat&idAchat='. h($a["id"]) .'" class="elt"> Détails </a>';
 
                     if(strcmp($a['état'], "en cours") == 0){
-                        echo ' <button type="submit" name="finAchat">
+                        echo ' <button type="submit" name="idAchat" value="'.h($a["id"]).'">
                                     Finaliser
                                 </button>';
                     }
+                $index++;
 
 
                 echo '</div>
