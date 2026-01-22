@@ -92,29 +92,66 @@
 
         public function ajoutStock($idProd, $quantite){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-                foreach($idProd as $key => $p){
-                    $qte = (int) $quantite[$key];
-                    if($qte > 0){
-                        $this->modele->ajoutStock($p, $qte);
+
+                        $this->modele->ajoutStock($idProd, $quantite);
                     }
-                }
-            }
+
+
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
 
         }
 
-        public function ajoutAchat($idProd, $quantite){
+        public function ajoutAchat($idProd, $quantite, $prix,  $idF){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-
-                $this->modele->ajoutAchat($idProd, $quantite);
-
+                foreach($idF as $indF => $f){
+                    $idAchat = $this->modele->ajoutAchat($idF[$indF]);
+                    foreach($idProd as $indP => $p){
+                        $qte = (int) $quantite[$indP];
+                        $prix_la = (int) $prix[$indP];
+                        $this->modele->ajoutLigneAchat($idAchat, $p, $qte, $prix_la);
+                    }
+                }
             }else{
                  $this->vue->message('Droit requis non perçu.');
              }
 
         }
+
+        public function parcourirLignes($lignes){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+                foreach($lignes as $l){
+                    $id = $l['id'];
+                    $q = $l['quantite'];
+                    var_dump($id);
+                    if($id && $q){
+                        $this->ajoutStock($id, $q);
+
+                    }
+                }
+            }else{
+               $this->vue->message('Droit requis non perçu.');
+            }
+        }
+
+        public function recupAchats(){
+            return $this->modele->getAchats();
+        }
+        public function afficherAchats($achats){
+            return $this->vue->finaliserAchats($achats);
+        }
+
+        public function recupDetailsAchat($id){
+            return $this->modele->getDetailsAchat($id);
+        }
+        public function afficherDetailsAchat($achats){
+            return $this->vue->detailsAchat($achats);
+        }
+
+    public function finaliserAchat($idAchat){
+        return $this->modele->finaliserAchat($idAchat);
+    }
 
        	public function affiche(){
 		return $this->vue->affiche();

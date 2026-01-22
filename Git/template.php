@@ -38,6 +38,8 @@
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
 
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=afficherAchats">Achats</a></li>
+
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=listProduits">Achat de produits</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
 
