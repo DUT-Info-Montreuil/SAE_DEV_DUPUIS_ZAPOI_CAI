@@ -34,7 +34,8 @@ class Cont_commande {
             if($type==null || $type=='reset'){
 
                 $produits = $this->modele->getProduitsMenu();
-                $this->vue->formulaire_commande($produits,$this->modele->getQuantite($produits));
+                
+                $this->vue->formulaire_commande($produits,$types,$this->modele->getQuantite($produits));
 
             }
             else{
@@ -152,6 +153,9 @@ class Cont_commande {
 
     public function afficheCommandeProduit($prod) {
         return $this->vue->vueCommandeProduit($prod);
+    }
+    public function getQuantité(){
+        return $this->modele->getQuantite();
     }
 }
 ?>

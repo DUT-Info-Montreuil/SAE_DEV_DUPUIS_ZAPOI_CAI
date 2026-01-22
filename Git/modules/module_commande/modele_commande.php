@@ -194,7 +194,7 @@ public function commandesEnCours(){
     public function getProdParType($idType){
         $idAsso= $_SESSION['idAsso'];
          $sql = "SELECT *
-         FROM menu NATURAL JOIN produits ON produits.idProd=stock.idProd  NATURAL JOIN inventaire
+         FROM menu NATURAL JOIN produits NATURAL JOIN inventaire
          WHERE menu.idAsso = ? AND produits.idType = ? AND date = CURRENT_DATE";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute([$idAsso,$idType]);
