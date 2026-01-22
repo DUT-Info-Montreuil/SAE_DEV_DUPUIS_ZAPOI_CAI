@@ -72,19 +72,19 @@ class Modele_stock extends Connexion{
 
 
 
-public function deduireStock() {
-    $idCom = $_POST['idCommande'] ?? null;
-    if ($idCom) {
-        $sql = self::$bdd->prepare("SELECT idProd, quantite FROM lignecommande WHERE idCommande = ? AND date = CURRENT_DATE");
-        $sql->execute([$idCom]);
-        $produits = $sql->fetchAll(PDO::FETCH_ASSOC);
-        $sqlUpdate = self::$bdd->prepare("UPDATE stock SET quantite = quantite - ? WHERE idProd = ?");
-        foreach ($produits as $p) {
-            $sqlUpdate->execute([$p['quantite'], $p['idProd']]);
+    public function deduireStock() {
+        $idCom = $_POST['idCommande'] ?? null;
+        if ($idCom) {
+            $sql = self::$bdd->prepare("SELECT idProd, quantite FROM lignecommande WHERE idCommande = ? AND date = CURRENT_DATE");
+            $sql->execute([$idCom]);
+            $produits = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $sqlUpdate = self::$bdd->prepare("UPDATE stock SET quantite = quantite - ? WHERE idProd = ?");
+            foreach ($produits as $p) {
+                $sqlUpdate->execute([$p['quantite'], $p['idProd']]);
+            }
         }
     }
-}
-public function getMenu(){
+    public function getMenu(){
         $selectMenu = self::$bdd->prepare("SELECT nom,prix,seuil,idProd FROM menu NATURAL JOIN produits WHERE idAsso = ?");
         $selectMenu->execute([$_SESSION['idAsso']]);
         $resultatMenu = $selectMenu->fetchAll(PDO::FETCH_ASSOC);

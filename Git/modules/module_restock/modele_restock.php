@@ -85,7 +85,7 @@ class Modele_restock extends Connexion {
 
         $quantiteFinale = $quantite + $quantiteCourante;
 
-        $sql = "UPDATE stock SET quantite = :q WHERE idProd = :id ";
+        $sql = "UPDATE stock SET quantite = quantite + :q, qteInit = qteInit + :q WHERE idProd = :id ";
 
         $stmt2 = self::$bdd->prepare($sql);
         $stmt2->bindParam(':q', $quantiteFinale);
