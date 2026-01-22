@@ -4,23 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="" />
+=======
     <list default="true" id="ced04137-1f2e-40a7-a352-e4150eaad5af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/module_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_commande/vue_commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/module_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_connexion/vue_connexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/module_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/module_historique.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_historique/vue_historique.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/modele_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/modele_restock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/module_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/module_restock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_restock/vue_restock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_restock/vue_restock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_solde/vue_solde.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_solde/vue_solde.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/module_stock/vue_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/modules/recapJournee/vue_recapJournee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Git/utils/connexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Git/utils/connexion.php" afterDir="false" />
     </list>
+>>>>>>> ac8342d512aea821c0bacd1861158cf044ea1a7d
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,8 +30,18 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "restock2",
-    "last_opened_file_path": "/home/etudiants/info/edupuis/local_html/MVC_3_edupuis",
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
+=======
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/local_html/merge_temporaire/Git",
+>>>>>>> ac8342d512aea821c0bacd1861158cf044ea1a7d
+=======
+    "git-widget-placeholder": "moduleAccueil",
+    "last_opened_file_path": "/home/etudiants/info/dzapoi/Bureau/SAE_WEB_S3_",
+>>>>>>> 1bd7a7bded5aee1c473d4556436b751e33be65cd
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,7 +81,6 @@
       <workItem from="1768228521219" duration="8746000" />
       <workItem from="1768293580768" duration="16008000" />
       <workItem from="1768315768991" duration="787000" />
-      <workItem from="1768565315950" duration="14379000" />
     </task>
     <servers />
   </component>

@@ -156,6 +156,36 @@ private function recherche_dynamique() {
             </form>
             ';
     }
+
+    public function afficheInitStockJour($produits){
+
+        echo '<h2>Vérification des arrivages </h2>';
+
+        echo '
+                <form method="post" action="index.php?module=stock&action=creeInventaire" id="form-produit">
+                    <div id="tableauStock">
+
+                        <div class="TitreColonne">Nom Produit</div>
+                        <div class="TitreColonne">Quantité</div>
+                        <div class="TitreColonne">Quantité prévu</div>
+                        <div class="TitreColonne">PlaceHolder</div>
+                        <div class="TitreColonne">PlaceHolder</div>';
+
+
+                        foreach($produits as $item){
+                            echo'
+                            <input type="hidden" name="produit['.$item['idProd'].'][idProd]" value="'.$item['idProd'].'">
+                            <div>'. h($item['nom']) .'</div>
+                            <div><input type="number" name="produit['.$item['idProd'].'][qteArrive]" value="'. h($item['quantite']) .'" placeholder="'. h($item['quantite']) .'"></div>
+                            <div>'. h(($item['quantite']+25)) .'</div>
+                            <div>PlaceHolder</div>
+                            <div>PlaceHolder</div>';
+                        }
+        echo'</div>
+        <button type="submit">Envoyer</button>
+        </form>';
+    }
+
     public function afficheNBDispo($dispo){
         echo '<p id="nb">Nombre de produits disponibles : '. h($dispo) .'</p>';
     }

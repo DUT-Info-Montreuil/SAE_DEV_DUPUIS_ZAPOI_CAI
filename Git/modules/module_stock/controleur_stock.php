@@ -16,7 +16,13 @@ class Cont_stock{
 
     public function affiche_stock() {
         if($_SESSION['role']==1 || $_SESSION['role']==4){
-            $this->vue->afficheStock($this-> getStock());
+            if($this->modele->stockExistePas()){
+                $this->vue->afficheInitStockJour($this ->modele-> getStockArrivage());
+            }
+            else{
+                $this->vue->afficheStock($this-> getStock());
+            }
+
         }
         else{
             $this->vue->message('Droit requis non perçu.');
@@ -40,6 +46,17 @@ class Cont_stock{
         else{
             $this->vue->message('Droit requis non perçu.');
         }
+    }
+
+    public function creeInventaire(){
+        if($_SESSION['role']==1 || $_SESSION['role']==4){
+            $this->modele->creeInventaire();
+
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+        header("Location: index.php?module=stock&action=affiche_stock");
     }
 
     //Fonctions du modèle

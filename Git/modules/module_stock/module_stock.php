@@ -13,6 +13,7 @@ Class Mod_stock{
         switch($action){
             case "affiche_stock":
                 $this->cont->affiche_stock();
+
                 $this->cont->affiche_stockFaible();
                 break;
             case "menu":
@@ -27,6 +28,9 @@ Class Mod_stock{
             case "ajouteProduit":
                 $this->cont->ajouterNewProduit();
                 break;
+            case "creeInventaire":
+                $this->cont->creeInventaire();
+                break;
             case"recherche":
                 $this->cont->getRecherche();
                 break;
@@ -36,7 +40,7 @@ Class Mod_stock{
         }
 
     }
-    
+
     public function affiche(){
         return $this->cont->affiche();
 
