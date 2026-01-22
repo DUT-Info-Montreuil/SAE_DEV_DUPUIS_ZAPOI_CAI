@@ -12,7 +12,20 @@ Class Mod_stock{
 
         switch($action){
             case "affiche_stock":
-                $this->affiche_stock();
+                $this->cont->affiche_stock();
+                $this->cont->affiche_stockFaible();
+                break;
+            case "menu":
+                $this->cont->affiche_menu();
+                break;
+            case "changeInfoMenu":
+                $this->cont->changement();
+                break;
+            case "afficheProdAjouter":
+                $this->cont->afficheProduit();
+                break;
+            case "ajouteProduit":
+                $this->cont->ajouterNewProduit();
                 break;
             case"recherche":
                 $this->cont->getRecherche();
@@ -23,9 +36,7 @@ Class Mod_stock{
         }
 
     }
-    public function affiche_stock() {
-        $this->cont->affiche_stock();
-    }
+    
     public function affiche(){
         return $this->cont->affiche();
 
