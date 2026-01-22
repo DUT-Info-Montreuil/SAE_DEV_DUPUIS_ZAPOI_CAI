@@ -127,6 +127,7 @@ public function finaliserCommande($idCommande){
         $s_sql_fin = self::$bdd->prepare($sql_fin);
         $s_sql_fin->execute([$idCommande]);
 
+        
         $sql_tresorerie = self::$bdd->prepare("UPDATE association 
         SET tresorerie = tresorerie + (SELECT prix FROM commande WHERE idAsso = ? AND idCommande = ?)  
         WHERE idAsso = ?");

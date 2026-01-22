@@ -187,6 +187,7 @@ public function finaliser_commande($liste_commande) {
             const reponseJSON = await response.json();
 
             const prodàEnlever = document.getElementById("commande-"+ id);
+            alert("commande-"+ id);
             alert("Commande finalisée avec succès !");
             prodàEnlever.remove();
 
