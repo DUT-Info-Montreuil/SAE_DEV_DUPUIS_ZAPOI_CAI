@@ -95,10 +95,12 @@ class Cont_stock{
         }
     }
     public function ajouterNewProduit(){
-        if($_SESSION['role']==1 && isset($_POST['produit'])){
-            $prod = $_POST['produit'];
-            foreach($prod as $item){
-                $this->modele->ajouterProduitMenu($item['idProd'],$item['prix'],$item['seuil']);
+        if($_SESSION['role']==1){
+            if(isset($_POST['produit'])){
+                $prod = $_POST['produit'];
+                foreach($prod as $item){
+                    $this->modele->ajouterProduitMenu($item['idProd'],$item['prix'],$item['seuil']);
+                }
             }
             header("Location: index.php?module=stock&action=affiche_stock"); 
         }
