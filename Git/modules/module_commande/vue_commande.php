@@ -9,21 +9,23 @@ public function formulaire_début_commande(){
 
     echo '
         <form method="post" action="index.php?module=commande&action=traiter_debut_commande">
+            <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>
                 <p>Cliquer pour commencer une nouvelle commande : </p>
                 <input type="submit" value="Démarrer la commande">
         </form>
     ';
 }
 
-public function formulaire_commande($liste_prod){
-echo '<form method="post" action="index.php?module=commande&action=ajout_produit" id="form-commande">';
+public function formulaire_commande($liste_prod,$max){
+echo '<form method="post" action="index.php?module=commande&action=ajout_produit" id="form-commande">
+<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>';
     $elem = 0;
     foreach($liste_prod as $p){
         $id = $p['idProd'];
         echo '
 
             <input type="hidden" name="produits['.$elem.'][id]" value="'. h($id).'">
-            <input type="number" name="produits['.$elem.'][qte]" min="0" max='. h($p["quantite"]).' placeholder="0" oninput="refreshPanier()">
+            <input type="number" name="produits['.$elem.'][qte]" min="0" max='. h($max[$elem]["limite"]).' placeholder="0" oninput="refreshPanier()">
                 <img src="'. h($p["image"]).'" alt="'. h($p["nom"]).'" width="100">
 
 
@@ -56,6 +58,7 @@ echo '<form method="post" action="index.php?module=commande&action=ajout_produit
 public function finaliser_commande($liste_commande){
     echo '
         <form method = "POST" action="index.php?module=stock&action=deduireStock" id="form-finCommande">
+        <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>
         <div id="listeCommande">
             <div class="TitreColonne">ID de la commande</div>
             <div class="TitreColonne">Prix de la commande</div>
@@ -129,6 +132,7 @@ public function finaliser_commande($liste_commande){
         foreach($prod as $p){
 
             echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
+            echo 'input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>';
             echo "<div id='restockDiv'>";
             echo "<p> Fournissseur : ". h($p['nomF']) ."</p>";
             echo "<p> Produit : ". h($p['nom']) ."</p>";
