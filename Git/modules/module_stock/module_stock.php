@@ -28,6 +28,12 @@ Class Mod_stock{
             case "ajouteProduit":
                 $this->cont->ajouterNewProduit();
                 break;
+            case "afficheProdRetirer":
+                $this->cont->afficheMenuDel();
+                break;
+            case "retireProduit":
+                $this->cont->retirerProduit();
+                break;
             case "creeInventaire":
                 $this->cont->creeInventaire();
                 break;

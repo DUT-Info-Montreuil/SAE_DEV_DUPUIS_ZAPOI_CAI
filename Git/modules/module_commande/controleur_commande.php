@@ -34,12 +34,12 @@ class Cont_commande {
             if($type==null || $type=='reset'){
 
                 $produits = $this->modele->getProduitsMenu();
-                $this->vue->formulaire_commande($produits,$types);
+                $this->vue->formulaire_commande($produits,$types,$this->modele->getQuantite($produits));
 
             }
             else{
                 $produits = $this->modele->getProdParType($type);
-                $this->vue->formulaire_commande($produits,$types);
+                $this->vue->formulaire_commande($produits,$types,$this->modele->getQuantite($produits));
             }
         } else {
             $this->vue->message('Droit requis non perçu.');

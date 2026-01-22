@@ -47,10 +47,10 @@ class Modele_commande extends Connexion {
         }
     }
 
-  public function getProduitsMenu():array{//TODO dissocier l'affichage du menu de la limite de commande
+  public function getProduitsMenu():array{
         $idAsso= $_SESSION['idAsso'];
-         $sql = "SELECT menu.idProd,produits.idType,nom,image,type.type,menu.prix,stock.quantite
-         FROM menu NATURAL JOIN produits NATURAL JOIN type INNER JOIN stock ON produits.idProd=stock.idProd NATURAL JOIN inventaire
+         $sql = "SELECT menu.idProd,produits.idType,nom,image,type.type,menu.prix
+         FROM menu NATURAL JOIN produits NATURAL JOIN type NATURAL JOIN inventaire
          WHERE menu.idAsso = ? AND date=CURRENT_DATE";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute([$idAsso]);
@@ -58,6 +58,23 @@ class Modele_commande extends Connexion {
 
          return $produits;
   }
+
+    public function getQuantite($produits){
+        $id=0;
+        foreach($produits as $item){
+            $sql = "SELECT stock.quantite
+                             FROM menu NATURAL JOIN stock NATURAL JOIN inventaire
+                             WHERE menu.idAsso = ? AND idProd = ? AND date = CURRENT_DATE";
+            $stmt = self::$bdd->prepare($sql);
+            $stmt->execute([$_SESSION['idAsso'],$item['idProd']]);
+            $donne[$id]['limite'] = $stmt->fetchColumn();
+            $id++;
+        }
+
+
+        return $donne;
+
+    }
   public function getTypes(){
     $sql="SELECT * FROM type";
     $stmt=self::$bdd->prepare($sql);
@@ -177,8 +194,8 @@ public function commandesEnCours(){
     public function getProdParType($idType){
         $idAsso= $_SESSION['idAsso'];
          $sql = "SELECT *
-         FROM menu NATURAL JOIN produits INNER JOIN stock ON produits.idProd=stock.idProd  NATURAL JOIN inventaire
-         WHERE menu.idAsso = ? AND produits.idType = ? AND date = CURRENT_DATE-1";
+         FROM menu NATURAL JOIN produits ON produits.idProd=stock.idProd  NATURAL JOIN inventaire
+         WHERE menu.idAsso = ? AND produits.idType = ? AND date = CURRENT_DATE";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute([$idAsso,$idType]);
                 $produits = $stmt->fetchAll();

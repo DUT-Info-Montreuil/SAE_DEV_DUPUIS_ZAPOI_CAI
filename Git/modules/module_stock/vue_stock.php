@@ -120,7 +120,9 @@ private function recherche_dynamique() {
     }
 }
     public function affiche_menu($menu){
-        echo'<h2>Menu de la buvette</h2> <a href="index.php?module=stock&action=afficheProdAjouter" id="add"> Ajouter des produits au menu</a>
+        echo'<h2>Menu de la buvette</h2>
+        <a href="index.php?module=stock&action=afficheProdAjouter" id="add"> Ajouter des produits au menu</a>
+        <a href="index.php?module=stock&action=afficheProdRetirer" id="del"> Retirer des produits au menu</a>
         <form method="POST" action="index.php?module=stock&action=changeInfoMenu">
         <div class="TitreColonne">Nom Produit</div>
         <div class="TitreColonne">Prix</div>
@@ -153,6 +155,21 @@ private function recherche_dynamique() {
                         <div><input type="number" name="produit['.h($item['idProd']).'][seuil]" placeholder="50"/></div>';
         }
         echo'<button type="submit"> Changer </button>
+            </form>
+            ';
+    }
+
+    public function afficheMenuDel($liste){
+        echo'<h2>Produit à vendre</h2>
+        <form method="POST" action="index.php?module=stock&action=retireProduit">
+        <div class="TitreColonne">Nom Produit</div>';
+
+        foreach($liste as $item){
+            echo '
+                <input type="checkbox" name="produit['.h($item['idProd']).'][idProd]" value="'.h($item['idProd']).'">
+                <div>'.h($item['nom']).'</div>';
+        }
+        echo'<button type="submit"> Retirer </button>
             </form>
             ';
     }

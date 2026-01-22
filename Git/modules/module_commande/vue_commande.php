@@ -20,7 +20,7 @@ require_once('utils/vue_generique.php');
         ';
     }
 
-    public function formulaire_commande($liste_prod, $type){
+    public function formulaire_commande($liste_prod, $type, $limite){
 
 
         echo '
@@ -77,7 +77,14 @@ require_once('utils/vue_generique.php');
                                 class="form-control"
                                 name="produits['.$elem.'][qte]"
                                 min="0"
-                                max="'.$p["quantite"].'"
+                                max="';
+                                if($limite[$elem]['limite']!=null){
+                                    echo ''.$limite[$elem]["limite"].'';
+                                }
+                                else{
+                                    echo '0';
+                                }
+                            echo '"
                                 value="0"
                                 oninput="refreshPanier()"
                             >

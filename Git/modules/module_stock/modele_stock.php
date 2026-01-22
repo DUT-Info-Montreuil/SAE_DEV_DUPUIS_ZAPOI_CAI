@@ -49,8 +49,12 @@ class Modele_stock extends Connexion{
     }
 
     public function getStock(): array{
-        $selectStock = self::$bdd->prepare("SELECT stock.idProd,nom,quantite,seuil FROM stock NATURAL JOIN produits NATURAL JOIN inventaire NATURAL JOIN menu WHERE idAsso = ? AND date = CURRENT_DATE ORDER BY (quantite < seuil) DESC");
-        $selectStock->execute([$_SESSION['idAsso']]);
+        $selectStock = self::$bdd->prepare(
+        "SELECT stock.idProd,nom,quantite,seuil
+        FROM stock NATURAL JOIN produits p NATURAL JOIN inventaire LEFT OUTER JOIN (SELECT idProd,seuil FROM menu WHERE idAsso = ?) s ON p.idProd=s.idProd
+        WHERE idAsso = ? AND date = CURRENT_DATE
+        ORDER BY (quantite < seuil) DESC");
+        $selectStock->execute([$_SESSION['idAsso'],$_SESSION['idAsso']]);
         $resultStock = $selectStock->fetchAll(PDO::FETCH_ASSOC);
         return $resultStock;
     }
@@ -106,6 +110,11 @@ class Modele_stock extends Connexion{
     public function changeInfo($idProd,$prix,$seuil){
         $sql = self::$bdd->prepare("UPDATE menu SET prix = ?, seuil = ? WHERE idAsso = ? AND idProd = ?");
         $sql -> execute([$prix,$seuil,$_SESSION['idAsso'],$idProd]);
+    }
+
+    public function retirerProduitMenu($idProd){
+        $sql = self::$bdd->prepare("DELETE FROM menu WHERE idProd = ? AND idAsso = ? ");
+        $sql -> execute([$idProd,$_SESSION['idAsso']]);
     }
 }
 ?>

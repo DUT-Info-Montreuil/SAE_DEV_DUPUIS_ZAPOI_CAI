@@ -119,7 +119,31 @@ class Cont_stock{
                     $this->modele->ajouterProduitMenu($item['idProd'],$item['prix'],$item['seuil']);
                 }
             }
-            header("Location: index.php?module=stock&action=affiche_stock"); 
+            header("Location: index.php?module=stock&action=affiche_stock");
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+    public function afficheMenuDel(){
+        if($_SESSION['role']==1){
+            $this->vue->afficheMenuDel($this->modele->getMenu());
+        }
+        else{
+            $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+    public function retirerProduit(){
+        if($_SESSION['role']==1){
+            if(isset($_POST['produit'])){
+                $prod = $_POST['produit'];
+                foreach($prod as $item){
+                    $this->modele->retirerProduitMenu($item['idProd']);
+                }
+            }
+            header("Location: index.php?module=stock&action=affiche_stock");
         }
         else{
             $this->vue->message('Droit requis non perçu.');
