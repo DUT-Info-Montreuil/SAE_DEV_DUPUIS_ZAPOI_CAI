@@ -12,12 +12,13 @@ class Modele_commande extends Connexion {
 
     public function ajout_début_commande() {
         $idUtilisateur = $_SESSION['idCompte'];
-        $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état) values(:idAsso,:idUtilisateur,NOW(),:etat)";
+        $sql = "INSERT INTO commande(idAssociation,idUtilisateur,date,état,prix) values(:idAsso,:idUtilisateur,CURRENT_DATE(),:etat,:prix)";
         $ssql = self::$bdd->prepare($sql);
         $success = $ssql->execute([
         'idAsso'=>$_SESSION['idAsso'],
         'idUtilisateur'=>$idUtilisateur,
-        'etat'=>0
+        'etat'=>0,
+        'prix'=>0
         ]);
         $_SESSION['idCommandeActuelle'] = self::$bdd->lastInsertId();
     }
@@ -46,11 +47,11 @@ class Modele_commande extends Connexion {
         }
     }
 
-  public function getProduitsMenu():array{
+  public function getProduitsMenu():array{//TODO dissocier l'affichage du menu de la limite de commande
         $idAsso= $_SESSION['idAsso'];
          $sql = "SELECT menu.idProd,produits.idType,nom,image,type.type,menu.prix,stock.quantite
          FROM menu NATURAL JOIN produits NATURAL JOIN type INNER JOIN stock ON produits.idProd=stock.idProd NATURAL JOIN inventaire
-         WHERE menu.idAsso = ? AND date=CURRENT_DATE-1";
+         WHERE menu.idAsso = ? AND date=CURRENT_DATE";
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute([$idAsso]);
                 $produits = $stmt->fetchAll();

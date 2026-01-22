@@ -84,5 +84,28 @@ public function deduireStock() {
         }
     }
 }
+public function getMenu(){
+        $selectMenu = self::$bdd->prepare("SELECT nom,prix,seuil,idProd FROM menu NATURAL JOIN produits WHERE idAsso = ?");
+        $selectMenu->execute([$_SESSION['idAsso']]);
+        $resultatMenu = $selectMenu->fetchAll(PDO::FETCH_ASSOC);
+        return $resultatMenu;
+    }
+
+    public function getHorsMenu(){
+        $selectMenu = self::$bdd->prepare("SELECT DISTINCT idProd, nom FROM stock NATURAL JOIN produits NATURAL JOIN inventaire WHERE idAsso = ? AND idProd NOT IN (SELECT idProd FROM menu WHERE idAsso = ?)");
+        $selectMenu->execute([$_SESSION['idAsso'],$_SESSION['idAsso']]);
+        $resultatMenu = $selectMenu->fetchAll(PDO::FETCH_ASSOC);
+        return $resultatMenu;
+    }
+
+    public function ajouterProduitMenu($id,$prix,$seuil){
+        $sql = self::$bdd->prepare("INSERT INTO menu (idProd,idAsso,prix,seuil) VALUES (?,?,?,?)");
+        $sql -> execute([$id,$_SESSION['idAsso'],$prix,$seuil]);
+    }
+
+    public function changeInfo($idProd,$prix,$seuil){
+        $sql = self::$bdd->prepare("UPDATE menu SET prix = ?, seuil = ? WHERE idAsso = ? AND idProd = ?");
+        $sql -> execute([$prix,$seuil,$_SESSION['idAsso'],$idProd]);
+    }
 }
 ?>

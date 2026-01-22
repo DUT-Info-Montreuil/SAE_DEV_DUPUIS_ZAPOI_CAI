@@ -13,7 +13,7 @@
         //Fonctions de la vue
         public function afficherHistoriqueClient(array $histo){
             if($_SESSION['role']==3 || $_SESSION['role']==1){
-                $this->vue->historique($histo);
+                $this->vue->historiqueClient($histo);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
