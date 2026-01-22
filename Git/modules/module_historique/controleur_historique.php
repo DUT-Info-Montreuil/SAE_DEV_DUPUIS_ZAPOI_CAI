@@ -12,7 +12,7 @@
         }
         //Fonctions de la vue
         public function afficherHistoriqueClient(array $histo){
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==3 || $_SESSION['role']==1){
                 $this->vue->historique($histo);
             }
             else{
@@ -22,9 +22,9 @@
         }
 
         public function afficherDetailsCommande(array $details){
-            if($_SESSION['role']==3 || $_SESSION['role']==2){
+            if($_SESSION['role']==3 || $_SESSION['role']==2 || $_SESSION['role']==1){
                   $this->vue->detailsCommande($details);
-              }
+            }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
@@ -32,7 +32,7 @@
 
         public function afficherHistoriqueAsso(array $histo){
             if($_SESSION['role']==1){
-                $this->vue->historique($histo);
+                $this->vue->historiqueClient($histo);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
@@ -44,7 +44,7 @@
 
         //Fonctions du modèle
         public function modHistoriqueClient() {
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==3 || $_SESSION['role']==1){
                 return $this->modele->getHistoriqueClient();
             }
             else{
@@ -60,19 +60,17 @@
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
         }
 
         public function modDetailsCommande($details) : array {
-            if($_SESSION['role']==3 || $_SESSION['role']==2){
+            if($_SESSION['role']==3 || $_SESSION['role']==2 ){
                 return $this->modele->getDetailsCommande($details);
-            }elseif($_SESSION['role']==1){
+            }else if($_SESSION['role']==1 ){
                 return $this->modele->getDetailsAchat($details);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
         }
 
 

@@ -62,6 +62,15 @@ class Modele_stock extends Connexion{
         return (int)$resultStock['nb'];
     }
 
+    public function getNBProduitFaible(): int{
+        $selectStock = self::$bdd->prepare("SELECT count(*) as nb FROM stock NATURAL JOIN produits NATURAL JOIN inventaire NATURAL JOIN menu WHERE idAsso = ? AND date = CURRENT_DATE AND (quantite < seuil) ");
+        $selectStock->execute([$_SESSION['idAsso']]);
+        $resultStock = $selectStock->fetch(PDO::FETCH_ASSOC);
+        return (int)$resultStock['nb'];
+    }
+
+
+
 
 public function deduireStock() {
     $idCom = $_POST['idCommande'] ?? null;
