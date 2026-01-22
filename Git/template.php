@@ -38,9 +38,12 @@
                             <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4 && !empty($_SESSION['idAsso'])): // Gestionnaire ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
+
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=menu">Menu</a></li>
 
 
+
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_soldeAsso">Solde Association</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=listProduits">Achat de produits</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
 

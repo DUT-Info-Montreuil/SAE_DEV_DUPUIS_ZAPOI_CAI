@@ -23,6 +23,9 @@ class Mod_solde{
             case "page_solde":
                 $this->cont->afficher_page_solde();
                 break;
+            case "page_soldeAsso":
+                $this->cont->afficher_soldeAsso();
+                break;
         }
 
     }

@@ -30,13 +30,26 @@ class Cont_solde {
         }
     }
 
+
     public function afficher_page_solde() {
         if ($_SESSION['role'] == 3) {
             $solde = $this->modele->getSolde();
             $this->vue->afficheSolde($solde);
             $this->vue->formulaire_solde();
-        } else {
+        }
+        else {
             $this->vue->message('Droit requis non perçu.');
+        }
+    }
+
+        public function afficher_soldeAsso(){
+            if($_SESSION['role']==1){
+                $this->vue->afficheSolde($this->modele->getSoldeAsso());
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
         }
     }
 

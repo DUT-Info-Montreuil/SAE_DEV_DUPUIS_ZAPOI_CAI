@@ -83,7 +83,7 @@ class Modele_commande extends Connexion {
   }
 public function calculerPrixTotalCommande() {
     $total = 0;
-    if (isset($_POST['produits'])) {
+    if (isset($_POST['produits']) || $_POST['produits']!=null) {
         foreach ($_POST['produits'] as $prod) {
             $id = $prod['id'];
             $idAsso = $_SESSION['idAsso'];
@@ -95,24 +95,34 @@ public function calculerPrixTotalCommande() {
                 $total += $prixUnitaire * $qte;
             }
         }
+        $sql=self::$bdd->prepare("UPDATE commande SET prix= ? WHERE idcommande= ?");
+        $sql->execute([($total*100),$_SESSION['idCommandeActuelle']]);
     }
+    
     return $total;
 
 }
 
 public function finaliserCommande($idCommande){
     if(!empty($idCommande)){
+
         $sql_fin = "UPDATE commande SET état = 1 WHERE idCommande = ?";
         $s_sql_fin = self::$bdd->prepare($sql_fin);
         $s_sql_fin->execute([$idCommande]);
+
+        $sql_tresorerie = self::$bdd->prepare("UPDATE association 
+        SET tresorerie = tresorerie + (SELECT prix FROM commande WHERE idAsso = ? AND idCommande = ?)  
+        WHERE idAsso = ?");
+        $sql_tresorerie -> execute([$_SESSION['idAsso'],$idCommande,$_SESSION['idAsso']]);
     }
 }
+
 public function commandesEnCours(){
     $sql = "
         SELECT
             c.état,
             c.idCommande AS id,
-            SUM(lc.quantite * m.prix) / 100 AS total_commande
+            SUM(lc.quantite * m.prix) /100 AS total_commande
         FROM commande c
         JOIN lignecommande lc ON lc.idCommande = c.idCommande
         JOIN menu m ON (m.idProd = lc.idProd AND c.idAssociation = m.idAsso)
@@ -142,8 +152,7 @@ public function commandesEnCours(){
         $sql = "DELETE FROM commande
                     WHERE idCommande NOT IN (SELECT distinct(idCommande) FROM lignecommande)";
 
-        $s_sql = self::$bdd->prepare($sql);
-        $s_sql->execute();
+        $s_sql = self::$bdd->prepare($sql);$s_sql->execute();
     }
 
     public function annulerCommande($id) {

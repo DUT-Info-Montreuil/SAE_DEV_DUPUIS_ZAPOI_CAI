@@ -22,8 +22,10 @@
         }
 
         public function afficherDetailsCommande(array $details){
+
             if($_SESSION['role']==3 || $_SESSION['role']==2 || $_SESSION['role']==1){
                   $this->vue->detailsCommande($details);
+
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
@@ -50,8 +52,9 @@
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
+        
         }
+
 
         public function modHistoriqueAsso() {
             if($_SESSION['role']==1){
@@ -65,13 +68,18 @@
         public function modDetailsCommande($details) : array {
             if($_SESSION['role']==3 || $_SESSION['role']==2 ){
                 return $this->modele->getDetailsCommande($details);
-            }else if($_SESSION['role']==1 ){
+            }
+            else if($_SESSION['role']==1 ){
                 return $this->modele->getDetailsAchat($details);
             }
+
+
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
+
         }
+
 
 
 
