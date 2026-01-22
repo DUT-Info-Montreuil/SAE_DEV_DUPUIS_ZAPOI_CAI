@@ -83,7 +83,7 @@ class Modele_commande extends Connexion {
   }
 public function calculerPrixTotalCommande() {
     $total = 0;
-    if (isset($_POST['produits']) || $_POST['produits']!=null) {
+    if (isset($_POST['produits']) && $_POST['produits']!=null) {
         foreach ($_POST['produits'] as $prod) {
             $id = $prod['id'];
             $idAsso = $_SESSION['idAsso'];

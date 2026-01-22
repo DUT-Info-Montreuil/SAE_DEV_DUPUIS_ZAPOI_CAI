@@ -51,7 +51,7 @@ class Cont_solde {
             }
 
         }
-    }
+
 
     public function envoyer_formulaire_solde() {
         if ($this->checker_csrf->check_csrf()) {

@@ -166,9 +166,9 @@ public function déconnexion() {
         return $donneAssoFinal;
     }
     public function nouvelleAssoValidee($donneAsso){
-        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social,chemin_logo) VALUES (?,?,?)");
-        $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');
-        $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');
+        $sql=self::$bdd->prepare("INSERT INTO association (nomAsso, siege_social,chemin_logo,tresorerie) VALUES (?,?,?,150)");
+        $sql_init_gestionnaire=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (?,1,?)');//Gestionnaire(créateur de l'asso)
+        $sql_init_suppadmin=self::$bdd->prepare('INSERT INTO Utilisateur (idCompte,idRole,idAsso) VALUES (1,4,?)');//SuperAdmin
 
         foreach($donneAsso as $inter){
             foreach($inter as $ajout){

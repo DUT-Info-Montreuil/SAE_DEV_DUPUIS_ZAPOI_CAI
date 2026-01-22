@@ -22,7 +22,9 @@ class Mod_commande {
 
             case 'reload':
                 $this->cont->afficher_formulaire_Commande();
+                break;
             case 'ajout_produit':
+
                     if($this->cont->commande_valide()){
 
                         $this->cont->envoyer_formulaire_Commande();
@@ -30,7 +32,6 @@ class Mod_commande {
 
                     }
                     else{
-                        var_dump("test");
                         $this->cont->updatecommande();
                         $this->vue->message("Echec de la commande");
                     }
