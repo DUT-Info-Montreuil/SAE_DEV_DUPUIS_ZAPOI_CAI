@@ -117,39 +117,42 @@ class modele_recapJournee extends Connexion{
                     SUM(lc.quantite) AS quantite_totale,
                     m.prix as prix,
                     SUM(lc.quantite * m.prix) AS total_produit,
-                    s.quantite AS qteStock
+                    m.idProd
                 FROM commande c
                 JOIN lignecommande lc ON lc.idCommande = c.idCommande
                 JOIN menu m ON (m.idProd = lc.idProd AND m.idAsso = c.idAssociation)
                 JOIN produits p ON p.idProd = lc.idProd
-                JOIN stock s ON s.idInventaire
                 WHERE DATE(c.date) = DATE_SUB(CURRENT_DATE(), INTERVAL :jour DAY)
-                AND c.état = 1
+                AND c.état = 1 
                 GROUP BY p.nom, m.prix
-
                 ORDER BY quantite_totale DESC;
             ";
 
             $stmt = self::$bdd->prepare($sql);
+
             $stmt->bindParam(':jour', $jour);
             $stmt->execute();
 
+            $sql_stock = self::$bdd->prepare("SELECT quantite FROM inventaire NATURAL JOIN stock NATURAL JOIN menu WHERE idAsso = ? AND idProd = ? AND date = CURRENT_DATE");
+            
+            
+
             $prodVendus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $stock = $this->getStock();
 
             $produits = [];
-
+            $id=0;
             foreach ($prodVendus as $ligne) {
                 $nom = $ligne['nom'];
-
-                $produits[$nom] = [
+                $sql_stock -> execute([$_SESSION['idAsso'],$ligne['idProd']]);
+                $produits[$id] = [
                     'nom' => $nom,
                     'quantite' => (int) $ligne['quantite_totale'],
                     'prix' => (float) $ligne['prix'] / 100,
                     'total' => (float) $ligne['total_produit'] / 100,
-                    'stock' => $ligne['qteStock'] ?? 0
+                    'stock' => $sql_stock->fetchColumn(),
                 ];
+                $id++;
             }
 
             return $produits;

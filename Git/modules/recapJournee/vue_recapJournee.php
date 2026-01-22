@@ -101,7 +101,7 @@ public function ProduitsVendus(array $produits) {
             <div class="col-lg-10">
                 <div class="card shadow-lg border-0 rounded-3">
                     <div class="card-header bg-dark text-white text-center py-3">
-                        <h2 class="card-title mb-0"> Produits vendus </h2>
+                        <h2 class="card-title mb-0"> Produits vendus du jour</h2>
                     </div>
                     <div class="card-body p-4">';
 
@@ -110,7 +110,7 @@ public function ProduitsVendus(array $produits) {
         echo "
         <div class='mb-2'>
             <span class='fw-bold fs-5'>" . 
-                h($p['nom']) . " — x" . h($p['quantite']) . ", total : " . number_format($p['total'], 2) . " € (stock : " . h($p['stock']) . ")
+                h($p['nom']) . " — x" . h($p['quantite']) . ", total : " . number_format($p['total'], 2) . " € (stock : " . h($p['stock']) . " restant)
             </span>
         </div>";
     } 
