@@ -22,7 +22,7 @@
         }
 
         public function afficherDetailsCommande(array $details){
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==2){
 
             }
             else{
@@ -40,17 +40,17 @@
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
+        
         }
 
         public function modDetailsCommande($details) : array {
-            if($_SESSION['role']==3){
+            if($_SESSION['role']==2){
                 return $this->modele->getDetailsCommande($details);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
+            
         }
 
 

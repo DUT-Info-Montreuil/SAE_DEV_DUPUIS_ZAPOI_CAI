@@ -22,9 +22,9 @@
 
         }
 
-        public function afficher_solde($solde){
-            if($_SESSION['role']==3){
-                $this->vue->afficheSolde($solde);
+        public function afficher_soldeAsso(){
+            if($_SESSION['role']==1){
+                $this->vue->afficheSolde($this->modele->getSoldeAsso());
             }
             else{
                 $this->vue->message('Droit requis non perçu.');

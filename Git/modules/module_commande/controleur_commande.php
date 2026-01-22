@@ -54,7 +54,7 @@
             if ($_SESSION['role']==3) {
                 $total=$this->modele->calculerPrixTotalCommande();
                 header('Content-Type: application/json');
-                echo json_encode(['total' => number_format($total, 2, '.', ''),['status'=>'success']]);
+                echo json_encode(['total' => number_format($total, 0, '.', ''),['status'=>'success']]);
             exit;
             }
             else{
@@ -66,7 +66,7 @@
         public function commande_valide() {
             if ($_SESSION['role']==3) {
                 $prixAchat = $this->modele->calculerPrixTotalCommande();
-            return $this->modele->commandeEstValide($_SESSION['solde'], $prixAchat);
+                return $this->modele->commandeEstValide($_SESSION['solde'], $prixAchat);
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
@@ -80,12 +80,11 @@
 
         public function updatecommande(){
             if($_SESSION['role']==3){
-                return $this->modele->updatecommande();
+                $this->modele->updatecommande();
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
-            return vide[null];
         }
     public function finaliserCommande(){
          if($_SESSION['role']==2){

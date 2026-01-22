@@ -28,6 +28,7 @@ class Mod_commande {
 
                     }
                     else{
+                        var_dump("test");
                         $this->cont->updatecommande();
                         $this->vue->message("Echec de la commande");
                     }
@@ -40,7 +41,6 @@ class Mod_commande {
             case 'finCommande':
                 $this->cont->finaliserCommande();
                 break;
-
             case 'annulation':
                 $idCommande = (int) $_GET['idCommande'];
                 $this->cont->annulationCommande($idCommande);

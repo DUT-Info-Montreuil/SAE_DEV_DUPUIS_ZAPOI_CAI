@@ -44,15 +44,22 @@ class Modele_solde extends Connexion{
         $_SESSION['solde'] = $this->getSolde();
        return "Solde mis à jour avec succès";
    }
-public function getSolde(){
+    public function getSolde(){
 
-    $idCompte = $_SESSION['idCompte'];
-    $sql_solde = "SELECT solde FROM compte WHERE idCompte = :idU";
-    $ssql_solde = self::$bdd->prepare($sql_solde);
-    $ssql_solde->execute(['idU' => $idCompte]);
+        $idCompte = $_SESSION['idCompte'];
+        $sql_solde = "SELECT solde FROM compte WHERE idCompte = :idU";
+        $ssql_solde = self::$bdd->prepare($sql_solde);
+        $ssql_solde->execute(['idU' => $idCompte]);
 
-    return $ssql_solde->fetchColumn();
-}
+        return $ssql_solde->fetchColumn();
+    }
+
+    public function getSoldeAsso(){
+
+        $sql_solde = self::$bdd->prepare("SELECT tresorerie FROM association WHERE idAsso = ?");
+        $sql_solde->execute([$_SESSION['idAsso']]);
+        return $sql_solde->fetchColumn();
+    }
 
 
 }
