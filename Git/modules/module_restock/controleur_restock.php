@@ -84,8 +84,8 @@ class Cont_restock {
                     $qte = (int) $quantite[$key];
                     $montant_total += $qte * $prix[$key];
                 }
-                var_dump($montant_total);
-                $fonds = $this->modele->fonds();
+
+                $fonds = $this->modele->getTresorerie();
                 $reste = $fonds - $montant_total;
                 if($reste > 0){
                     return true;

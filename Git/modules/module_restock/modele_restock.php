@@ -271,6 +271,12 @@ class Modele_restock extends Connexion {
 
     }
 
+    public function getTresorerie() {
+        $sql = self::$bdd->prepare("SELECT tresorerie FROM association WHERE idAsso = ?");
+        $sql->execute([$_SESSION['idAsso']]);
+        return $sql->fetchColumn();
+    }
+
 
 }
 
