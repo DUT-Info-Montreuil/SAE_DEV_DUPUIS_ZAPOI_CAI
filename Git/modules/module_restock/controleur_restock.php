@@ -66,23 +66,53 @@
             }
 
         }
-        public function ajoutStock($idProd, $idInventaire, $quantite){
+
+        public function fondsSuffisants($idProd, $quantite, $prix): bool{
+
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+                $montant_total = 0;
                 foreach($idProd as $key => $p){
                     $qte = (int) $quantite[$key];
-                    if($qte > 0){
-                        $idInv = (int) $idInventaire[$key];
-                        $this->modele->ajoutStock($p, $idInv, $qte);
-                    }
-
-                    
-
+                    $montant_total += $qte * $prix[$key];
                 }
-                
+                var_dump($montant_total);
+                $fonds = $this->modele->fonds();
+                $reste = $fonds - $montant_total;
+                if($reste > 0){
+                    return true;
+                }else{
+                    return false;
+                }
+
             }
             else{
                 $this->vue->message('Droit requis non perçu.');
             }
+        }
+
+        public function ajoutStock($idProd, $quantite){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+                foreach($idProd as $key => $p){
+                    $qte = (int) $quantite[$key];
+                    if($qte > 0){
+                        $this->modele->ajoutStock($p, $qte);
+                    }
+                }
+            }
+            else{
+                $this->vue->message('Droit requis non perçu.');
+            }
+
+        }
+
+        public function ajoutAchat($idProd, $quantite){
+            if($_SESSION['role']==1 || $_SESSION['role'] == 4){
+
+                $this->modele->ajoutAchat($idProd, $quantite);
+
+            }else{
+                 $this->vue->message('Droit requis non perçu.');
+             }
 
         }
 

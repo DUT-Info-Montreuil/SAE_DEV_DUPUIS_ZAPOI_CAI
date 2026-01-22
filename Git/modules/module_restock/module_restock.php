@@ -27,17 +27,25 @@ class Mod_restock {
                 $this->cont->afficherProduitsAchat($prodF);
                 break;
 
-            case "ajoutStock":
+            case "ajoutAchat":
                 $idProd = (array) $_POST['produit'] ?? null;
-                $idInventaire = (array) $_POST['inventaire'] ?? null;
                 $quantite = (array) $_POST['quantite'] ?? null;
+                $prix = (array) $_POST['prix'] ?? null;
 
+                $fonds = $this->cont->fondsSuffisants($idProd, $quantite, $prix);
 
-                if($idProd && $idInventaire && $quantite){
-                    $this->cont->ajoutStock($idProd, $idInventaire, $quantite);
+                if($fonds && $idProd && $quantite){
+                    $this->cont->ajoutAchat($idProd, $quantite);
+                }
+
+                break;
+
+            case "ajoutStock";
+            //???
+                 if($fonds && $idProd && $quantite){
+                    $this->cont->ajoutStock($idProd, $quantite);
                     echo "Stock mis à jour avec succès !";
                 }
-                break;
 
         }
 	}

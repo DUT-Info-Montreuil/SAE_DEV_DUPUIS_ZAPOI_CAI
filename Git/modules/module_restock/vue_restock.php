@@ -13,8 +13,8 @@ require_once('utils/vue_generique.php');
         foreach($produits as $p){
             echo '<br><li><p>'. h($p['nom']) .' , Prix : '.number_format($p['prix'],2).' € , Fournisseur : '. h($p['fournisseur']) .'
 
-                <input type="hidden" name="inventaire[]" value="'. h($p['idInventaire']) .'">
                 <input type="hidden" name="produit[]" value="'. h($p['idProd']) .'">
+                <input type="hidden" name="prix[]" value="'. h($p['prix']) .'">
                 <input type="number" name="quantite[]" min="0" max="1000" placeholder="0">';
            
         }
