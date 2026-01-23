@@ -54,25 +54,25 @@ public function formulaire_commande($liste_prod,$type,$max){
         ';
      $elem = 0;
         foreach($liste_prod as $p){
-            $id = $p['idProd'];
+            $id = h($p['idProd']);
 
             echo '
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="'.$p["image"].'" class="card-img-top p-3" alt="'.h($p["nom"]).'" style="height:180px; object-fit:contain;">
+                    <img src="'.h($p["image"]).'" class="card-img-top p-3" alt="'.h($p["nom"]).'" style="height:180px; object-fit:contain;">
 
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">'.h($p["nom"]).'</h5>
                         <p class="card-text fw-bold">'.(h($p["prix"]/100)).' €</p>
 
-                        <input type="hidden" name="produits['.$elem.'][id]" value="'.$id.'">
+                        <input type="hidden" name="produits['.h($elem).'][id]" value="'.$id.'">
 
                         <div class="mt-auto">
                             <label class="form-label">Quantité</label>
                             <input
                                 type="number"
                                 class="form-control"
-                                name="produits['.$elem.'][qte]"
+                                name="produits['.h($elem).'][qte]"
                                 min="0"
                                 max="'.h($max[$elem]["limite"]).'"
                                 value="0"
@@ -146,16 +146,16 @@ public function finaliser_commande($liste_commande) {
 
     foreach ($liste_commande as $c) {
         echo '
-                                    <tr id="commande-'.$c["id"].'">
-                                        <td class="ps-4 fw-bold text-primary">#'.$c["id"].'</td>
+                                    <tr id="commande-'.h($c["id"]).'">
+                                        <td class="ps-4 fw-bold text-primary">#'.h($c["id"]).'</td>
                                         <td><span class="badge bg-success fs-6">'.number_format($c['total_commande'], 2, ',', ' ').' €</span></td>
                                         <td class="text-center">
-                                            <a href="index.php?module=historique&action=detailHistoClient&idCommande='.$c['id'].'" class="btn btn-outline-secondary btn-sm">
+                                            <a href="index.php?module=historique&action=detailHistoClient&idCommande='.h($c["id"]).'" class="btn btn-outline-secondary btn-sm">
                                                 <i class="bi bi-search me-1"></i> Voir Détails
                                             </a>
                                         </td>
                                         <td class="text-end pe-4">
-                                            <button type="button" class="btn btn-dark btn-sm px-4" onclick="finCommandeAJAX('.$c['id'].')">
+                                            <button type="button" class="btn btn-dark btn-sm px-4" onclick="finCommandeAJAX('.h($c["id"]).')">
                                                 Finaliser
                                             </button>
                                         </td>
