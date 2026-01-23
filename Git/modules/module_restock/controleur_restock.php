@@ -120,16 +120,21 @@ class Cont_restock {
 
         public function parcourirLignes($lignes){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
-                foreach($lignes as $l){
+                if($this->modele->inventaireCheck()){
 
-                    $id = $l['id'];
-                    $q = $l['quantite'];
-                    if($id && $q){
+                    foreach($lignes as $l){
+
+                        $id = $l['id'];
+                        $q = $l['quantite'];
                         $this->ajoutStock($id, $q);
-
                     }
+                 }
+                else{
+                            $this->vue->message("Pas d'inventaire aujourd'hui, veuillez en faire un.");
                 }
-            }else{
+                }
+            
+            else{
                $this->vue->message('Droit requis non perçu.');
             }
         }

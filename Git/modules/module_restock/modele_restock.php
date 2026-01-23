@@ -33,6 +33,20 @@ class Modele_restock extends Connexion {
         return $produits;
 
     }
+    public function inventaireCheck(){
+
+        $sql_q = "SELECT * FROM inventaire WHERE date = CURRENT_DATE";
+
+        $stmt = self::$bdd->prepare($sql_q);
+        $stmt->execute();
+        $bool = $stmt->fetchColumn();
+
+        if($bool == NULL){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     public function getProduitsFournisseur($id) {
         $sql = "
