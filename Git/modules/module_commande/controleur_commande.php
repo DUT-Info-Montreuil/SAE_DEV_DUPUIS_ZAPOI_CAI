@@ -15,7 +15,7 @@ class Cont_commande {
     }
 
     public function afficher_formulaire_débutCommande() {
-        if ($_SESSION['role'] == 3) {
+        if ($_SESSION['role'] == 3 || $_SESSION['role']==4) {
             $this->vue->formulaire_début_commande();
         } else {
             $this->vue->message('Droit requis non perçu.');
@@ -23,7 +23,7 @@ class Cont_commande {
     }
 
     public function afficher_formulaire_Commande() {
-        if ($_SESSION['role'] == 3) {
+        if ($_SESSION['role'] == 3 ) {
 
             $types = $this->getTypes();
             $type='';
@@ -154,8 +154,8 @@ class Cont_commande {
     public function afficheCommandeProduit($prod) {
         return $this->vue->vueCommandeProduit($prod);
     }
-    public function getQuantité(){
-        return $this->modele->getQuantite();
+    public function getQuantité($produits){
+        return $this->modele->getQuantite($produits);
     }
 }
 ?>

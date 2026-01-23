@@ -14,16 +14,16 @@ class Cont_restock {
         $this->checker_csrf = new Token_CSRF();
     }
 
-    public function recupProduitsAchat() {
+    public function recupProduitsAchat($idProd) {
         if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4) {
-            return $this->modele->getProduitsAchat();
+            return $this->modele->getProduitsAchat($idProd);
         } else {
             $this->vue->message('Droit requis non perçu.');
         }
     }
 
     public function afficherProduitsAchat($p) {
-        if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4) {
+        if ($_SESSION['role'] == 1) {
             return $this->vue->produitsAchat($p);
         } else {
             $this->vue->message('Droit requis non perçu.');
@@ -63,10 +63,10 @@ class Cont_restock {
     }
 
 
-    public function ajoutStock($id, $quantite) {
+    public function ajoutStock($id, $quantite,$tot) {
         if ($this->checker_csrf->check_csrf()) {
             if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4) {
-                return $this->modele->ajoutStock($id, $quantite);
+                return $this->modele->ajoutStock($id, $quantite, $tot);
             } else {
                 $this->vue->message('Droit requis non perçu.');
             }
@@ -83,9 +83,10 @@ class Cont_restock {
 
                 foreach($_POST['produit'] as $p){
                     $montant_total += (int)$p['qte'] * (float)$p['prix'];
-                }//TODO vérifier avec le solde de l'asso
+                }
 
-                $reste = 2;
+                $tresorerie = $this->modele->getTresorerie();
+                $reste = $tresorerie-$montant_total;
 
                 if($reste > 0){
                     return true;
@@ -98,10 +99,6 @@ class Cont_restock {
                 $this->vue->message('Droit requis non perçu.');
             }
         }
-
-
-
-
 
         public function ajoutAchat(){
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
@@ -126,7 +123,8 @@ class Cont_restock {
 
                         $id = $l['id'];
                         $q = $l['quantite'];
-                        $this->ajoutStock($id, $q);
+                        $tot = $l['total'];
+                        $this->ajoutStock($id, $q, $tot);
                     }
                  }
                 else{

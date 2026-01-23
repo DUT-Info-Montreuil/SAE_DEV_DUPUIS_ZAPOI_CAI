@@ -10,23 +10,47 @@ class Modele_restock extends Connexion {
     }
 
 
-    public function getProduitsAchat() {
-        $sql = "
-            SELECT DISTINCT
-                p.idProd ,
-                f.idFournisseur as idF,
-                p.nom as nom ,
-                pf.prix / 100 as prix,
-                p.image as image,
-                f.nom as fournisseur
-            FROM
-                produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
-                JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+    public function getProduitsAchat($idProd) {
+        if(!empty($idProd)){
+            $sql = "
+                SELECT DISTINCT
+                    p.idProd ,
+                    f.idFournisseur as idF,
+                    p.nom as nom ,
+                    pf.prix / 100 as prix,
+                    p.image as image,
+                    f.nom as fournisseur
+                FROM
+                    produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
+                    JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+                WHERE p.idProd= ?
 
-        ";
+            ";
+        }
+        else{
+            $sql = "
+                SELECT DISTINCT
+                    p.idProd ,
+                    f.idFournisseur as idF,
+                    p.nom as nom ,
+                    pf.prix / 100 as prix,
+                    p.image as image,
+                    f.nom as fournisseur
+                FROM
+                    produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
+                    JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+
+            ";
+        }
 
         $stmt = self::$bdd->prepare($sql);
-        $stmt->execute();
+        if(!empty($idProd)){
+            $stmt->execute([$idProd]);
+        }
+        else{
+            $stmt->execute();
+        }
+
 
         $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -180,7 +204,7 @@ class Modele_restock extends Connexion {
                  la.idProd AS id,
                  p.nom AS nom,
                  SUM(la.quantite) AS quantite_totale,
-                 SUM(la.quantite * pf.prix) / 100 AS total_produit
+                 SUM(la.quantite * pf.prix) AS total_produit
              FROM achat a
              JOIN ligneAchat la ON la.idAchat = a.idAchat
              JOIN fournisseur f ON f.idFournisseur = la.idFournisseur
@@ -223,6 +247,7 @@ class Modele_restock extends Connexion {
             $sql_fin = "UPDATE achat SET état = 1 WHERE idAchat = ?";
             $s_sql_fin = self::$bdd->prepare($sql_fin);
             $s_sql_fin->execute([$idAchat]);
+
         }
     }
 
@@ -249,7 +274,7 @@ class Modele_restock extends Connexion {
 
         if($this->dansInventaire($idProd, $idInventaire)){
 
-            $sql_update = "UPDATE stock SET quantite = quantite+:q WHERE idProd = :idProd AND idInventaire = :idInventaire";
+            $sql_update = "UPDATE stock SET quantite = :q WHERE idProd = :idProd AND idInventaire = :idInventaire";
 
             $stmt3 = self::$bdd->prepare($sql_update);
             $stmt3->bindParam(':q', $quantiteFinale);
@@ -271,23 +296,29 @@ class Modele_restock extends Connexion {
     }
 
 
-    public function ajoutStock($idProd, $quantite){
+    public function ajoutStock($idProd, $quantite, $tot){
 
-        $sql_q = "SELECT quantite FROM stock NATURAL JOIN inventaire WHERE idProd = :idProd AND date = CURRENT_DATE";
+        $sql_q = "SELECT quantite FROM stock NATURAL JOIN inventaire WHERE idProd = :idProd AND date = CURRENT_DATE AND idAsso = :idAsso";
 
         $stmt = self::$bdd->prepare($sql_q);
         $stmt->bindParam(':idProd', $idProd);
+        $stmt->bindParam(':idAsso', $_SESSION['idAsso']);
         $stmt->execute();
         $quantiteCourante = $stmt->fetchColumn();
 
         $quantiteFinale = $quantite + $quantiteCourante;
 
-        $sql_inv = "SELECT idInventaire FROM inventaire WHERE date = CURRENT_DATE";
+        $sql_inv = "SELECT idInventaire FROM inventaire WHERE date = CURRENT_DATE AND idAsso = ?";
         $stmt2 = self::$bdd->prepare($sql_inv);
-        $stmt2->execute();
+        $stmt2->execute([$_SESSION['idAsso']]);
         $idInventaireCourant = $stmt2->fetchColumn();
 
         $idInventaire = $idInventaireCourant;
+
+        $sql_tresorerie = self::$bdd->prepare("UPDATE association
+            SET tresorerie = tresorerie - ?
+            WHERE idAsso = ?");
+        $sql_tresorerie -> execute([$tot,$_SESSION['idAsso']]);
 
         $this->finalAjoutStock($idProd, $idInventaire, $quantiteFinale);
 

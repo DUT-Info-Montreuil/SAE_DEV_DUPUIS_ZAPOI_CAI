@@ -8,12 +8,14 @@
         public static function initConnexion() {
             //self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw201699',$user='dutinfopw201699',$password='juhugege');
 
+            self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw20167',$user='dutinfopw20167',$password='dysesyjy');
 
 
 
 
 
-            self::$bdd = new PDO('mysql:host=localhost;dbname=gestion_bar;charset=utf8', 'root', '');
+
+            //self::$bdd = new PDO('mysql:host=localhost;dbname=gestion_bar;charset=utf8', 'root', '');
 
 
             //self::$bdd = new PDO('mysql:host=localhost;dbname=saeweb;charset=utf8', 'root', '');

@@ -100,8 +100,11 @@ public function finaliserAchats($liste_achats) {
                                     <th>Date</th>
                                     <th>Prix Total</th>
                                     <th>État</th>
-                                    <th class="text-center">Détails</th>
-                                    <th class="text-end px-4">Action</th>
+                                    <th class="text-center">Détails</th>';
+                                    if($_SESSION['role']==1){
+                                        echo'<th class="text-end px-4">Action</th>';
+                                    }
+                                    echo'
                                 </tr>
                             </thead>
                             <tbody>';
@@ -123,7 +126,10 @@ public function finaliserAchats($liste_achats) {
                                             <i class="bi bi-eye"></i> Voir détails
                                         </a>
                                     </td>
-                                    <td class="text-end px-4">';
+                                ';
+        if($_SESSION['role']==1){
+            echo'
+                <td class="text-end px-4">';
 
         if(strcmp($etat, "en cours") == 0) {
             echo '
@@ -135,7 +141,8 @@ public function finaliserAchats($liste_achats) {
         }
 
         echo '
-                                    </td>
+                                    </td>';}
+                                    echo'
                                 </tr>';
     }
 

@@ -91,7 +91,7 @@ class Cont_stock{
     }
 
     public function affiche_menu(){
-        if($_SESSION['role']==1){
+        if($_SESSION['role']==1 || $_SESSION['role']==4 ){
             $this->vue->affiche_menu($this->modele->getMenu());
         }
         else{

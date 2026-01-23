@@ -54,7 +54,7 @@ class Mod_commande {
                 $id = (int) $_GET['idProd'];
                 $prod = $this->cont->recupCommandeProduit($id);
                 $type = $this->cont->getTypes();
-                $max = $this->cont->getQuantité();
+                $max = $this->cont->getQuantité($prod);
                 $this->cont->afficheCommandeProduit($prod,$max,$type);
 
 

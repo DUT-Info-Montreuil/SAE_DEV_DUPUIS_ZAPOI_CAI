@@ -53,6 +53,7 @@ public function formulaire_commande($liste_prod,$type,$max){
             <div class="row g-4">
         ';
      $elem = 0;
+     if(!empty($liste_prod)){
         foreach($liste_prod as $p){
             $id = $p['idProd'];
 
@@ -85,6 +86,10 @@ public function formulaire_commande($liste_prod,$type,$max){
             ';
             $elem++;
         }
+    }
+    else{
+        echo"<div>Nada</div>";//Pas de produit en cours
+    }
 
         echo '
             </div>
@@ -96,7 +101,7 @@ public function formulaire_commande($liste_prod,$type,$max){
                 </h3>
 
                 <button type="submit" class="btn btn-success btn-lg mt-3">
-                    🛒 Ajouter au panier
+                    Ajouter au panier
                 </button>
             </div>
 
@@ -115,7 +120,7 @@ public function formulaire_commande($liste_prod,$type,$max){
             });
 
         const reponseJSON = await reponse.json();
-        document.getElementById("total-prix").innerText = reponseJSON.total +"€";
+        document.getElementById("total-prix").innerText = reponseJSON.total/100 +"€";
 
     }
     </script>
@@ -188,9 +193,7 @@ public function finaliser_commande($liste_commande) {
                 body : données
             });
             const reponseJSON = await response.json();
-
             const prodàEnlever = document.getElementById("commande-"+ id);
-            alert("commande-"+ id);
             alert("Commande finalisée avec succès !");
             prodàEnlever.remove();
 
@@ -217,21 +220,23 @@ public function finaliser_commande($liste_commande) {
     
 
     public function vueCommandeProduit($prod){
+        echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
+        echo '<input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>';
+        $index=0;
         foreach($prod as $p){
 
-            echo '<form method="post" action="index.php?module=restock&action=ajoutStock">';
-            echo 'input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>';
+
             echo "<div id='restockDiv'>";
             echo "<p> Fournissseur : ". h($p['nomF']) ."</p>";
             echo "<p> Produit : ". h($p['nom']) ."</p>";
             echo "<p> Prix : ". number_format($p['prix']/100,2) ." €</p>";
-            echo "<input type='hidden' name='idProd' value='". h($p['id']) ."'>";
-            echo "<input type='number' name='quantite' min='1' max='1000' placeholder='0'>";
-
-            echo " <button type='submit'>Valider</button>";
+            echo "<input type='hidden' name='prod[".$index."][idProd]' value='". h($p['idProd']) ."'>";
+            echo "<input type='number' name='prod[".$index."][quantite]' min='1' max='1000' placeholder='0'>";
             echo "</div>";
-            echo "</form>";
+            $index++;
         }
+        echo " <button type='submit'>Valider</button>";
+        echo "</form>";
     }
 
 
