@@ -5,29 +5,67 @@ require_once('utils/vue_generique.php');
             parent::__construct();
         }
 
-    public function produitsAchat(array $produits){
-        echo '<h3> Produits à l\'achat : </h3> <br>
-        
-        <form method="post" action="index.php?module=restock&action=ajoutAchat">';
-        $index=0;
-        foreach($produits as $p){
+ public function produitsAchat(array $produits) {
+    echo '
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-dark text-white text-center py-3">
+                        <h3 class="card-title h5 mb-0">Produits à l\'achat</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <form method="post" action="index.php?module=restock&action=ajoutAchat">
+                            <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'"/>
+                            
+                            <ul class="list-group list-group-flush">';
 
-            echo '<br><li><p>'. h($p['nom']) .' , Prix : '.number_format($p['prix'],2).' € , Fournisseur : '. h($p['fournisseur']) .'
-
-
-                <input type="hidden" name="produit['.$index.'][idProd]" value="'. h($p['idProd']) .'">
-                <input type="hidden" name="produit['.$index.'][prix]" value="'. h($p['prix']) .'">
-                <input type="hidden" name="produit['.$index.'][idF]" value="'. h($p['idF']) .'">
-                <input type="number" name="produit['.$index.'][qte]" min="0" max="1000" value="0" placeholder="0">';
-           $index++;
-
-        }
-
-        echo '<button type="submit"> Commander </button>
-        </form>
-        ';
-             
+    $index = 0;
+    foreach ($produits as $p) {
+        echo '
+                                <li class="list-group-item py-3 px-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-7">
+                                            <h6 class="mb-1">' . h($p['nom']) . '</h6>
+                                            <p class="mb-0 text-muted small">
+                                                Prix : <strong>' . number_format($p['prix'], 2) . ' €</strong> | 
+                                                Fournisseur : <span class="text-dark">' . h($p['fournisseur']) . '</span>
+                                            </p>
+                                        </div>
+                                        
+                                        <div class="col-md-5 mt-2 mt-md-0">
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-light small">Qté</span>
+                                                <input type="hidden" name="produit['.$index.'][idProd]" value="'. h($p['idProd']) .'">
+                                                <input type="hidden" name="produit['.$index.'][prix]" value="'. h($p['prix']) .'">
+                                                <input type="hidden" name="produit['.$index.'][idF]" value="'. h($p['idF']) .'">
+                                                <input type="number" name="produit['.$index.'][qte]" 
+                                                       class="form-control" 
+                                                       min="0" max="1000" 
+                                                       value="0" 
+                                                       placeholder="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>';
+        $index++;
     }
+
+    echo '
+                            </ul>
+                            
+                            <div class="card-footer bg-light text-center py-3">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">
+                                    Commander
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+}
 
     public function fournisseurs(array $fournisseurs){
          echo '<h2>Choisissez un fournisseur :</h2>';
