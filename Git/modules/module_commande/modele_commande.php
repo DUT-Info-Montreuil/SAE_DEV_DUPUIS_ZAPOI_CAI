@@ -52,15 +52,16 @@ class Modele_commande extends Connexion {
          $sql = "SELECT menu.idProd,produits.idType,nom,image,type.type,menu.prix
          FROM menu NATURAL JOIN produits NATURAL JOIN type NATURAL JOIN inventaire
          WHERE menu.idAsso = ? AND date=CURRENT_DATE";
-                $stmt = self::$bdd->prepare($sql);
-                $stmt->execute([$idAsso]);
-                $produits = $stmt->fetchAll();
+        $stmt = self::$bdd->prepare($sql);
+        $stmt->execute([$idAsso]);
+        $produits = $stmt->fetchAll();
 
          return $produits;
   }
 
     public function getQuantite($produits){
         $id=0;
+        $donne = null;
         foreach($produits as $item){
             $sql = "SELECT stock.quantite
                              FROM menu NATURAL JOIN stock NATURAL JOIN inventaire
@@ -70,7 +71,6 @@ class Modele_commande extends Connexion {
             $donne[$id]['limite'] = $stmt->fetchColumn();
             $id++;
         }
-
 
         return $donne;
 
@@ -108,12 +108,12 @@ public function calculerPrixTotalCommande() {
             if ($qte > 0) {
                 $stmt = self::$bdd->prepare("SELECT prix FROM menu WHERE idProd = ? AND idAsso = ?");
                 $stmt->execute([$id,$idAsso]);
-                $prixUnitaire = $stmt->fetchColumn()/100;
+                $prixUnitaire = $stmt->fetchColumn();
                 $total += $prixUnitaire * $qte;
             }
         }
         $sql=self::$bdd->prepare("UPDATE commande SET prix= ? WHERE idcommande= ?");
-        $sql->execute([($total*100),$_SESSION['idCommandeActuelle']]);
+        $sql->execute([$total,$_SESSION['idCommandeActuelle']]);
     }
     
     return $total;
@@ -127,7 +127,15 @@ public function finaliserCommande($idCommande){
         $s_sql_fin = self::$bdd->prepare($sql_fin);
         $s_sql_fin->execute([$idCommande]);
 
-        
+        $sql_prod = self::$bdd->prepare("SELECT idProd, quantite FROM lignecommande WHERE idCommande = ?");
+        $sql_prod -> execute([$idCommande]);
+        $tab = $sql_prod->fetchAll();
+
+        foreach($tab as $item){
+            $sql_stock = self::$bdd->prepare("UPDATE stock NATURAL JOIN inventaire SET quantite = (quantite - ?) WHERE idProd = ? AND date = CURRENT_DATE");
+            $sql_stock -> execute([$item['quantite'],$item['idProd']]);
+        }
+
         $sql_tresorerie = self::$bdd->prepare("UPDATE association 
         SET tresorerie = tresorerie + (SELECT prix FROM commande WHERE idAsso = ? AND idCommande = ?)  
         WHERE idAsso = ?");
@@ -208,7 +216,7 @@ public function commandesEnCours(){
         $idAsso=$_SESSION['idAsso'];
         $sql_lc = "
             SELECT 
-                p.idProd as id,
+                p.idProd as idProd,
                 p.nom,
                 pf.prix,
                 s.quantite,
@@ -220,8 +228,9 @@ public function commandesEnCours(){
                 NATURAL JOIN stock s
                 JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON f.idFournisseur = pf.idFournisseur
+                JOIN inventaire i ON s.idInventaire=i.idInventaire
             WHERE
-                p.idProd = :id;
+                p.idProd = :id AND date=CURRENT_DATE;
         ";
 
         $s_sql_lc = self::$bdd->prepare($sql_lc);

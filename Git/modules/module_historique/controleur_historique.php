@@ -33,7 +33,7 @@
         }
 
         public function afficherHistoriqueAsso(array $histo){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role']==4){
                 $this->vue->historiqueClient($histo);
             }
             else{
@@ -57,7 +57,7 @@
 
 
         public function modHistoriqueAsso() {
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role']==4){
                 return $this->modele->getHistoriqueAsso();
             }
             else{

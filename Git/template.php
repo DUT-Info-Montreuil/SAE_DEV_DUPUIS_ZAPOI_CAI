@@ -30,33 +30,29 @@
                 <ul class="navbar-nav me-auto">
                     <?php if (isset($_SESSION['connecté']) && !empty($_SESSION['connecté']) ): ?>
                         <?php if(isset($_SESSION['role'])): ?>
-                            <?php if ($_SESSION['role'] == 4): // Admin ?>
+
+                                
+                            <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4 && !empty($_SESSION['idAsso'])): // Gestionnaire ?>
+                                <?php if ($_SESSION['role'] == 4): // Admin ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=newAsso">Gestion nouvelle Association</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=connexion&action=choisirAsso">Choisir Association</a></li>
                                 <?php endif; ?>
-                                
-                            <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4 && !empty($_SESSION['idAsso'])): // Gestionnaire ?>
+
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=recapJournee&action=recapDuJour">Récap Jour</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>
-
-
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=menu">Menu</a></li>
-
-
-
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_soldeAsso">Solde Association</a></li>
-
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=afficherAchats">Achats</a></li>
-
-
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=listProduits">Achat de produits</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=fournisseurs">Fournisseurs</a></li>
-
-                                <li class="nav-item"><a class="nav-link" href="index.php?module=staff&action=gestionMembre">Gestion Utilisateurs</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=historique&action=historiqueAchatFournisseur">Historique achats</a></li>
+
+                                <?php if ($_SESSION['role'] == 1):?>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=staff&action=gestionMembre">Gestion Utilisateurs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php?module=restock&action=listProduits">Achat de produits</a></li>
+                                <?php endif; ?>
                             <?php elseif ($_SESSION['role'] == 2): // Barman ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=commande&action=finCommande">Gérer les Commandes</a></li>
-                                <!--This is a comment. Comments are not displayed in the browser<li class="nav-item"><a class="nav-link" href="index.php?module=stock&action=affiche_stock">Stock</a></li>-->
+
                             <?php elseif ($_SESSION['role'] == 3): // Client ?>
                                 <li class="nav-item"><a class="nav-link" href="index.php?module=solde&action=page_solde">Mon Solde</a></li>
                                 <li class="nav-item"><a class="nav-link btn btn-primary btn-sm text-white ms-lg-2" href="index.php?module=commande&action=ajout_debut_commande">Commander</a></li>

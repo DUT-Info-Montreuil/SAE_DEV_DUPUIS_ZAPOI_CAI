@@ -43,7 +43,7 @@ class Cont_solde {
     }
 
         public function afficher_soldeAsso(){
-            if($_SESSION['role']==1){
+            if($_SESSION['role']==1 || $_SESSION['role']==4 ){
                 $this->vue->afficheSolde($this->modele->getSoldeAsso());
             }
             else{

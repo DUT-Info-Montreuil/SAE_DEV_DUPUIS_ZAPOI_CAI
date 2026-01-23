@@ -77,7 +77,7 @@ class Modele_stock extends Connexion{
 
 
     public function deduireStock() {
-        $idCom = $_POST['idCommande'] ?? null;
+        $idCom = $_GET['idCommande'] ?? null;
         if ($idCom) {
             $sql = self::$bdd->prepare("SELECT idProd, quantite FROM lignecommande WHERE idCommande = ? AND date = CURRENT_DATE");
             $sql->execute([$idCom]);

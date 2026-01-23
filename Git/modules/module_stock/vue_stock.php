@@ -24,8 +24,11 @@ Class Vue_stock extends VueGenerique{
                                         <th class="ps-4">Nom Produit</th>
                                         <th>Quantité</th>
                                         <th class="text-center">Seuil minimum</th>
-                                        <th class="text-end pe-4">Statut</th>
-                                        <th class="text-end pe-4">Action</th>
+                                        <th class="text-end pe-4">Statut</th>';
+                                        if($_SESSION['role']==1){
+                                        echo'<th class="text-end pe-4">Action</th>';
+                                        }
+                                    echo'
                     </tr>
                     </thead>
                     <tbody id="corps-tableau">
@@ -78,12 +81,15 @@ private function recherche_dynamique() {
                         <td class="text-center">${p.seuil}</td>
                         <td class="text-end pe-4">
                             <span class="badge ${badgeClass} text-white">${texte}</span>
-                        </td>
+                        </td>';
+                    if($_SESSION['role']==1){
+                        echo'
                         <td class="text-end pe-4">
-                            <a class="btn btn-sm btn-outline-primary" href="index.php?module=commande&action=commandeProduit&idProd=${p.idProd}">
+                            <a class="btn btn-sm btn-outline-primary" href="index.php?module=restock&action=listProduits&idProd=${p.idProd}">
                                 Restock
                             </a>
-                        </td>
+                        </td>';}
+                    echo'
                     </tr>
                 `;
             });
@@ -110,12 +116,17 @@ private function recherche_dynamique() {
                     } else {
                         echo '<span class="badge bg-danger text-white">Faible</span>';
                     }
-        echo '  </td>
+        echo '  </td>';
+                    if($_SESSION['role']==1){
+                                            echo'
                 <td class="text-end pe-4">
-                    <a class="btn btn-sm btn-outline-primary" href="index.php?module=commande&action=commandeProduit&idProd='. h($item['idProd']) .'"> 
+
+                    <a class="btn btn-sm btn-outline-primary" href="index.php?module=restock&action=listProduits&idProd='. h($item['idProd']) .'">
                         Restock 
                     </a>
-                </td>
+
+                </td>';}
+                echo'
               </tr>';
     }
 }
@@ -124,7 +135,9 @@ private function recherche_dynamique() {
     <div class="container mt-5">
         <div class="card shadow-lg border-0">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
-                <h2 class="h4 mb-0">Menu de la buvette</h2>
+                <h2 class="h4 mb-0">Menu de la buvette</h2>';
+                if($_SESSION['role']==1){
+                echo'
                 <div>
                     <a href="index.php?module=stock&action=afficheProdAjouter" class="btn btn-sm btn-success me-2">
                         <i class="bi bi-plus-circle"></i> Ajouter
@@ -132,7 +145,9 @@ private function recherche_dynamique() {
                     <a href="index.php?module=stock&action=afficheProdRetirer" class="btn btn-sm btn-danger">
                         <i class="bi bi-trash"></i> Retirer
                     </a>
-                </div>
+                </div>';
+                }
+            echo'
             </div>
             
             <div class="card-body p-4">
@@ -152,6 +167,7 @@ private function recherche_dynamique() {
 
     foreach($menu as $item) {
         $id = h($item['idProd']);
+
         echo '
                                 <tr>
                                     <td>
@@ -160,12 +176,26 @@ private function recherche_dynamique() {
                                     </td>
                                     <td>
                                         <div class="input-group">
-                                            <input type="number" name="produit['.$id.'][prix]" class="form-control" value="'.h($item['prix']).'">
+                                            <input type="number" name="produit['.$id.'][prix]" class="form-control" value="'.h($item['prix']).'" ';
+                                            if( $_SESSION['role']==4){
+                                                echo' disabled>';
+                                            }
+                                            else{
+                                                echo'>';
+                                            }
+                                        echo'
                                             <span class="input-group-text">cts</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="number" name="produit['.$id.'][seuil]" class="form-control" value="'.h($item['seuil']).'">
+                                        <input type="number" name="produit['.$id.'][seuil]" class="form-control" value="'.h($item['seuil']).'" ';
+                                        if( $_SESSION['role']==4){
+                                            echo' disabled>';
+                                        }
+                                        else{
+                                            echo'>';
+                                        }
+                                    echo'
                                     </td>
                                 </tr>';
     }
@@ -176,7 +206,14 @@ private function recherche_dynamique() {
                     </div>
 
                     <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow"';
+                        if( $_SESSION['role']==4){
+                                echo' disabled>';
+                            }
+                            else{
+                                echo'>';
+                            }
+                        echo'
                             Enregistrer les modifications
                         </button>
                     </div>
