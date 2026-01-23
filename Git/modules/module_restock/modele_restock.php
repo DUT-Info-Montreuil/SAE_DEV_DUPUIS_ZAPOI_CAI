@@ -22,6 +22,8 @@ class Modele_restock extends Connexion {
             FROM
                 produits p JOIN prod_fournisseur pf ON p.idProd = pf.idProd
                 JOIN fournisseur f ON pf.idFournisseur = f.idFournisseur
+            ORDER BY
+                p.idProd;
 
         ";
 
@@ -32,20 +34,6 @@ class Modele_restock extends Connexion {
 
         return $produits;
 
-    }
-    public function inventaireCheck(){
-
-        $sql_q = "SELECT * FROM inventaire WHERE date = CURRENT_DATE";
-
-        $stmt = self::$bdd->prepare($sql_q);
-        $stmt->execute();
-        $bool = $stmt->fetchColumn();
-
-        if($bool == NULL){
-            return false;
-        }else{
-            return true;
-        }
     }
 
     public function getProduitsFournisseur($id) {
@@ -267,6 +255,21 @@ class Modele_restock extends Connexion {
             $stmt4->bindParam(':idInventaire', $idInventaire);
             $stmt4->execute();
 
+        }
+    }
+
+    public function inventaireCheck(){
+
+        $sql_q = "SELECT * FROM inventaire WHERE date = CURRENT_DATE";
+
+        $stmt = self::$bdd->prepare($sql_q);
+        $stmt->execute();
+        $bool = $stmt->fetchColumn();
+
+        if($bool == NULL){
+            return false;
+        }else{
+            return true;
         }
     }
 
