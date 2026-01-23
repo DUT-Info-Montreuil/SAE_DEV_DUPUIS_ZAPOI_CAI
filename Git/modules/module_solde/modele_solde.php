@@ -13,7 +13,7 @@ class Modele_solde extends Connexion{
            return "Champs manquants";
        }
 
-       $input_solde = $_POST["solde"];
+       $input_solde = ($_POST["solde"]*100);
        $idCompte = $_SESSION['idCompte'];
 
        $sql_idCompte = "SELECT idCompte FROM compte WHERE idCompte = :idC";

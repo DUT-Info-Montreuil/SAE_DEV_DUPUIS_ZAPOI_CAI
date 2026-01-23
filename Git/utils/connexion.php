@@ -6,9 +6,9 @@
         }
 
         public static function initConnexion() {
-            //self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw201699',$user='dutinfopw201699',$password='juhugege');
+            self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw201699',$user='dutinfopw201699',$password='juhugege');
 
-            self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw20167',$user='dutinfopw20167',$password='dysesyjy');
+            //self::$bdd = new PDO($dsn='mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw20167',$user='dutinfopw20167',$password='dysesyjy');
 
 
 

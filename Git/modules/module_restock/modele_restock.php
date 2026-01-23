@@ -216,7 +216,7 @@ class Modele_restock extends Connexion {
 
          foreach ($detailsFetch as $ligne) {
          $id = $ligne['id'];
-         $details_achat[$id] = ['id' => $ligne['id'],'nom' => $ligne['nom'],'quantite' => $ligne['quantite_totale'],'total' => $ligne['total_produit']];
+         $details_achat[$id] = ['id' => $ligne['id'],'nom' => $ligne['nom'],'qte' => $ligne['quantite_totale'],'prix' => $ligne['total_produit']];
          }
 
          return $details_achat;

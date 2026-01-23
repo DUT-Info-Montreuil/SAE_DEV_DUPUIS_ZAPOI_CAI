@@ -160,7 +160,7 @@ public function finaliserAchats($liste_achats) {
         echo "<h3> Détails de la commande: </h3> <br>";
         echo "<lu>";
         foreach($lignesAchat as $ligne){
-            echo "<br><li><p class='details'>". h($ligne['nom']) ." x ". h($ligne['quantite']) .", total : ". number_format($ligne['total'],2)." € </li>";
+            echo "<br><li><p class='details'>". h($ligne['nom']) ." x ". h($ligne['qte']) .", total : ". number_format($ligne['prix'],2)." € </li>";
         }
         echo "</lu>";
     }

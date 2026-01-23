@@ -34,10 +34,8 @@ class Mod_restock {
                 break;
 
             case "ajoutAchat":
-
-                $fonds = $this->cont->fondsSuffisants();
-
-                if($fonds){
+                $produit = $_POST['produit'];
+                if($this->cont->fondsSuffisants($produit)){
                     $this->cont->ajoutAchat();
                 }
 
@@ -57,13 +55,16 @@ class Mod_restock {
 
             case "ajoutStock";
                 $idAchat = $_POST['idAchat'];
+
                 $details = $this->cont->recupDetailsAchat($idAchat);
-
-                $this->cont->parcourirLignes($details);
-
-                $this->cont->finaliserAchat($idAchat);
-
-                echo "Stock mis à jour avec succès !";
+                if($this->cont->fondsSuffisants($details)){
+                    $this->cont->parcourirLignes($details);
+                    $this->cont->finaliserAchat($idAchat);
+                    $this->vue->message("Stock mis à jour avec succès !");
+                }
+            else{
+                $this->vue->message("Fond insuffisant !");
+            }
                 break;
 
         }

@@ -45,7 +45,6 @@
             }
             else{
                 $this->vue->message("Aucune nouvelle association en attente de validation.");
-                header("Location: index.php?module=connexion&action=nouvelleAsso");
             }
         }
         //Fonctions du modèle

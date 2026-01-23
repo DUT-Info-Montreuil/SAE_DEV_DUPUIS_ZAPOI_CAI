@@ -76,13 +76,13 @@ class Cont_restock {
         }
     }
 
-        public function fondsSuffisants(): bool{
+        public function fondsSuffisants($produit): bool{
 
             if($_SESSION['role']==1 || $_SESSION['role'] == 4){
                 $montant_total = 0;
 
-                foreach($_POST['produit'] as $p){
-                    $montant_total += (int)$p['qte'] * (float)$p['prix'];
+                foreach($produit as $p){
+                    $montant_total += ((int)$p['qte'] * (int)$p['prix']);
                 }
 
                 $tresorerie = $this->modele->getTresorerie();
@@ -122,8 +122,8 @@ class Cont_restock {
                     foreach($lignes as $l){
 
                         $id = $l['id'];
-                        $q = $l['quantite'];
-                        $tot = $l['total'];
+                        $q = $l['qte'];
+                        $tot = $l['prix'];
                         $this->ajoutStock($id, $q, $tot);
                     }
                  }
