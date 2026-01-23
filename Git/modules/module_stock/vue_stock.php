@@ -119,26 +119,72 @@ private function recherche_dynamique() {
               </tr>';
     }
 }
-    public function affiche_menu($menu){
-        echo'<h2>Menu de la buvette</h2>
-        <a href="index.php?module=stock&action=afficheProdAjouter" id="add"> Ajouter des produits au menu</a>
-        <a href="index.php?module=stock&action=afficheProdRetirer" id="del"> Retirer des produits au menu</a>
-        <form method="POST" action="index.php?module=stock&action=changeInfoMenu">
-        <div class="TitreColonne">Nom Produit</div>
-        <div class="TitreColonne">Prix</div>
-        <div class="TitreColonne">Seuil minimum</div>';
+    public function affiche_menu($menu) {
+    echo '
+    <div class="container mt-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                <h2 class="h4 mb-0">Menu de la buvette</h2>
+                <div>
+                    <a href="index.php?module=stock&action=afficheProdAjouter" class="btn btn-sm btn-success me-2">
+                        <i class="bi bi-plus-circle"></i> Ajouter
+                    </a>
+                    <a href="index.php?module=stock&action=afficheProdRetirer" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Retirer
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card-body p-4">
+                <form method="POST" action="index.php?module=stock&action=changeInfoMenu">
+                    <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'"/>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nom Produit</th>
+                                    <th style="width: 200px;">Prix (en cts)</th>
+                                    <th style="width: 200px;">Seuil minimum</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
 
-        foreach($menu as $item){
-            echo '
-                        <input type="hidden" name="produit['.h($item['idProd']).'][idProd]" value="'.h($item['idProd']).'"/>
-                        <div>'.h($item['nom']).'</div>
-                        <div><input type="number" name="produit['.h($item['idProd']).'][prix]" value="'. h($item['prix']) .'"/></div>
-                        <div><input type="number" name="produit['.h($item['idProd']).'][seuil]" value="'. h($item['seuil']) .'"/></div>';
-        }
-        echo'<button type="submit"> Changer </button>
-            </form>
-            ';
+    foreach($menu as $item) {
+        $id = h($item['idProd']);
+        echo '
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="produit['.$id.'][idProd]" value="'.$id.'"/>
+                                        <span class="fw-bold">'.h($item['nom']).'</span>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" name="produit['.$id.'][prix]" class="form-control" value="'.h($item['prix']).'">
+                                            <span class="input-group-text">cts</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="produit['.$id.'][seuil]" class="form-control" value="'.h($item['seuil']).'">
+                                    </td>
+                                </tr>';
     }
+
+    echo '
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                            Enregistrer les modifications
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>';
+}
 
     public function afficheProduit($liste){
         echo'<h2>Produit à vendre</h2>
@@ -174,34 +220,75 @@ private function recherche_dynamique() {
             ';
     }
 
-    public function afficheInitStockJour($produits){
+ public function afficheInitStockJour($produits) {
+    echo '
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-dark text-white text-center py-3">
+                        <h2 class="card-title mb-0">Vérification des arrivages</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" action="index.php?module=stock&action=creeInventaire" id="form-produit">
+                            <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'"/>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Nom Produit</th>
+                                            <th scope="col" style="width: 200px;">Quantité Reçue</th>
+                                            <th scope="col" class="text-center">Quantité prévue</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
 
-        echo '<h2>Vérification des arrivages </h2>';
+    foreach ($produits as $item) {
+        $id = h($item['idProd']);
+        $nom = h($item['nom']);
+        $qteActuelle = h($item['quantite']);
+        $qtePrevue = $item['quantite'] + 25; // Ta logique métier (+25)
 
         echo '
-                <form method="post" action="index.php?module=stock&action=creeInventaire" id="form-produit">
-                    <div id="tableauStock">
-
-                        <div class="TitreColonne">Nom Produit</div>
-                        <div class="TitreColonne">Quantité</div>
-                        <div class="TitreColonne">Quantité prévu</div>
-                        <div class="TitreColonne">PlaceHolder</div>
-                        <div class="TitreColonne">PlaceHolder</div>';
-
-
-                        foreach($produits as $item){
-                            echo'
-                            <input type="hidden" name="produit['.$item['idProd'].'][idProd]" value="'.$item['idProd'].'">
-                            <div>'. h($item['nom']) .'</div>
-                            <div><input type="number" name="produit['.$item['idProd'].'][qteArrive]" value="'. h($item['quantite']) .'" placeholder="'. h($item['quantite']) .'"></div>
-                            <div>'. h(($item['quantite']+25)) .'</div>
-                            <div>PlaceHolder</div>
-                            <div>PlaceHolder</div>';
-                        }
-        echo'</div>
-        <button type="submit">Envoyer</button>
-        </form>';
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" name="produit['.$id.'][idProd]" value="'.$id.'">
+                                                <span class="fw-bold">'.$nom.'</span>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="number" 
+                                                           name="produit['.$id.'][qteArrive]" 
+                                                           class="form-control" 
+                                                           value="'.$qteActuelle.'" 
+                                                           min="0">
+                                                    <span class="input-group-text">unités</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-info text-dark fs-6">'.$qtePrevue.'</span>
+                                            </td>
+                                        </tr>';
     }
+
+    echo '
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                                    <i class="bi bi-check-circle me-2"></i>Valider l\'inventaire
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+}
 
     public function afficheNBDispo($dispo){
         echo '<p id="nb">Nombre de produits disponibles : '. h($dispo) .'</p>';

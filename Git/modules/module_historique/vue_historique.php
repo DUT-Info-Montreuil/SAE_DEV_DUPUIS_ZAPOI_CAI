@@ -12,8 +12,11 @@ public function historiqueClient(array $historique) {
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
                 <div class="card shadow-lg">
-                    <div class="card-body p-4">
-                        <h2 class="card-title text-center mb-4">Historique de vos commandes</h2>';
+                <div class="card-header bg-dark text-white">
+                 <h2 class="card-title text-center mb-4">Historique de vos commandes</h2>
+                </div>   
+                 <div class="card-body p-4">';
+                       
 
                             if (empty($historique)) {
                                 echo '<p class="text-center text-muted">Aucune commande enregistrée.</p>';

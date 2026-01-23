@@ -14,7 +14,6 @@ Class Mod_stock{
             case "affiche_stock":
                 $this->cont->affiche_stock();
 
-                $this->cont->affiche_stockFaible();
                 break;
             case "menu":
                 $this->cont->affiche_menu();

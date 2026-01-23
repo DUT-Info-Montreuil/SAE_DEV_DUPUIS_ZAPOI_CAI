@@ -43,48 +43,73 @@ require_once('utils/vue_generique.php');
 
     }
 
-    public function finaliserAchats($liste_achats) {
+public function finaliserAchats($liste_achats) {
+    echo '
+    <div class="container mt-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-dark text-white text-center py-3">
+                <h2 class="card-title mb-0">Historique et Finalisation des Achats</h2>
+            </div>
+            <div class="card-body p-0">
+                <form method="POST" action="index.php?module=restock&action=ajoutStock">
+                    <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'"/>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Prix Total</th>
+                                    <th>État</th>
+                                    <th class="text-center">Détails</th>
+                                    <th class="text-end px-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+    foreach($liste_achats as $a) {
+        $idAchat = h($a["id"]);
+        $etat = h($a['état']);
+        
+        $badgeClass = (strcmp($etat, "en cours") == 0) ? "bg-warning text-dark" : "bg-success";
 
         echo '
-            <form method = "POST" action="index.php?module=restock&action=ajoutStock">
-            <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'"/>
-            <div id="listeCommande">
-                <div class="TitreColonne">ID de la commande</div>
-                <div class="TitreColonne">Date de la commande</div>
-                <div class="TitreColonne">Prix de la commande</div>
-                <div class="TitreColonne">Etat commande </div>
-                <div class="TitreColonne">Détails de la commande </div>
-                <div class ="TitreColonne">Action</div>';
-                $index=0;
-                foreach($liste_achats as $a){
+                                <tr id="achat-'.$idAchat.'">
+                                    <td class="fw-bold">#'.$idAchat.'</td>
+                                    <td>'.h($a["date"]).'</td>
+                                    <td class="text-primary fw-bold">'.number_format($a['total'], 2).' €</td>
+                                    <td><span class="badge '.$badgeClass.'">'.$etat.'</span></td>
+                                    <td class="text-center">
+                                        <a href="index.php?module=restock&action=detailsAchat&idAchat='.$idAchat.'" class="btn btn-outline-info btn-sm">
+                                            <i class="bi bi-eye"></i> Voir détails
+                                        </a>
+                                    </td>
+                                    <td class="text-end px-4">';
 
-                echo'
-                    <div id = "achat-'. h($a["id"]) .'" class="ligneCommande" style="display : contents;">
+        if(strcmp($etat, "en cours") == 0) {
+            echo '
+                                        <button type="submit" name="idAchat" value="'.$idAchat.'" class="btn btn-success btn-sm shadow-sm">
+                                            Finaliser l\'achat
+                                        </button>';
+        } else {
+            echo '<span class="text-muted small italic">Aucune action</span>';
+        }
 
-                    <div class="elt">'. h($a["id"]) .'</div>
-                    <div class="elt">'. h($a["date"]) .'</div>
-                    <div class="elt">'. h($a['total']) .'</div>
-                    <div class="elt">'. h($a['état']) .'</div>
-                    <a href="index.php?module=restock&action=detailsAchat&idAchat='. h($a["id"]) .'" class="elt"> Détails </a>';
-
-                    if(strcmp($a['état'], "en cours") == 0){
-                        echo ' <button type="submit" name="idAchat" value="'.h($a["id"]).'">
-                                    Finaliser
-                                </button>';
-                    }
-                $index++;
-
-
-                echo '</div>
-
-                ';
-                }
-
-            echo '</div>';
-
-            echo '</form>';
-
+        echo '
+                                    </td>
+                                </tr>';
     }
+
+    echo '
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>';
+}
 
     public function detailsAchat(array $lignesAchat){
         echo "<h3> Détails de la commande: </h3> <br>";

@@ -24,6 +24,7 @@ public function formulaire_commande($liste_prod,$type,$max){
 
         echo '
         <form method="post" id="form-type" action="index.php?module=commande&action=reload" class="mb-4">
+        <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             <div class="d-flex flex-wrap gap-2 justify-content-center">
         ';
 
@@ -48,6 +49,7 @@ public function formulaire_commande($liste_prod,$type,$max){
 
     echo '
         <form method="post" action="index.php?module=commande&action=ajout_produit" id="form-commande">
+        <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
             <div class="row g-4">
         ';
      $elem = 0;
@@ -98,7 +100,7 @@ public function formulaire_commande($liste_prod,$type,$max){
                 </button>
             </div>
 
-            <input type="hidden" name="token_csrf" value="'.$_SESSION['token'].'">
+            
         </form>
         ';
     echo '
@@ -122,6 +124,7 @@ public function formulaire_commande($liste_prod,$type,$max){
 public function finaliser_commande($liste_commande) {
     echo '
     <form method="post" action="index.php?module=commande&action=finCommande" id="form-finCommande">
+    <input type="hidden" name="token_csrf" value = "'.$_SESSION['token'].'">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
